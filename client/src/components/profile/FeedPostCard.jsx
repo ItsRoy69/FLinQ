@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import './feedPostCard.css'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 
 const FeedPostCard = ({post}) => {
+
+    const [isLiked, setIsLiked] = useState(false)
 
     const TimeGap = (date) => {
         const postTime = new Date(date)
@@ -47,6 +50,10 @@ const FeedPostCard = ({post}) => {
         return `${secondsGap} seconds ago`
     }
 
+    const handleLikePress = () => {
+        setIsLiked(!isLiked)
+    }
+
     return (
         <div className='feed-post-container h-60 sm:h-80 md:h-96 rounded-xl overflow-hidden flex flex-col'>
             <div className="feed-post h-5/6 bg-gradient-to-r from-fuchsia-950 to-purple-950 rounded-b-3xl">
@@ -75,7 +82,18 @@ const FeedPostCard = ({post}) => {
             </div>
             <div className="feed-post-footer-utilities flex justify-between items-center w-full h-1/6 sm:py-2">
                 <div className="feed-post-utils-set1 flex items-center gap-3 w-3/12 h-full px-2 text-3xl sm:text-5xl">
-                    <i className='bx bx-like'></i>
+                    {
+                        (!isLiked) ? 
+                            <i 
+                                className='bx bx-like' 
+                                onClick={handleLikePress}
+                            ></i>
+                        : 
+                            <i 
+                                className='bx bxs-like' 
+                                onClick={handleLikePress}
+                            ></i>
+                    }
                     <i className='bx bx-chat'></i>
                 </div>
                 <div className="feed-post-utils-set2 flex justify-end items-center gap-2 w-3/12 h-full px-2 text-3xl sm:text-5xl">

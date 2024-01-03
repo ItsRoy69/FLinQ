@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import FeedPostCard from "../../components/profile/FeedPostCard";
 import FeedStatusCard from '../../components/profile/FeedStatusCard';
-import Add from '@mui/icons-material/Add';
+import NavBar from '../../constants/navbar/NavBar';
 
 const Feed = () => {
 
@@ -57,17 +57,18 @@ const Feed = () => {
 
 	return (
 		<>
-			<div className="feed h-screen dark:bg-slate-900 dark:text-white p-4 overflow-auto">
-				<div className="feed-contents-extra flex flex-col gap-4">
-					<div className="feed-welcome-card h-12 flex justify-between items-center ">
-						<div className="feed-welcome-greet flex flex-col justify-center items-start w-fit max-w-4/5 h-full">
-							<p className="font-medium truncate w-full">Hello {user.name}</p>
-							<p className="text-xs sm:text-lg font-thin">Find your interests here!</p>
-						</div>
-						<div className="feed-settings flex justify-center items-center rounded-full h-full w-12 bg-gradient-to-b from-pink-600 to-purple-700 text-3xl">
-							<SettingsIcon/>
-						</div>
-					</div>
+			<div className="feed-header-card h-16 flex justify-between items-center fixed top-0 left-0 px-4 w-full z-10 bg-inherit dark:bg-slate-900 dark:text-white">
+				<div className="feed-header-greet flex flex-col justify-center items-start w-fit max-w-4/5 h-12">
+					<p className="font-medium truncate w-full">Hello {user.name}</p>
+					<p className="text-xs sm:text-lg font-thin">Find your interests here!</p>
+				</div>
+				<div className="feed-settings flex justify-center items-center w-12 h-12 rounded-full bg-gradient-to-b from-pink-600 to-purple-700">
+					<SettingsIcon/>
+				</div>
+			</div>
+
+			<div className="feed-body h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16">
+				<div className="feed-contents-extra flex flex-col gap-4 mt-20">
 					<div className="feed-search-card flex justify-between items-center h-16">
 						<img
 							src={user.dp}
@@ -133,6 +134,7 @@ const Feed = () => {
 					</div>
 				</div>
 			</div>
+			<NavBar/>
 		</>
 	);
 };
