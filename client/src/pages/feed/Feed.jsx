@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import "./feed.css"
 import SettingsIcon from '@mui/icons-material/Settings';
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import AddIcon from '@mui/icons-material/Add';
+
+import { dummyPostArray, dummyStatusArray } from '../../data/DummyFeed';
+import { dummyUser } from '../../data/DummyUser';
 
 import FeedPostCard from "../../components/profile/FeedPostCard";
 import FeedStatusCard from '../../components/profile/FeedStatusCard';
@@ -13,6 +16,35 @@ const Feed = () => {
 
 	const [searchVal, setSearchVal] = useState('')
 	const [selectedFeed, setSelectedFeed] = useState('recent')
+	const [page, setPage] = useState(1)
+	const [postArray, setPostArray] = useState([])
+	const [statusArray, setStatusArray] = useState([])
+	const [user, setUser] = useState(dummyUser)
+
+	useEffect(() => {
+		setPostArray(dummyPostArray)
+		setStatusArray(dummyStatusArray)
+	}, [])
+
+	useEffect(() => {
+		const feedBody = document.getElementById('feed-body')
+		const handleScroll = () => {
+			if (feedBody.scrollHeight - feedBody.offsetHeight - feedBody.scrollTop < 1) {
+				// bottom touched
+				setPostArray([...postArray, dummyPostArray[0], dummyPostArray[1]])
+				window.removeEventListener('wheel', handleScroll)
+				setTimeout(() => {
+					setPage((page) => page + 1)
+
+				}, 1000)
+			}
+		}
+		
+		window.addEventListener('wheel', handleScroll)
+		return () => {
+			window.removeEventListener('wheel', handleScroll)
+		}
+	}, [page])
 
 	const handleSearchValChange = (e) => {
 		setSearchVal(e.target.value)
@@ -21,40 +53,7 @@ const Feed = () => {
 	const handleFeedChange = (feedtype) => {
 		setSelectedFeed(feedtype)
 	}
-
-	const user = {
-		name: 'Samita',
-		dp: 'https://rb.gy/vozm3f'
-	}
-
-	const dummyPostArray = [
-		{	
-			user: 'Samantha',
-			image: 'https://reductress.com/wp-content/uploads/2019/06/petite-woman-1-820x500.jpg',
-			timestamp: '2024-01-03T04:00:00Z'
-		},
-		{
-			user: 'Rose Williams',
-			image: 'https://images.pexels.com/photos/247322/pexels-photo-247322.jpeg?cs=srgb&dl=pexels-pixabay-247322.jpg&fm=jpg',
-			timestamp: '2024-01-03T06:50:00Z'
-		}
-	]
-
-	const dummyStatusArray = [
-		{	
-			user: 'Samantha',
-			image: 'https://rb.gy/6eez7x',
-			timestamp: '2024-01-03T04:00:00Z',
-			seen: false
-		},
-		{
-			user: 'Rose Williams',
-			image: 'https://rb.gy/jxjhlq',
-			timestamp: '2024-01-03T06:50:00Z',
-			seen: false
-		}
-	]
-
+	
 	return (
 		<>
 			<div className="feed-header-card h-16 flex justify-between items-center fixed top-0 left-0 px-4 w-full z-10 bg-inherit dark:bg-slate-900 dark:text-white">
@@ -67,7 +66,7 @@ const Feed = () => {
 				</div>
 			</div>
 
-			<div className="feed-body h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16">
+			<div id="feed-body" className="feed-body h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16">
 				<div className="feed-contents-extra flex flex-col gap-4 mt-20">
 					<div className="feed-search-card flex justify-between items-center h-16">
 						<img
@@ -86,7 +85,7 @@ const Feed = () => {
 						<div 
 							className="feed-status-add-button h-16 w-16 ml-1 rounded-2xl flex items-center justify-center bg-cover overflow-hidden"
 							style={{
-								backgroundImage: `url(${user.dp})`
+								backgroundImage: `url(${dummyUser.dp})`
 							}}
 						>
 							<div className="add-icon w-full h-full flex items-center justify-center text-inherit backdrop-blur-[1px]">
@@ -95,7 +94,7 @@ const Feed = () => {
 						</div>
 						<div className="feed-status-content flex items-center gap-4 overflow-x-auto">
 							{
-								dummyStatusArray.map((status, index) => (
+								statusArray.map((status, index) => (
 									<FeedStatusCard key={index} status={status}/>
 								))
 							}
@@ -127,10 +126,10 @@ const Feed = () => {
 					<p className="font-semibold mb-1">Posts</p>
 					<div className="feed-post-container-body flex flex-col gap-2">
 						{
-							dummyPostArray.map((post, index) => (
+							postArray.map((post, index) => (
 								<FeedPostCard key={index} post={post}/>
 							))
-						}
+						}	
 					</div>
 				</div>
 			</div>
