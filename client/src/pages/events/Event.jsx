@@ -16,11 +16,31 @@ const Event = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [eventArray,setEventArray] = useState([])
   const [searchVal,setSearchVal] = useState('')
+  const [page,setPage] = useState(1)
 
   useEffect(()=>{
     setEventArray(dummyEventsArray)
-    console.log(eventArray)
   },[])
+
+  useEffect(() => {
+		const eventBody = document.getElementById('event-body')
+		const handleScroll = () => {
+			if (eventBody.scrollHeight - eventBody.offsetHeight - eventBody.scrollTop < 1) {
+				// bottom touched
+				setEventArray([...eventArray, dummyEventsArray[0], dummyEventsArray[1]])
+				window.removeEventListener('wheel', handleScroll)
+				setTimeout(() => {
+					setPage((page) => page + 1)
+
+				}, 1000)
+			}
+		}
+		
+		window.addEventListener('wheel', handleScroll)
+		return () => {
+			window.removeEventListener('wheel', handleScroll)
+		}
+	}, [page])
 
   const handleArrowClick=()=>{
     navigate('/')
@@ -36,7 +56,7 @@ const Event = () => {
 
   return (
     <div className='event_container'>
-        <nav> 
+        <nav className='nav_events'> 
            <div className='arrowBox'><FontAwesomeIcon icon={faArrowLeft} className='arrowIcon' 
             onClick={handleArrowClick}/> </div>
             <div className='header'>Events</div>

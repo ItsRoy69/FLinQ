@@ -4,15 +4,11 @@
     padding: 0;
     font-family: "Inter var", sans-serif;
 }
-body, html{
-  margin: 0;
-  padding: 0;
-}
 .event_container{
   min-height: 100vh;
   background-color: rgb(19, 22, 39)
 }
-nav {
+.nav_events {
     display: flex;
     align-items: center;
     justify-content: space-between;
