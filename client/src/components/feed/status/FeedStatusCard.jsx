@@ -1,4 +1,4 @@
-import './feedPostCard.css'
+import './feedStatusCard.css'
 
 const FeedStatusCard = ({status}) => {
     return (
