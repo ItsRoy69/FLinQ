@@ -45,6 +45,7 @@ const Feed = () => {
 			window.removeEventListener('wheel', handleScroll)
 		}
 	}, [page])
+	
 
 	const handleSearchValChange = (e) => {
 		setSearchVal(e.target.value)
