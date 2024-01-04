@@ -57,7 +57,7 @@ const Event = () => {
                       <div className='box' key={index}>
                       <img src={event.image} alt = "imsge" className='dummy'/>
                         <div className='upper_container'>
-                          <div className='companyName' style={{color:'black'}}>{event.eventOrganizer}</div>
+                          <div className='companyName'>{event.eventOrganizer}</div>
                           <div className='time_container'><p>{event.timestamp}</p></div>
                         </div>
                         <div className='lower_container'>
