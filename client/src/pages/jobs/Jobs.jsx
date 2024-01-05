@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 import './jobs.css'
 
 import { dummyRecommendationsArray } from '../../data/DummyRecommendations'
@@ -12,6 +14,50 @@ import AddRounded from '@mui/icons-material/AddRounded'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const Jobs = () => {
+
+    const [recommendationPage, setRecommendationPage] = useState(1)
+    const [latestPage, setLatestPage] = useState(1)
+    const [savedPage, setSavedPage] = useState(1)
+
+    useEffect(() => {
+        const recommendationContainer = document.getElementById('recommendation-container')
+        const handleScroll = () => {
+            console.log(recommendationContainer.scrollLeft, screen.width, recommendationContainer.scrollWidth)
+        }
+        
+        recommendationContainer.addEventListener('wheel', handleScroll)
+        return () => {
+            recommendationContainer.removeEventListener('wheel', handleScroll)
+        }
+
+    }, [recommendationPage])
+
+    useEffect(() => {
+        const latestContainer = document.getElementById('latest-container')
+        const handleScroll = () => {
+            console.log(latestContainer.scrollLeft, screen.width, latestContainer.scrollWidth)
+        }
+        
+        latestContainer.addEventListener('wheel', handleScroll)
+        return () => {
+            latestContainer.removeEventListener('wheel', handleScroll)
+        }
+
+    }, [latestPage])
+
+    useEffect(() => {
+        const savedContainer = document.getElementById('saved-container')
+        const handleScroll = () => {
+            console.log(savedContainer.scrollLeft, screen.width, savedContainer.scrollWidth)
+        }
+        
+        savedContainer.addEventListener('wheel', handleScroll)
+        return () => {
+            savedContainer.removeEventListener('wheel', handleScroll)
+        }
+
+    }, [savedPage])
+
     return (
         <>
             <div className='jobs-header dark:bg-slate-900 dark:text-white fixed top-0 left-0 h-16 w-full flex items-center px-4'> 
@@ -30,7 +76,7 @@ const Jobs = () => {
                             Recommendations
                         </p>
                     </div>
-                    <div className="recommendation-container h-full flex gap-5 overflow-x-auto">
+                    <div id='recommendation-container' className="recommendation-container h-full flex gap-5 overflow-x-auto">
                         {
                             dummyRecommendationsArray.map((recommentation, index) => (
                                 <JobsRecommendation key={index} job={recommentation}/>
@@ -42,7 +88,7 @@ const Jobs = () => {
                     <div className="saved-title text-sm font-sm">
                         <p className='text-left text-lg font-semibold'>Saved Jobs</p>
                     </div>
-                    <div className="saved-container w-full h-full flex items-center gap-2 overflow-x-auto">
+                    <div id="saved-container" className="saved-container w-full h-full flex items-center gap-2 overflow-x-auto">
                         {
                             dummySavedJobsArray.map((job, index) => (
                                 <SavedJobCard key={index} job={job}/>
@@ -54,7 +100,7 @@ const Jobs = () => {
                     <div className="latest-title text-sm font-sm">
                         <p className='text-left text-lg font-semibold'>Recently Added</p>
                     </div>
-                    <div className="latest-container w-full h-full flex items-center gap-2 overflow-x-auto">
+                    <div id='latest-container' className="latest-container w-full h-full flex items-center gap-2 overflow-x-auto">
                         {
                             dummyLatestJobsArray.map((job, index) => (
                                 <LatestJobCard key={index} job={job}/>

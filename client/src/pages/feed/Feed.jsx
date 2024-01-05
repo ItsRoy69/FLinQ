@@ -31,6 +31,7 @@ const Feed = () => {
 				// bottom touched
 				setPostArray([...postArray, dummyPostArray[0], dummyPostArray[1]])
 				window.removeEventListener('wheel', handleScroll)
+				window.removeEventListener('scroll', handleScroll)
 				setTimeout(() => {
 					setPage((page) => page + 1)
 
@@ -39,8 +40,10 @@ const Feed = () => {
 		}
 		
 		window.addEventListener('wheel', handleScroll)
+		window.addEventListener('scroll', handleScroll)
 		return () => {
 			window.removeEventListener('wheel', handleScroll)
+			window.removeEventListener('scroll', handleScroll)
 		}
 	}, [page])
 	
