@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react'
 
 import "./feed.css"
 import SettingsIcon from '@mui/icons-material/Settings';
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import AddIcon from '@mui/icons-material/Add';
 
 import { dummyPostArray, dummyStatusArray } from '../../data/DummyFeed';
 import { dummyUser } from '../../data/DummyUser';
 
-import FeedPostCard from "../../components/profile/FeedPostCard";
-import FeedStatusCard from '../../components/profile/FeedStatusCard';
+import FeedPostCard from '../../components/feed/post/FeedPostCard';
+import FeedStatusCard from '../../components/feed/status/FeedStatusCard';
 import NavBar from '../../constants/navbar/NavBar';
 
 const Feed = () => {
@@ -33,6 +31,7 @@ const Feed = () => {
 				// bottom touched
 				setPostArray([...postArray, dummyPostArray[0], dummyPostArray[1]])
 				window.removeEventListener('wheel', handleScroll)
+				window.removeEventListener('scroll', handleScroll)
 				setTimeout(() => {
 					setPage((page) => page + 1)
 
@@ -41,8 +40,10 @@ const Feed = () => {
 		}
 		
 		window.addEventListener('wheel', handleScroll)
+		window.addEventListener('scroll', handleScroll)
 		return () => {
 			window.removeEventListener('wheel', handleScroll)
+			window.removeEventListener('scroll', handleScroll)
 		}
 	}, [page])
 	

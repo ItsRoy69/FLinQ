@@ -1,0 +1,5 @@
+.recommendation-container::-webkit-scrollbar, 
+.latest-container::-webkit-scrollbar, 
+.saved-container::-webkit-scrollbar {
+    display : none;
+}
