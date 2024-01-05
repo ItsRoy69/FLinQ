@@ -18,6 +18,7 @@
     backdrop-filter: blur(10px);
   }
 .arrowBox{
+    position: absolute;
     margin-top : 15px;
     margin-left : 16px;
     margin-bottom: 10px;
@@ -36,9 +37,7 @@
 }
   
 .header {
-    flex-grow: 2;  
-    position: relative;
-    right : 10px;
+    width : 100%; 
     justify-content: center;
     text-align: center;
     font-size: 25px;
@@ -84,10 +83,10 @@
     margin: 20px 25px;
   }
   .container-fluid{
-    /* align-items: center; */
+    
     max-width: 100%;
-    padding: 0 15px; /* Add padding as needed */
-    margin: 0 auto; /* Center the container */
+    padding: 0 15px 15px ; 
+    margin: 0 auto; 
     box-sizing: border-box; 
   }
   .box{
