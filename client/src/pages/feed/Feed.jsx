@@ -29,7 +29,7 @@ const Feed = () => {
 		const handleScroll = () => {
 			if (feedBody.scrollHeight - feedBody.offsetHeight - feedBody.scrollTop < 1) {
 				// bottom touched
-				setPostArray([...postArray, dummyPostArray[0], dummyPostArray[1]])
+				setPostArray([...postArray, ...dummyPostArray])
 				window.removeEventListener('wheel', handleScroll)
 				window.removeEventListener('scroll', handleScroll)
 				setTimeout(() => {
