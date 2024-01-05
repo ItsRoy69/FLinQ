@@ -13,7 +13,7 @@ const LatestJobCard = ({job}) => {
 
     return (
         <>
-            <div className="job-card-container flex-shrink-0 flex-grow-0 flex flex-col justify-between w-64 h-44 rounded-3xl border border-blue-700 p-3"
+            <div className="job-card-container flex-shrink-0 flex-grow-0 flex flex-col justify-between w-64 h-44 rounded-3xl p-3"
                 style={{
                     backgroundColor: `${bgColor}`
                 }}
