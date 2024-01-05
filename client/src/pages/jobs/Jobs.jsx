@@ -9,54 +9,57 @@ import { dummySavedJobsArray } from '../../data/DummySavedJobs'
 import JobsRecommendation from '../../components/jobs/recommendations/JobsRecommendation'
 import LatestJobCard from '../../components/jobs/latests/LatestJobCard'
 import SavedJobCard from '../../components/jobs/saved/SavedJobCard'
+import JobCardSkeleton from '../../components/jobs/latests/JobCardSkeleton'
 
 import AddRounded from '@mui/icons-material/AddRounded'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowRightIcon from '@mui/icons-material/ArrowRight'
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
+import SyncIcon from '@mui/icons-material/Sync'
 
 const Jobs = () => {
 
-    const [recommendationPage, setRecommendationPage] = useState(1)
-    const [latestPage, setLatestPage] = useState(1)
-    const [savedPage, setSavedPage] = useState(1)
+    // NECESSARIES FOR LATEST JOBS SECTION
 
+    // states for latest jobs
+    const [latestJobsArray, setLatestJobsArray] = useState([])
+    const [latestPage, setLatestPage] = useState(0)
+    const [isLatestLoading, setIsLatestLoading] = useState(true)
+    const [newLatestLoaded, setNewLatestLoaded] = useState(false)
+
+    // load more latest jobs
+    const loadMoreLatest = () => {
+        setIsLatestLoading(true)
+        setTimeout(() => {
+            setLatestJobsArray([...latestJobsArray, ...dummyLatestJobsArray])
+            setIsLatestLoading(false)
+            setNewLatestLoaded(true)
+        }, 1000)
+    }
+
+    // load latest jobs on page mount
     useEffect(() => {
-        const recommendationContainer = document.getElementById('recommendation-container')
-        const handleScroll = () => {
-            console.log(recommendationContainer.scrollLeft, screen.width, recommendationContainer.scrollWidth)
-        }
-        
-        recommendationContainer.addEventListener('wheel', handleScroll)
-        return () => {
-            recommendationContainer.removeEventListener('wheel', handleScroll)
-        }
+        setTimeout(() => {
+            setLatestPage((page) => page + 1)
+            setLatestJobsArray(dummyLatestJobsArray)
+            // setIsLatestLoading(false)
+        }, 2000)
+    }, [])
 
-    }, [recommendationPage])
-
+    // hide check out prompt on scroll
     useEffect(() => {
         const latestContainer = document.getElementById('latest-container')
         const handleScroll = () => {
-            console.log(latestContainer.scrollLeft, screen.width, latestContainer.scrollWidth)
+            setTimeout(() => {
+                setNewLatestLoaded(false)
+                latestContainer.removeEventListener('wheel', handleScroll)
+            }, 500)
         }
-        
         latestContainer.addEventListener('wheel', handleScroll)
         return () => {
             latestContainer.removeEventListener('wheel', handleScroll)
         }
-
-    }, [latestPage])
-
-    useEffect(() => {
-        const savedContainer = document.getElementById('saved-container')
-        const handleScroll = () => {
-            console.log(savedContainer.scrollLeft, screen.width, savedContainer.scrollWidth)
-        }
-        
-        savedContainer.addEventListener('wheel', handleScroll)
-        return () => {
-            savedContainer.removeEventListener('wheel', handleScroll)
-        }
-
-    }, [savedPage])
+    }, [latestJobsArray])
 
     return (
         <>
@@ -97,14 +100,56 @@ const Jobs = () => {
                     </div>
                 </div>
                 <div className="jobs-latest flex flex-col w-full h-60 px-1 pb-5 gap-2">
-                    <div className="latest-title text-sm font-sm">
-                        <p className='text-left text-lg font-semibold'>Recently Added</p>
+                    <div className="latest-title flex items-center justify-between max-h-full text-sm overflow-hidden ">
+                        <p className='text-left text-lg font-semibold h-full'>Recently Added</p>
+                        {
+                            (newLatestLoaded && latestPage > 1) &&
+                                <div className="flex items-center gap-2 text-slate-200 h-full overflow-hidden ">
+                                    <p 
+                                        className='text-sm font-light underline  overflow-hidden'
+                                    >
+                                        Check Out Fresh!
+                                        <ArrowRightAltIcon
+                                        fontSize='large'
+                                        className=''
+                                    /> 
+                                    </p>
+                                </div>
+                        }
                     </div>
+                    
                     <div id='latest-container' className="latest-container w-full h-full flex items-center gap-2 overflow-x-auto">
                         {
-                            dummyLatestJobsArray.map((job, index) => (
-                                <LatestJobCard key={index} job={job}/>
-                            ))
+                            (isLatestLoading) ? 
+                                <JobCardSkeleton cards={2}/>
+                            :
+                            (
+                                latestJobsArray.map((job, index) => (
+                                    <LatestJobCard key={index} job={job}/>
+                                ))
+                            )
+                        }
+                        {
+                            (!isLatestLoading && latestPage > 0) &&
+                            <div className="latest-more absolute right-5 min-w-10 w-fit p-1 h-11 flex justify-center items-center rounded-full bg-slate-700"
+                                onClick={loadMoreLatest}
+                            >
+                                {
+                                    (isLatestLoading && latestPage > 1) ?
+                                        <SyncIcon 
+                                            className='load-spinner dark:text-slate-200' 
+                                            fontSize='medium'
+                                        />
+                                    :
+                                        <div className='flex justify-center items-center ml-2 hover:cursor-pointer'>
+                                            <p className='text-sm text-center font-light'>More</p>
+                                            <ArrowRightIcon
+                                                fontSize='medium'
+                                            />
+                                        </div>
+                                }
+                                
+                            </div>
                         }
                     </div>
                 </div>
