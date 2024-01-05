@@ -11,13 +11,14 @@
     "start": "npx tailwindcss -i ./src/index.css -o ./src/dist/build.css && vite"
   },
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "framer-motion": "^10.17.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.15.2",
     "@mui/material": "^5.15.2",
+    "@react-google-maps/api": "^2.19.2",
+    "framer-motion": "^10.17.0",
     "randomcolor": "^0.6.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",
