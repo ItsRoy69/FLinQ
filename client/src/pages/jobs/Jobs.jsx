@@ -19,9 +19,10 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import SyncIcon from '@mui/icons-material/Sync'
 import SearchIcon from '@mui/icons-material/Search'
 
-const Jobs = () => {
+import { motion, AnimatePresence } from 'framer-motion';
+import { preview } from 'vite'
 
-    // NECESSARIES FOR JOBS HEADER SECTION
+const Jobs = () => {
 
     const [searchOpen, setSearchOpen] = useState(false)
 
@@ -40,6 +41,7 @@ const Jobs = () => {
     const [latestPage, setLatestPage] = useState(0)
     const [isLatestLoading, setIsLatestLoading] = useState(true)
     const [newLatestLoaded, setNewLatestLoaded] = useState(false)
+    const [currentSlide, setCurrentSlide] = useState(0)
 
     // load more latest jobs
     const loadMoreLatest = () => {
@@ -75,6 +77,16 @@ const Jobs = () => {
         }
     }, [latestJobsArray])
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentSlide((prevSlide) => (prevSlide + 1) % dummyRecommendationsArray.length);
+          }, 5000);
+      
+          return () => clearInterval(interval);
+    }, [])
+
+
+
     return (
         <>
             {
@@ -102,13 +114,23 @@ const Jobs = () => {
                             Recommendations
                         </p>
                     </div>
-                    <div id='recommendation-container' className="recommendation-container h-full flex gap-5 overflow-x-auto">
-                        {
-                            dummyRecommendationsArray.map((recommentation, index) => (
-                                <JobsRecommendation key={index} job={recommentation}/>
-                            ))
-                        }
-                    </div>
+                   <AnimatePresence>
+                        <motion.div 
+                        id = 'recommendation-container' 
+                        className = "recommendation-container h-full flex gap-5 overflow-x-auto"
+                        key = {currentSlide}
+                        initial = {{ opacity: 0 , x: '100%', width : '100%', height : '100%'}}
+                        animate = {{ opacity: 1, x: '0%', width : '100%' }}
+                        exit = {{ opacity: 0, x: '-100%', width : '100%',height : '100%' }}
+                        transition = {{ duration: 1.5, ease: 'easeInOut' }}
+                        >
+                            {
+                                dummyRecommendationsArray.map((recommentation, index) => (
+                                    <JobsRecommendation key={index} job={recommentation}/>
+                                ))
+                            }
+                        </motion.div>
+                   </AnimatePresence>
                 </div>
                 <div className="jobs-saved flex flex-col w-full h-60 px-1 pb-5 gap-2">
                     <div className="saved-title text-sm font-sm">
