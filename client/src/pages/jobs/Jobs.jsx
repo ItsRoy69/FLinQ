@@ -20,7 +20,7 @@ import SyncIcon from '@mui/icons-material/Sync'
 import SearchIcon from '@mui/icons-material/Search'
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { preview } from 'vite'
+
 
 const Jobs = () => {
 
@@ -49,7 +49,7 @@ const Jobs = () => {
         setTimeout(() => {
             setLatestJobsArray([...latestJobsArray, ...dummyLatestJobsArray])
             setIsLatestLoading(false)
-            setNewLatestLoaded(true)
+            // setNewLatestLoaded(true)
         }, 1000)
     }
 
@@ -58,7 +58,7 @@ const Jobs = () => {
         setTimeout(() => {
             setLatestPage((page) => page + 1)
             setLatestJobsArray(dummyLatestJobsArray)
-            // setIsLatestLoading(false)
+            setIsLatestLoading(false)
         }, 2000)
     }, [])
 
@@ -117,7 +117,7 @@ const Jobs = () => {
                    <AnimatePresence>
                         <motion.div 
                         id = 'recommendation-container' 
-                        className = "recommendation-container h-full flex gap-5 overflow-x-auto"
+                        className = "recommendation-container flex justify-between items-center h-fully bg-transparent-200 overflow-hidden relative "
                         key = {currentSlide}
                         initial = {{ opacity: 0 , x: '100%', width : '100%', height : '100%'}}
                         animate = {{ opacity: 1, x: '0%', width : '100%' }}

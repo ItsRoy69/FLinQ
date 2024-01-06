@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { dummyEventsArray } from '../../data/DummyEvent';
-import './event.css';
+import EventCard from '../../components/events/EventCard';
+
+// import './event.css';
 //icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +16,6 @@ const Event = () => {
 
   const navigate = useNavigate()
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [eventArray,setEventArray] = useState([])
   const [searchVal,setSearchVal] = useState('')
   const [page,setPage] = useState(1)
@@ -70,12 +72,12 @@ const Event = () => {
           </div>
           <div><p className='upcoming_events'>Upcoming Events</p></div>
 
-          <div id='event-body' className='container-fluid'>
+          <div id='event-body' className='container-fluid-mx-auto-p-0-md:p-1-box-border'>
             <div className='row'>
                   {  eventArray.map ((event, index)=>(
-                    event.status === "active" && (
-                      <div className='box' key={index}>
-                      <img src={event.image} alt = "imsge" className='dummy'/>
+                      <EventCard key={index} event=  {event}/>
+                      /* <div className='box' key={index}>
+                      <img src={event.image} alt = "image" className='dummy'/>
                         <div className='upper_container'>
                           <div className='companyName'>{event.eventOrganizer}</div>
                           <div className='time_container'><p>{event.timestamp}</p></div>
@@ -84,12 +86,11 @@ const Event = () => {
                           <p>{event.motive}</p>
                           <button >Book your seat</button>
                         </div>
-                      </div>
-                    )
+                      </div> */
                     ))
                   }
 
-               <div class="floating_button" onClick={handleAddEvent}>+</div>
+               <div className="floating_button" onClick={handleAddEvent}>+</div>
             </div>
           </div>
         </section>
