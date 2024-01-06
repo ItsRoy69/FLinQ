@@ -6,7 +6,7 @@ const JobCardSkeleton = ({ cards }) => {
     .fill(0)
     .map((_, index) => (
       <div
-        className="job-card-skeleton flex-shrink-0 flex-grow-0 flex flex-col justify-between w-64 h-44 rounded-3xl p-3 border border-blue-300"
+        className="job-card-skeleton flex-shrink-0 flex-grow-0 flex flex-col justify-between w-64 h-44 rounded-3xl p-3 border border-slate-400"
         key={index}
       >
         <div className="job-card-skeleton-header w-full flex items-center gap-5">
