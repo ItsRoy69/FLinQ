@@ -185,7 +185,7 @@ const Jobs = () => {
         </div>
       </div>
 
-      <div className="jobs-footer dark:bg-slate-900 dark:text-white fixed bottom-0 right-0 h-16 w-full flex justify-center items-center">
+      <div className="jobs-footer dark:bg-slate-900 dark:text-white fixed bottom-0 right-0 h-16 w-full flex justify-center items-center z-50">
         <div className="job-postnew h-4/5 w-11/12 flex justify-center items-center gap-2 rounded-2xl bg-gradient-to-r dark:from-fuchsia-600 dark:to-purple-600 hover:cursor-pointer">
           <AddRounded fontSize="large" />
           <p className="font-medium text-2xl">Post Job</p>
