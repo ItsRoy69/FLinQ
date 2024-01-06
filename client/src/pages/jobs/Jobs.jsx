@@ -20,7 +20,6 @@ import SyncIcon from '@mui/icons-material/Sync'
 import SearchIcon from '@mui/icons-material/Search'
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { preview } from 'vite'
 
 const Jobs = () => {
 
