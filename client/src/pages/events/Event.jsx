@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { dummyEventsArray } from '../../data/DummyEvent';
-import EventCard from '../../components/events/EventCard';
 
-// import './event.css';
+import './event.css';
 //icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +28,7 @@ const Event = () => {
 		const handleScroll = () => {
 			if (eventBody.scrollHeight - eventBody.offsetHeight - eventBody.scrollTop < 1) {
 				// bottom touched
-				setEventArray([...eventArray, dummyEventsArray[0], dummyEventsArray[1]])
+				setEventArray([...eventArray, dummyEventsArray[0], dummyEventsArray[1],dummyEventsArray[2]])
 				window.removeEventListener('wheel', handleScroll)
 				setTimeout(() => {
 					setPage((page) => page + 1)
@@ -72,11 +71,10 @@ const Event = () => {
           </div>
           <div><p className='upcoming_events'>Upcoming Events</p></div>
 
-          <div id='event-body' className='container-fluid-mx-auto-p-0-md:p-1-box-border'>
+          <div id='event-body' className='container-fluid'>
             <div className='row'>
-                  {  eventArray.map ((event, index)=>(
-                      <EventCard key={index} event=  {event}/>
-                      /* <div className='box' key={index}>
+                  {  eventArray.map ((event, index)=>(                     
+                      <div className='box' key={index}>
                       <img src={event.image} alt = "image" className='dummy'/>
                         <div className='upper_container'>
                           <div className='companyName'>{event.eventOrganizer}</div>
@@ -86,7 +84,7 @@ const Event = () => {
                           <p>{event.motive}</p>
                           <button >Book your seat</button>
                         </div>
-                      </div> */
+                      </div> 
                     ))
                   }
 

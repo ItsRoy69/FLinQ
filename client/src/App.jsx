@@ -6,8 +6,7 @@ import Home from "./pages/home/Home";
 import Jobs from "./pages/jobs/Jobs";
 import NavBar from "./constants/navbar/NavBar";
 import Event from "./pages/events/Event";
-// import SearchLocation from "./pages/SearchLocation";
-// import MapComponent from "./pages/MapComponent";
+import MapComponent from "./pages/map/MapComponent"
 
 
 
@@ -26,6 +25,7 @@ function App() {
 					<Route path="/events" element= {<Event/>}/>
 					<Route path="/feed" element={<Feed />} />
 					<Route path="/jobs" element={<Jobs />}/>
+					<Route path="/map" element = {<MapComponent/>}/>
 				</Routes>
 			</Router>
 		</SkeletonTheme>
