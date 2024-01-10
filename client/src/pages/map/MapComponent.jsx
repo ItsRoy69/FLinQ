@@ -1,6 +1,8 @@
 import React, { useEffect,useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, distance } from 'framer-motion';
 
+import pin from '../../assets/pin.png'
+import filter_marker from '../../assets/filter_marker.png'
 import './MapComponent.css';
 
 
@@ -9,7 +11,7 @@ const MapComponent = () => {
     const [userMarker, setUserMarker] = useState(null);
     const [directionsRenderer, setDirectionsRenderer] = useState(null);
     const [directionsService, setDirectionsService] = useState(null);
-    const [selectedHospitalLocation, setSelectedHospitalLocation] = useState(null);
+    const [selectedspotLocation, setSelectedspotLocation] = useState(null);
 
     const [userLocation, setUserLocation] = useState(null);
     const [latitude, setLatitude] = useState(null);
@@ -31,7 +33,7 @@ const MapComponent = () => {
       
       if (window.google && window.google.maps) {
           const map = new window.google.maps.Map(document.getElementById("map"), {
-            zoom: 12,
+            zoom: 13,
           });
     
           if("geolocation" in navigator){
@@ -116,10 +118,13 @@ const MapComponent = () => {
                     );
                   }
                 });
+                return distance;
               } else {
                 console.error("DirectionsService is not yet initialized.");
               }
+             
             };
+            if( data !== "") { 
             const service = new window.google.maps.places.PlacesService(map);
 
             const request = {
@@ -128,45 +133,79 @@ const MapComponent = () => {
               type: [data],
             };
   
-          
+            
             service.nearbySearch(request, (results, status) => {
-              console.log(request)
+              
               if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                let hospitals = [];
+               
+                let spots = [];
+                let nearestspot = null;
+                let minDistance = Number.MAX_VALUE;
                 results.forEach((result) => {
-                  const hospitalLocation = result.geometry.location;
+                  const spotLocation = result.geometry.location;
   
                   const distance =
                     window.google.maps.geometry.spherical.computeDistanceBetween(
                       userLocation,
-                      hospitalLocation
+                      spotLocation
                     );
-  
+                      
                   if (distance < circleRadius) {
                     const photoUrl = result.photos && result.photos[0] ? result.photos[0].getUrl() : null;
                     
                     
-                    const hospitalMarker = new window.google.maps.Marker({
-                      position: hospitalLocation,
+                    const spotMarker = new window.google.maps.Marker({
+                      position: spotLocation,
                       map: map,
                       title: result.name,
                       icon: photoUrl ? { url: photoUrl, scaledSize: new window.google.maps.Size(50, 50) } : null,
                     });
   
-                    hospitalMarker.addListener("click", () => {
-                      setSelectedHospitalLocation(hospitalLocation);
-                      calculateAndDisplayRoute(userLocation, hospitalLocation);
+                    spotMarker.addListener("click", () => {
+                      setSelectedspotLocation(spotLocation);
+                      calculateAndDisplayRoute(userLocation, spotLocation);
+                      
                     });
-  
-                    hospitals.push({
+                    
+                    spots.push({
                       name: result.name,
                       distance: distance,
-                      location: hospitalLocation,
+                      location: spotLocation,
                     });
+                   
+                   
+                    if (distance < minDistance) {
+                      minDistance = distance;
+                      nearestspot = {
+                        name: result.name,
+                        location: spotLocation,
+                      };
+                    }
+                    
                   }
                 });
+                
+               
+                if(nearestspot){
+                  const nearestspotMarker = new window.google.maps.Marker({
+                    position : nearestspot.location,
+                    map : map,
+                    title : "Nearest Location",
+                    icon : {
+                      url : pin,
+                      scaledSize: new window.google.maps.Size(50, 50),
+                    }
+                  })
+                  nearestspotMarker.addListener("click", () => {
+                    setSelectedspotLocation(nearestspot.location);
+                    calculateAndDisplayRoute(userLocation,nearestspot.location);
+                    
+                  });
+                }
               }
-            });
+            });}
+           
+      
     
           } else {
             alert("Geolocation is not available in your browser");
@@ -177,7 +216,7 @@ const MapComponent = () => {
       
     }
     
-  const initilData = "restaurant"
+  const initilData = ""
    useEffect(()=>{
     initializeMap({data : initilData})
    },[latitude, longitude, circleRadius])
@@ -201,11 +240,12 @@ const MapComponent = () => {
       <input type='text' placeholder='enter a location to search' onInput={handleSearchPlace}></input>
     </div> */}
       <div id= "map" className='mapBody' style={{height : "100vh"}} ></div>
-        <div className='modal_body'>
-            <div className="content">
-                <button onClick={openModal}>Filters</button>
-            </div>
+      
+      <button className='filter_button' onClick={openModal}><img src={filter_marker} alt='filter'/></button>
+           
 
+        <div className='modal_body'>
+            
             <div>
               <AnimatePresence>
                 {isModalOpen && (
@@ -224,7 +264,7 @@ const MapComponent = () => {
                         <h1 className='head'>Filters</h1>
                         <div className='filter_body'>
                             <ul className='filter_list' onClick={closeModal}>
-                              <li onClick={() => handleItemClick('hospitals')}>Hospitals</li>
+                              <li onClick={() => handleItemClick('spots')}>spots</li>
                               <li onClick={() => handleItemClick('beauty_salon')}>Beauty Salon</li>
                               <li onClick={() => handleItemClick('clothing_store')}>Clothing store</li>
                               <li onClick={() => handleItemClick('hair_care')} >Haircare</li>
