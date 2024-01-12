@@ -60,6 +60,10 @@ Few Instructions:
     - ### Installing the packages
       
       - Use `pip install -r requirements.txt` to install the packages.
+     
+    - ### Creating venv + Installing packages in one go
+
+      - Use `python -m venv venv && venv/bin/pip install -r requirements.txt` . 
         
 - To run the `chat.py` file, use the command: `python chat.py`
   
