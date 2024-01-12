@@ -56,7 +56,7 @@ const Jobs = () => {
         setTimeout(() => {
             setLatestPage((page) => page + 1)
             setLatestJobsArray(dummyLatestJobsArray)
-            // setIsLatestLoading(false)
+            setIsLatestLoading(false)
         }, 2000)
     }, [])
 
