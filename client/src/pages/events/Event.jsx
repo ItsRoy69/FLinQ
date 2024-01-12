@@ -70,7 +70,7 @@ const Event = () => {
                 </div>
             </div>
 			
-			<div className="event-container pt-16 px-4 flex flex-col min-h-screen h-fit">
+			<div className="event-container pt-16 pb-10 px-4 flex flex-col min-h-screen h-fit">
 				<div className='search-bar w-full dark:text-slate-200 h-16 flex items-center justify-center my-2'>
 					<div className='h-16 w-10 flex justify-center items-center absolute left-4 rounded-l-3xl'>
 						<SearchIcon/>
