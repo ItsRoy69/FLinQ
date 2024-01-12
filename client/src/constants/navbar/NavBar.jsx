@@ -7,6 +7,7 @@ import TextsmsIcon from '@mui/icons-material/Textsms';
 import Person2Icon from '@mui/icons-material/Person2';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import PlaceIcon from '@mui/icons-material/Place';
 
 const NavBar = () => {
 
@@ -54,10 +55,10 @@ const NavBar = () => {
 
 				<div 
 					className="nav-reels h-full w-1/5 flex items-center justify-center rounded-xl"
-					onClick={() => handlePageSwitch('reels')}
+					onClick={() => handlePageSwitch('maps')}
 				>
-					<PlayCircleIcon
-						className={`${(selectedPage === 'reels') ? "text-pink-600" : ''}`}
+					<PlaceIcon
+						className={`${(selectedPage === 'maps') ? "text-pink-600" : ''}`}
 						fontSize='medium'
 					/>
 				</div>
