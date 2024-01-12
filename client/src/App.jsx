@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { SkeletonTheme } from 'react-loading-skeleton'
 
@@ -6,16 +7,14 @@ import Home from "./pages/home/Home";
 import Jobs from "./pages/jobs/Jobs";
 import NavBar from "./constants/navbar/NavBar";
 import Event from "./pages/events/Event";
-import MapComponent from "./pages/map/MapComponent"
+import MapComponent from "./pages/map/MapComponent";
+import Profile from "./pages/profile/Profile";
 
 
 
 
 function App() {
-	// const [selectedLocation, setSelectedLocation] = useState({
-	// 	lat: 28.7041,
-	// 	lng: 77.1025,
-	//   });
+	
 	return (
 		<SkeletonTheme baseColor='#5c5b5b' highlightColor='#aba9a9'>
 			<Router>
@@ -26,6 +25,7 @@ function App() {
 					<Route path="/feed" element={<Feed />} />
 					<Route path="/jobs" element={<Jobs />}/>
 					<Route path="/map" element = {<MapComponent/>}/>
+					<Route path="/profile" element = {<Profile/>}/>
 				</Routes>
 			</Router>
 		</SkeletonTheme>
