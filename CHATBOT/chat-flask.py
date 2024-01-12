@@ -1,8 +1,16 @@
 from flask import Flask, request, jsonify
-import vertexai
+import vertexai, os
+from dotenv import load_dotenv
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair, ChatMessage
 
+# Loading environment variables from .env
+load_dotenv()
+
 app = Flask(__name__)
+
+# Accessing environment variables
+credential_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 # initialize vertexai
 projectId = "helical-indexer-410804"
