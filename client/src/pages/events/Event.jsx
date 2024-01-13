@@ -45,7 +45,7 @@ const Event = () => {
 	}, [page])
 
 	const handleBackClick=()=>{
-		navigate('/feed')
+		navigate(-1)
 	}
 
 	const handleSearchValChange = (e) =>{

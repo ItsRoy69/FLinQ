@@ -1,31 +1,60 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import './navbar.css'
 
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import TextsmsIcon from '@mui/icons-material/Textsms';
-import Person2Icon from '@mui/icons-material/Person2';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import PlaceIcon from '@mui/icons-material/Place';
+import ChatPromptWindow from '../../components/navbar/ChatPromptWindow'
+
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
+import TextsmsIcon from '@mui/icons-material/Textsms'
+import Person2Icon from '@mui/icons-material/Person2'
+import AddRoundedIcon from '@mui/icons-material/AddRounded'
+import PlaceIcon from '@mui/icons-material/Place'
 
 const NavBar = () => {
+
+	// NECESSARIES FOR NAVIGATION
 
 	const [selectedPage, setSelectedPage] = useState('home')
 
 	const navigate = useNavigate()
+	const location = useLocation()
 
 	const handlePageSwitch = (path) => {
 		setSelectedPage(path)
-		// navigate(`/${path}`)
+		navigate(`/${path}`)
+	}
+
+	// NECESSARIES FOR TEMPORARY CHAT REDIRECTION WINDOW PROMPT
+
+	const [chatPromptWindowOpen, setChatPromptWindowOpen] = useState(false)
+
+	const openChatPromptWindow = () => {
+		if (!chatPromptWindowOpen) {
+			setChatPromptWindowOpen(true)
+		}
+	}
+
+	const closeChatPromptWindow = () => {
+		if (chatPromptWindowOpen) {
+			setChatPromptWindowOpen(false)
+		}
 	}
 
 	return (
 		<>
-			<nav className="navbar h-14 dark:bg-slate-900 dark:text-white fixed bottom-0 flex w-screen justify-between items-center gap-2 px-2 z-10">
+			{
+				chatPromptWindowOpen && 
+					<ChatPromptWindow 
+						chatPromptWindowOpen={chatPromptWindowOpen}
+						closeChatPromptWindow={closeChatPromptWindow}
+						handlePageSwitch={handlePageSwitch}
+					/>
+			}
+
+			<nav className="navbar h-14 dark:bg-slate-900 dark:text-white fixed bottom-0 flex w-screen justify-between items-center gap-2 px-2 z-20">
 				
 				<div 
-					className='nav-home h-full w-1/5 flex items-center justify-center rounded-xl'
+					className='nav-home h-full w-1/5 flex items-center justify-center rounded-xl hover:cursor-pointer'
 					onClick={() => handlePageSwitch('home')}
 				>
 					<HomeRoundedIcon
@@ -35,11 +64,11 @@ const NavBar = () => {
 				</div>
 				
 				<div
-					className='nav-messages h-full w-1/5 flex items-center justify-center rounded-xl'
-					onClick={() => handlePageSwitch('message')}
+					className='nav-chats h-full w-1/5 flex items-center justify-center rounded-xl hover:cursor-pointer'
+					onClick={openChatPromptWindow}
 				>
 					<TextsmsIcon
-						className={`${(selectedPage === 'message') ? "text-pink-600" : ''}`} 
+						className={`${(selectedPage.startsWith('chat/')) ? "text-pink-600" : ''}`} 
 						fontSize='medium'
 					/>
 				</div>
@@ -51,10 +80,9 @@ const NavBar = () => {
 						/>
 					</div>
 				</div>
-				
 
 				<div 
-					className="nav-reels h-full w-1/5 flex items-center justify-center rounded-xl"
+					className="nav-maps h-full w-1/5 flex items-center justify-center rounded-xl hover:cursor-pointer"
 					onClick={() => handlePageSwitch('maps')}
 				>
 					<PlaceIcon
@@ -64,7 +92,7 @@ const NavBar = () => {
 				</div>
 				
 				<div
-					className='nav-profile h-full w-1/5 flex items-center justify-center rounded-xl'
+					className='nav-profile h-full w-1/5 flex items-center justify-center rounded-xl hover:cursor-pointer'
 					onClick={() => handlePageSwitch('profile')}
 				>
 					<Person2Icon
@@ -75,7 +103,7 @@ const NavBar = () => {
 				
 			</nav>
 		</>
-	);
-};
+	)
+}
 
-export default NavBar;
+export default NavBar

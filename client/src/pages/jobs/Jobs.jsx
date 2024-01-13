@@ -39,7 +39,7 @@ const Jobs = () => {
     const navigate = useNavigate()
 
     const handleBackClick = () => {
-        navigate('/feed')
+        navigate(-1)
     }
 
     // NECESSARIES FOR LATEST JOBS SECTION
