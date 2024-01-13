@@ -8,6 +8,8 @@ import Event from "./pages/events/Event"
 // import SearchLocation from "./pages/SearchLocation"
 // import MapComponent from "./pages/MapComponent"
 
+import ChatBot from "./pages/chat/bot/ChatBot";
+
 function App() {
 	// const [selectedLocation, setSelectedLocation] = useState({
 	// 	lat: 28.7041,
@@ -21,6 +23,7 @@ function App() {
 					<Route path="/events" element= {<Event/>}/>
 					<Route path="/feed" element={<Feed />} />
 					<Route path="/jobs" element={<Jobs />}/>
+					<Route path='/chat/aibot' element={<ChatBot/>}/>
 				</Routes>
 			</Router>
 		</SkeletonTheme>
