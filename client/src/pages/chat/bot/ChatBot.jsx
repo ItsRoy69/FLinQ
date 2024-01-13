@@ -5,7 +5,7 @@ import './chatBot.css'
 
 import MicRoundedIcon from '@mui/icons-material/MicRounded'
 
-import { DummyAIChatArray } from '../../../data/DummyAiChat.js'
+import { DummyAIChatArray } from '../../../data/DummyAiChat'
 import SentMessage from '../../../components/chat/sent/SentMessage'
 import ReceivedMessage from '../../../components/chat/received/ReceivedMessage'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
