@@ -8,7 +8,8 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair, Cha
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://googlesolchatbot.onrender.com"])
+
 
 # Accessing environment variables
 credential_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
