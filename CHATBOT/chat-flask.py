@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import vertexai, os
 from dotenv import load_dotenv
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair, ChatMessage
@@ -7,6 +8,7 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair, Cha
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 # Accessing environment variables
 credential_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
