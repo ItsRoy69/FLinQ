@@ -5,7 +5,7 @@ import './chatBot.css'
 
 import MicRoundedIcon from '@mui/icons-material/MicRounded'
 
-import { DummyAIChatArray } from '../../../data/DummyAiChat'
+import { DummyAIChatArray } from '../../../data/DummyAiChat.js'
 import SentMessage from '../../../components/chat/sent/SentMessage'
 import ReceivedMessage from '../../../components/chat/received/ReceivedMessage'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -24,8 +24,8 @@ const ChatBot = () => {
 
     const navigate = useNavigate()
 
-    const handleBackClick=()=>{
-		navigate('/feed')
+    const handleBackClick=() => {
+		navigate(-1)
 	}
 
     // NECESSARIES FOR STARTING THE CHAT UI FROM BOTTOM
@@ -71,7 +71,6 @@ const ChatBot = () => {
 
     const handleQueryInputChange = (e) => {
         setQueryInputVal(e.target.value)
-        console.log(queryInputVal)
     }
 
     const sendQuery = () => {
@@ -92,8 +91,6 @@ const ChatBot = () => {
 
     const handleEnterPress = (e) => {
         if (e.key === 'Enter') {
-            console.log('press')
-            console.log(`${queryInputVal}`)
             sendQuery()
         }
     }
