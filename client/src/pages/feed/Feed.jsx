@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import "./feed.css"
-import SettingsIcon from '@mui/icons-material/Settings';
 
 import { dummyPostArray, dummyStatusArray } from '../../data/DummyFeed';
 import { dummyUser } from '../../data/DummyUser';
@@ -9,11 +8,13 @@ import { dummyUser } from '../../data/DummyUser';
 import FeedPostCard from '../../components/feed/post/FeedPostCard';
 import FeedStatusCard from '../../components/feed/status/FeedStatusCard';
 import NavBar from '../../constants/navbar/NavBar';
+import FeedSelector from '../../constants/feed-selector/FeedSelector';
+import AlertIcon from '../../constants/alert/AlertIcon';
 
 const Feed = () => {
 
 	const [searchVal, setSearchVal] = useState('')
-	const [selectedFeed, setSelectedFeed] = useState('recent')
+	// const [selectedFeed, setSelectedFeed] = useState('recent')
 	const [page, setPage] = useState(1)
 	const [postArray, setPostArray] = useState([])
 	const [statusArray, setStatusArray] = useState([])
@@ -52,9 +53,12 @@ const Feed = () => {
 		setSearchVal(e.target.value)
 	}
 
-	const handleFeedChange = (feedtype) => {
-		setSelectedFeed(feedtype)
-	}
+	// const navigate = useNavigate()
+
+	// const handleFeedChange = (feedtype) => {
+	// 	setSelectedFeed(feedtype)
+	// 	navigate(`/${feedtype}`)
+	// }
 	
 	return (
 		<>
@@ -63,9 +67,7 @@ const Feed = () => {
 					<p className="font-medium truncate w-full">Hello {user.name}</p>
 					<p className="text-xs sm:text-lg font-thin">Find your interests here!</p>
 				</div>
-				<div className="feed-settings flex justify-center items-center w-12 h-12 rounded-full bg-gradient-to-b from-pink-600 to-purple-700">
-					<SettingsIcon/>
-				</div>
+				<AlertIcon/>
 			</div>
 
 			<div id="feed-body" className="feed-body h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16">
@@ -79,7 +81,7 @@ const Feed = () => {
 							type='text'
 							value={searchVal}
 							onInput={handleSearchValChange}
-							placeholder='Better use search'
+							placeholder='Search Recent Posts...'
 							className='bg-slate-700 rounded-3xl h-12 w-3/4 px-5 focus:outline-purple-800'
 						/>
 					</div>
@@ -102,26 +104,7 @@ const Feed = () => {
 							}
 						</div>
 					</div>
-					<div className="feed-type-selector border dark:border-slate-400 bg-gradient-to-b dark:from-gray-800 dark:to-slate-900 rounded-3xl h-20 flex items-center justify-evenly gap-2 p-3">
-						<button 
-							className={` w-2/6 rounded-2xl h-4/6 ${(selectedFeed === 'recent') ? 'bg-purple-900' : ''}`}
-							onClick={() => handleFeedChange('recent')}
-						>
-							Recent
-						</button>
-						<button 
-							className={`w-2/6 rounded-2xl h-4/6 ${(selectedFeed === 'career') ? 'bg-purple-900' : ''}`}
-							onClick={() => handleFeedChange('career')}
-						>
-							Career
-						</button>
-						<button 
-							className={`w-2/6 rounded-2xl h-4/6 ${(selectedFeed === 'events') ? 'bg-purple-900' : ''}`}
-							onClick={() => handleFeedChange('events')}
-						>
-							Events
-						</button>
-					</div>
+					<FeedSelector />
 				</div>
 
 				<div className="feed-container overflow-auto mt-2">
