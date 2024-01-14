@@ -13,7 +13,7 @@ const SearchJobs = ({searchClose}) => {
     const [searchRecommendation, setSearchRecommendation] = useState(dummySearchRecommendationArray)
 
     return (
-        <div className='fixed h-screen w-screen z-50 dark:bg-slate-900 dark:text-white flex flex-col'>
+        <div className='fixed h-screen w-screen dark:bg-slate-900 dark:text-white flex flex-col z-20'>
             <div className="search-header h-20 w-full flex justify-between items-center px-2">
                 <input
                     type='text'

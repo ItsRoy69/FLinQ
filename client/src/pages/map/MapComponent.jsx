@@ -266,31 +266,31 @@ const MapComponent = () => {
           <AnimatePresence>
             {isModalOpen && (
               <motion.div
-                className="fixed bottom-0 left-0 w-full h-400 bg-gray-200 border-t border-gray-300 p-20 box-border flex justify-center items-center"
+                className="fixed bottom-0 left-0 w-full h-[400px] bg-white border-y p-[20px] border-box flex justify-center align-middle  "
                 initial={{ opacity: 0, y: '100%' }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: '100%' }}
               >
                 <motion.div
-                  className="w-full bg-white p-20 shadow-top flex flex-col"
+                  className="w-full bg-white p-[15px] flex flex-col shadow-inner "
                   onClick={(e) => e.stopPropagation()}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <h1 className='font-sans text-lg text-orange-500 p-0'>Filters</h1>
-                  <div className='flex justify-center p-3'>
-                    <ul className='list-none p-0 flex flex-wrap w-300 justify-center' onClick={closeModal}>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('spots')}>Important Spots</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('beauty_salon')}>Beauty Salon</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('clothing_store')}>Clothing store</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('hair_care')} >Haircare</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('jewelry_store')}>Jwellery Store</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('university')}>University</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('spa')}>Spa</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('restaurant')}>Restaurent</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('shopping_mall')}> Shopping Mall</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('police')}>Police</li>
-                      <li className='m-2 p-5 font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('pharmacy')}>Pharmacy</li>
+                  <h1 className='font-sans text-xl text-orange-400 p-0'>Filters</h1>
+                  <div className='flex justify-center p-[10px]'>
+                    <ul className='list-none p-0 flex flex-wrap w-[500px] justify-center' onClick={closeModal}>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('spots')}>Important Spots</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('beauty_salon')}>Beauty Salon</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('clothing_store')}>Clothing store</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('hair_care')} >Haircare</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('jewelry_store')}>Jwellery Store</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('university')}>University</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('spa')}>Spa</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('restaurant')}>Restaurent</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('shopping_mall')}> Shopping Mall</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('police')}>Police</li>
+                      <li className='m-[5px] p-[5px] font-sans rounded-md bg-amber-100 cursor-pointer' onClick={() => handleItemClick('pharmacy')}>Pharmacy</li>
                     </ul>
                   </div>
                   <button onClick={closeModal}>Close</button>
