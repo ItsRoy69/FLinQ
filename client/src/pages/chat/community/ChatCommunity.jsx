@@ -1,36 +1,44 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-import './chatBot.css'
+import './chatCommunity.css'
 
-import { DummyAIChatArray } from '../../../data/DummyAiChat'
+import { DummyChatCommunityArray } from '../../../data/DummyChatCommunity'
 
 import ChatHeader from '../../../components/chat/chat-container/chat-header/ChatHeader'
 import ChatBody from '../../../components/chat/chat-container/chat-body/ChatBody'
 import ChatFooter from '../../../components/chat/chat-container/chat-footer/ChatFooter'
 
-const ChatBot = () => {
+const ChatCommunity = () => {
 
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const queryParams = new URLSearchParams(location.search)
+    const communityParam = queryParams.get('comm')
+
+    const [community, setCommunity] = useState({})
     const [chatArray, setChatArray] = useState([])
 
     useEffect(() => {
-        setChatArray([...DummyAIChatArray])
+        if (communityParam === null) {
+            navigate('/feed')
+        } else {
+            DummyChatCommunityArray.map((community) => {
+                if (community.name === communityParam) {
+                    setCommunity(community)
+                    setChatArray(community.chatHistory)
+                }
+            })
+        }
     }, [])
-
-    // NECESSARIES FOR NAVIGATION
-
-    const navigate = useNavigate()
-
-    const handleBackClick=() => {
-		navigate(-1)
-	}
 
     const [isScrollingUp, setIsScrollingUp] = useState(false)
 
     return (
         <>
             <ChatHeader
-                roomName={'Helpyy'}
+                roomName={community.name}
             />
             <ChatBody
                 chatArray={chatArray}
@@ -47,4 +55,4 @@ const ChatBot = () => {
     )
 }
 
-export default ChatBot
+export default ChatCommunity
