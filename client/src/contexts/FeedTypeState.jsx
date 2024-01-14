@@ -10,6 +10,7 @@ const FeedTypeState = (props) => {
         const feedType = localStorage.getItem('feedType')
         if (feedType === null) {
             setSelectedFeed('recent')
+            localStorage.setItem('feedType', 'recent')
         } else {
             setSelectedFeed(feedType)
         }

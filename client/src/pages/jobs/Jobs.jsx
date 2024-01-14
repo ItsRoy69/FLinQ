@@ -12,16 +12,13 @@ import SavedJobCard from "../../components/jobs/saved/SavedJobCard";
 import JobCardSkeleton from "../../components/jobs/latests/JobCardSkeleton";
 import SearchJobs from '../../constants/search/SearchJobs';
 import FeedSelector from "../../constants/feed-selector/FeedSelector";
+import AlertIcon from "../../constants/alert/AlertIcon";
 
 import AddRounded from "@mui/icons-material/AddRounded";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import SyncIcon from "@mui/icons-material/Sync";
-import SearchIcon from "@mui/icons-material/Search";
-import SettingsIcon from "@mui/icons-material/Settings";
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded'
-import GppMaybeRoundedIcon from '@mui/icons-material/GppMaybeRounded'
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -132,18 +129,11 @@ const Jobs = () => {
                     <input
                         type="text"
                         placeholder="Search Jobs..."
-                        className="dark:bg-slate-800 rounded-3xl h-12 w-11/12 px-5 focus:outline-none focus:outline-purple-800"
+                        className="dark:bg-slate-800 rounded-3xl h-12 w-5/6 px-5 focus:outline-none focus:outline-purple-800"
                         onClick={handleSearchOpen}
                     />
                 </div>
-                <div
-                    className="header-alert w-10 h-10 rounded-full border border-red-600 flex justify-center items-center dark:text-white dark:bg-red-900 hover:cursor-pointer"
-                >
-                    <GppMaybeRoundedIcon 
-                        fontSize="large"
-                        className="text-red-600"
-                    />
-                </div>
+                <AlertIcon/>
             </div>
 
             <div 

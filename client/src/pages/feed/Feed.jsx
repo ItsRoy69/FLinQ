@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 
 import "./feed.css"
-import SettingsIcon from '@mui/icons-material/Settings';
 
 import { dummyPostArray, dummyStatusArray } from '../../data/DummyFeed';
 import { dummyUser } from '../../data/DummyUser';
@@ -11,7 +9,7 @@ import FeedPostCard from '../../components/feed/post/FeedPostCard';
 import FeedStatusCard from '../../components/feed/status/FeedStatusCard';
 import NavBar from '../../constants/navbar/NavBar';
 import FeedSelector from '../../constants/feed-selector/FeedSelector';
-import GppMaybeRoundedIcon from '@mui/icons-material/GppMaybeRounded';
+import AlertIcon from '../../constants/alert/AlertIcon';
 
 const Feed = () => {
 
@@ -69,14 +67,7 @@ const Feed = () => {
 					<p className="font-medium truncate w-full">Hello {user.name}</p>
 					<p className="text-xs sm:text-lg font-thin">Find your interests here!</p>
 				</div>
-				<div
-                    className="header-alert w-10 h-10 rounded-full border border-red-600 flex justify-center items-center dark:text-white dark:bg-red-900 hover:cursor-pointer"
-                >
-                    <GppMaybeRoundedIcon 
-                        fontSize="large"
-                        className="text-red-600"
-                    />
-                </div>
+				<AlertIcon/>
 			</div>
 
 			<div id="feed-body" className="feed-body h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16">

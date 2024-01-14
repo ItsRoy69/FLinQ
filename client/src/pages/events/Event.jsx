@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { dummyEventsArray } from '../../data/DummyEvent';
 import './event.css';
@@ -7,12 +6,10 @@ import './event.css';
 import EventCard from '../../components/event/EventCard';
 import FeedSelector from '../../constants/feed-selector/FeedSelector';
 import SearchJobs from '../../constants/search/SearchJobs';
+import AlertIcon from '../../constants/alert/AlertIcon';
 
 //icons
-import SearchIcon from '@mui/icons-material/Search';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
 import AddRounded from '@mui/icons-material/AddRounded';
-import GppMaybeRoundedIcon from '@mui/icons-material/GppMaybeRounded';
 
 const Event = () => {
 
@@ -80,18 +77,11 @@ const Event = () => {
 						<input
 							type="text"
 							placeholder="Search Events..."
-							className="dark:bg-slate-800 rounded-3xl h-12 w-11/12 px-5 focus:outline-none focus:outline-purple-800"
+							className="dark:bg-slate-800 rounded-3xl h-12 w-5/6 px-5 focus:outline-none focus:outline-purple-800"
 							onClick={handleSearchOpen}
 						/>
 					</div>
-					<div
-						className="header-alert w-10 h-10 rounded-full border border-red-600 flex justify-center items-center dark:text-white dark:bg-red-900 hover:cursor-pointer"
-					>
-						<GppMaybeRoundedIcon 
-							fontSize="large"
-							className="text-red-600"
-						/>
-					</div>
+					<AlertIcon/>
 				</div>
 				
 				<div className="event-container pt-16 pb-10 px-4 mt-2 flex flex-col min-h-screen h-fit">

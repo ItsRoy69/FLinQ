@@ -10,6 +10,8 @@ import Event from "./pages/events/Event"
 // import SearchLocation from "./pages/SearchLocation"
 // import MapComponent from "./pages/MapComponent"
 import ChatBot from "./pages/chat/bot/ChatBot"
+import ChatCommunity from "./pages/chat/community/ChatCommunity";
+import ChatAnonymous from "./pages/chat/anonymous/ChatAnonymous";
 
 function App() {
 	// const [selectedLocation, setSelectedLocation] = useState({
@@ -26,6 +28,9 @@ function App() {
 						<Route path="/feed" element={<Feed />} />
 						<Route path="/jobs" element={<Jobs />}/>
 						<Route path='/chat/aibot' element={<ChatBot/>}/>
+						<Route path='/chat/community/*' element={<ChatCommunity/>}/>
+						<Route path='/chat/anonymous' element={<ChatAnonymous/>}/>
+
 					</Routes>
 				</FeedTypeState>
 			</Router>

@@ -1,36 +1,27 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-import './chatBot.css'
+import './chatAnonymous.css'
 
-import { DummyAIChatArray } from '../../../data/DummyAiChat'
+import { DummyChatAnonymousArray } from '../../../data/DummyChatAnonymous'
 
 import ChatHeader from '../../../components/chat/chat-container/chat-header/ChatHeader'
 import ChatBody from '../../../components/chat/chat-container/chat-body/ChatBody'
 import ChatFooter from '../../../components/chat/chat-container/chat-footer/ChatFooter'
 
-const ChatBot = () => {
+const ChatAnonymous = () => {
 
     const [chatArray, setChatArray] = useState([])
 
     useEffect(() => {
-        setChatArray([...DummyAIChatArray])
+        setChatArray([...DummyChatAnonymousArray])
     }, [])
-
-    // NECESSARIES FOR NAVIGATION
-
-    const navigate = useNavigate()
-
-    const handleBackClick=() => {
-		navigate(-1)
-	}
 
     const [isScrollingUp, setIsScrollingUp] = useState(false)
 
     return (
         <>
             <ChatHeader
-                roomName={'Helpyy'}
+                roomName={'Incognito Chat'}
             />
             <ChatBody
                 chatArray={chatArray}
@@ -47,4 +38,4 @@ const ChatBot = () => {
     )
 }
 
-export default ChatBot
+export default ChatAnonymous
