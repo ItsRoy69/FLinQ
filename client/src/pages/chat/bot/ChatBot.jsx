@@ -49,7 +49,6 @@ const ChatBot = () => {
     const handleChatScroll = () => {
         if (chatContainerBodyRef.current.scrollHeight - chatContainerBodyRef.current.scrollTop > 700) {
             setIsScrollingUp(true)
-            console.log('scroll trigerr')
         }
         else {
             setIsScrollingUp(false)
