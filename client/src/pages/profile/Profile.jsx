@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import profile_photo from '../../assets/profile_photo.jpg';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faMapLocationDot } from '@fortawesome/free-solid-svg-icons';
@@ -8,14 +8,19 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import {faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { dummyProfile } from '../../data/DummyProfile'; 
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
 
 const Profile = () => {
+    const [user,setUser] = useState([]);
     const navigate = useNavigate()
+    useEffect(()=>{
+        setUser(dummyProfile);
+    },[])
     const handleBackClick = () =>{
         navigate('/')
     }
@@ -37,9 +42,9 @@ const Profile = () => {
                         <p className="text-2xl font-semibold">Profile</p>
                         </div>
                     </div>
-                    <div className='flex justify-center items-center border-white '><img className='w-[100px] h-[100px] mt-5 rounded-full border-2 border-white  p-2' src={profile_photo} alt='profile'></img></div>
-                    <div className='flex justify-center items-center  text-xl text-white m-[5px] '>Shreya Ganguly</div>
-                    <div className='flex justify-center items-center  text-lg text-stone-600 mb-2'>@ganguly</div>
+                    <div className='flex justify-center items-center border-white '><img className='w-[100px] h-[100px] mt-5 rounded-full border-2 border-white  p-2' src={user.image} alt='profile'></img></div>
+                    <div className='flex justify-center items-center  text-xl text-white m-[5px] '>{user.name}</div>
+                    <div className='flex justify-center items-center  text-lg text-stone-600 mb-2'>{user.username}</div>
                     <button onClick={handleEditProfileClick} className='flex justify-center items-center text-xl rounded-[10px] text-black border-solid border-none bg-white border-2 cursor-pointer m-[12px] mb-5 py-2 px-5'>Edit Profile</button>
                 </div>
                 <div className='flex flex-col items-start w-full p-0 m-0 mb-5' >
