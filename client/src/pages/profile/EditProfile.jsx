@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import './EditProfile.css';
+import './Editprofile.css';
 import profile_photo from '../../assets/profile_photo.jpg';
 import { dummyProfile } from '../../data/DummyProfile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
