@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { dummyEventsArray } from '../../data/DummyEvent';
+
 import './event.css';
 
 import EventCard from '../../components/event/EventCard';
