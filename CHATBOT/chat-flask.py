@@ -8,7 +8,7 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair, Cha
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins=["https://googlesolchatbot.onrender.com"])
+CORS(app, origins=["https://flinq-chatbot.onrender.com"])
 
 
 # Accessing environment variables
