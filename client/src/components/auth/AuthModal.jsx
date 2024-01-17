@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import "./Authmodal.css";
+import "./authmodal.css";
 import formImg from '../../assets/login-img.png'
 import { userModal } from "../../contexts/userContext";
 import { toast, ToastContainer } from "react-toastify";
