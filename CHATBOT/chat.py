@@ -61,6 +61,5 @@ def doChat():
         print(f"Response from Model: {response.text}")
     
     #return response
-
 # Invoke doChat() 
 print(doChat()) 
