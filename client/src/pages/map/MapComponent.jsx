@@ -4,6 +4,7 @@ import pin from '../../assets/pin.png'
 import filter_marker from '../../assets/filter_marker.png'
 import './MapComponent.css';
 import { useNavigate } from 'react-router-dom';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 const map_api_key = import.meta.env.VITE_MAP_API_KEY;
 
 const MapComponent = () => {
@@ -250,12 +251,13 @@ const MapComponent = () => {
   }
 
   const handleBackClick = () => {
-    navigate('/')
+    navigate('/feed')
   }
 
   return (
     <div className='relative w-full h-[600px]'>
       <div id="map" className='p-[10px]' style={{ height: "100vh" }} ></div>
+      <div className='absolute top-20 mt-2 left-0 ml-3 cursor-pointer w-10 text-center rounded-[2px] border-2 bg-white' onClick={handleBackClick}><KeyboardArrowLeftIcon/></div>
 
       <button className="fixed bottom-[200px] right-2 bg-white rounded-full border-2 border-white w-[50px] h-[50px] flex items-center justify-center text-3xl shadow-md cursor-pointer p-2 " onClick={openModal}><img src={filter_marker} alt='filter' /></button>
 

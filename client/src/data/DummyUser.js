@@ -1,4 +1,4 @@
 export const dummyUser = {
-    name: 'Samita',
+    name: 'Ayushi',
     dp: 'https://rb.gy/vozm3f'
 }

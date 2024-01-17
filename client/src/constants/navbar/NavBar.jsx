@@ -83,7 +83,7 @@ const NavBar = () => {
 
 				<div 
 					className="nav-maps h-full w-1/5 flex items-center justify-center rounded-xl hover:cursor-pointer"
-					onClick={() => handlePageSwitch('maps')}
+					onClick={() => handlePageSwitch('map')}
 				>
 					<PlaceIcon
 						className={`${(selectedPage === 'maps') ? "text-pink-600" : ''}`}
