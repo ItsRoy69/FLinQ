@@ -1,12 +1,12 @@
 import profile_image from '../assets/profile_photo.jpg';
 
 export const dummyProfile = {
-    name : "Shreya Ganguly",
-    username : "@ganguly",
+    name : "Ayushi",
+    username : "@roy",
     image : profile_image,
     gender : "female",
     birthday : "12-01-2003",
     phone_number : 7499345384,
-    email : "shreyaganguly2003@gmail.com",
+    email : "ayushiroy12345@gmail.com",
     
 }

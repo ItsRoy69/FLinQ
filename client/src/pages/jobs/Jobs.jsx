@@ -147,7 +147,7 @@ const Jobs = () => {
                     <div className="recommendation-title text-sm font-sm">
                         <p className="text-left text-lg font-semibold">Recommended Jobs</p>
                     </div>
-                    <AnimatePresence mode="sync">
+                    
                         <motion.div
                             id="recommendation-container"
                             className="recommendation-container h-full flex gap-5 overflow-x-auto"
@@ -163,7 +163,7 @@ const Jobs = () => {
                                 ))
                             }
                         </motion.div>
-                    </AnimatePresence>
+                    
                 </div>
                 <div className="jobs-saved flex flex-col w-full h-60 px-1 pb-5 gap-2">
                     <div className="saved-title text-sm font-sm">

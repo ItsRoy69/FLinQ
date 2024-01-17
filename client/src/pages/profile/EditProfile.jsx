@@ -100,7 +100,7 @@ const EditProfile = () => {
                     </div>
                     <div className='flex'>
                         <div className='w-[50%] relative border-2 mt-2 border-slate-500 rounded-[10px] mr-1'>
-                            <input type='select' id='gender' className=' w-full bg-transparent mt-4 px-2   py-1.5 focus:outline-none peer'/>
+                            <input type='select' id='gender'  className=' w-full bg-transparent mt-4 px-2   py-1.5 focus:outline-none peer'/>
                             <label for='gender' className='absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600'>Gender</label>
                         </div>
                         <div className='w-[50%] relative border-2 mt-2 border-slate-500 rounded-[10px] ml-1'>
