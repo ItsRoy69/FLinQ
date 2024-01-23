@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 // routes
-app.get('/',(req,res)=>res.send("Welcome to CollabMate Nodejs server"));
+app.get('/',(req,res)=>res.send("Welcome to Flinq server"));
 app.use('/user',userRoute);
 
 
