@@ -12,12 +12,17 @@ import Profile from './pages/profile/Profile';
 import EditProfile from "./pages/profile/EditProfile";
 import MapComponent from './pages/map/MapComponent'
 import ChatBot from "./pages/chat/bot/ChatBot"
+import AuthModal from "./components/auth/AuthModal"
 import ChatCommunity from "./pages/chat/community/ChatCommunity";
 import ChatAnonymous from "./pages/chat/anonymous/ChatAnonymous";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 
 function App() {
+	const client_id = import.meta.env.VITE_CLIENT_ID;
 	
 	return (
+	<GoogleOAuthProvider clientId={client_id}>
 		<SkeletonTheme baseColor='#5c5b5b' highlightColor='#aba9a9'>
 			<Router>
 				<FeedTypeState>
@@ -31,6 +36,7 @@ function App() {
 						<Route path='/chat/community/*' element={<ChatCommunity/>}/>
 						<Route path='/chat/anonymous' element={<ChatAnonymous/>}/>
 						<Route path="/map" element ={<MapComponent/>}/>
+						<Route path="/register" element = {<AuthModal/>}/>
 						<Route path="/profile" element = {<Profile/>}/>
 						<Route path="/edit" element ={<EditProfile/>}/>
 
@@ -38,6 +44,7 @@ function App() {
 				</FeedTypeState>
 			</Router>
 		</SkeletonTheme>
+	</GoogleOAuthProvider>
 	)
 }
 
