@@ -22,7 +22,7 @@ const Profile = () => {
         setUser(dummyProfile);
     },[])
     const handleBackClick = () =>{
-        navigate('/')
+        navigate('/feed')
     }
     const handleEditProfileClick = ()=>{
         navigate('/edit')
