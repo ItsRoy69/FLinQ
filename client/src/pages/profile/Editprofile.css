@@ -1,0 +1,15 @@
+input::-ms-clear {
+    display: none;
+}
+
+input::-webkit-search-cancel-button,
+input::-webkit-search-clear-button {
+    display: none;
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0 0px transparent inset;
+}
+input::after{
+    background-color: black;
+}

@@ -1,0 +1,18 @@
+.recommendation-container::-webkit-scrollbar, 
+.latest-container::-webkit-scrollbar, 
+.saved-container::-webkit-scrollbar {
+    display : none;
+}
+
+@keyframes load-spin {
+    from {
+        transform: rotate(0);
+    } 
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.load-spinner {
+    animation: load-spin 2s linear infinite;
+}
