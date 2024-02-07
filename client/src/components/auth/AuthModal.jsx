@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from "axios";
 import {userModal} from '../../contexts/userContext';
@@ -30,11 +30,21 @@ const AuthModal = () => {
 
   const userContext = useContext(userModal);
 
+  const onLoginSuccess = async (codeResponse) => {
+    console.log(jwtDecode(codeResponse.code))
+  }
+
+  const onLoginError = async(error) => {
+    console.log(error)
+  }
+
   const login =  
   useGoogleLogin({
-    onSuccess: codeResponse => console.log(codeResponse),
+    onSuccess: (codeResponse) => onLoginSuccess(codeResponse),
+    onError: (codeResponse) => onLoginError(codeResponse),
     flow: 'auth-code',
   })
+
   // firebase.auth().signInWithGoogle()
   // .then((userCredential) => {
   //   const user = jwtDecode(userCredential.user);
@@ -45,9 +55,6 @@ const AuthModal = () => {
    
   //   console.error(error.message);
   // });
-
-
- 
   
   const handleChange = (e) => {
     setcreds({ ...creds, [e.target.name]: e.target.value });
@@ -204,7 +211,13 @@ const AuthModal = () => {
 
                   </div> */}
                 <div className="flex items-center text-slate-400 justify-center text-lg">Or</div>
-                <button className="border bg-black text-white px-1 md:mt-0 mt-4 md:px-4 py-2  rounded-[10px]  md:text-lg" onClick={() => login()} ><span className="px-2 mr-3 md:mr-5"><GoogleIcon/></span>Sign in with Google</button>
+                {/* <button className="border bg-black text-white px-1 md:mt-0 mt-4 md:px-4 py-2  rounded-[10px]  md:text-lg" onClick={() => login()} ><span className="px-2 mr-3 md:mr-5"><GoogleIcon/></span>Sign in with Google</button> */}
+                <GoogleLogin
+                  onSuccess = {onLoginSuccess }
+                  onError = {onLoginError}
+                  >
+
+                </GoogleLogin>
                 </div>
               </div>           
             </div>
