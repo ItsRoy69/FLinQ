@@ -5,19 +5,20 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const userRoute = require('./routes/userRoute');
+const postRoute = require('./routes/postRoute');
 
 // middlewares
 app.use(cors({
-    credentials:true,
-    origin:["http://localhost:5173"]
+    credentials: true,
+    origin: ["http://localhost:5173"]
 }));
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.get('/',(req,res)=>res.send("Welcome to Flinq server"));
-app.use('/user',userRoute);
-
+app.get('/', (req, res) => res.send("Welcome to Flinq server"));
+app.use('/user', userRoute);
+app.use('/post', postRoute);
 
 const connectToDb = async () => {
     try {
