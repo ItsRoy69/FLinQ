@@ -39,12 +39,30 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: [true, "Phone number must be unique"],
         required: [true, "Phone number is required"]
+<<<<<<< HEAD
     }
 }, { timestamps: true });
 
 // user registration 
 userSchema.statics.register = async function ({ username, name, email, password, occupation, phone }) {
     // Check if email or username already exists
+=======
+    },
+    gender: {
+        type: String,
+        trim: true,
+    },
+    birthdate: {
+        type: Date,
+    },
+    image: {
+        type: Buffer,
+    },
+}, { timestamps: true });
+
+// user registration 
+userSchema.statics.register = async function ({ username, name, email, password, occupation, phone, gender, birthdate, image }) {
+>>>>>>> 88c326f2d43ad1f42d07f7d10b0b1bdb38ef8327
     const emailExists = await this.findOne({ email });
     const usernameExists = await this.findOne({ username });
 
@@ -55,7 +73,10 @@ userSchema.statics.register = async function ({ username, name, email, password,
         throw new Error("Username already exists");
     }
 
+<<<<<<< HEAD
     // Validate email and password
+=======
+>>>>>>> 88c326f2d43ad1f42d07f7d10b0b1bdb38ef8327
     if (!validator.isEmail(email)) {
         throw new Error("Email not valid");
     }
@@ -63,18 +84,31 @@ userSchema.statics.register = async function ({ username, name, email, password,
         throw new Error("Password not strong enough");
     }
 
+<<<<<<< HEAD
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
     // Create user with all the details
+=======
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+>>>>>>> 88c326f2d43ad1f42d07f7d10b0b1bdb38ef8327
     const user = await this.create({
         username,
         name,
         email,
         password: hash,
         occupation,
+<<<<<<< HEAD
         phone
+=======
+        phone,
+        gender,
+        birthdate,
+        image,
+>>>>>>> 88c326f2d43ad1f42d07f7d10b0b1bdb38ef8327
     });
 
     if (!user) {
@@ -86,13 +120,19 @@ userSchema.statics.register = async function ({ username, name, email, password,
 
 // user login 
 userSchema.statics.login = async function (email, password) {
+<<<<<<< HEAD
     // Check if the email is registered
+=======
+>>>>>>> 88c326f2d43ad1f42d07f7d10b0b1bdb38ef8327
     const savedUser = await this.findOne({ email }).exec();
     if (!savedUser) {
         throw new Error("Email is not registered");
     }
 
+<<<<<<< HEAD
     // Verify the password
+=======
+>>>>>>> 88c326f2d43ad1f42d07f7d10b0b1bdb38ef8327
     const match = await bcrypt.compare(password, savedUser.password);
     if (!match) {
         throw new Error("Password is not correct");

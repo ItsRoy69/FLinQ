@@ -1,4 +1,4 @@
-import { useEffect, useState,useContext } from 'react'
+import { useEffect, useState } from 'react'
 
 import "./feed.css"
 
@@ -10,10 +10,9 @@ import FeedStatusCard from '../../components/feed/status/FeedStatusCard';
 import NavBar from '../../constants/navbar/NavBar';
 import FeedSelector from '../../constants/feed-selector/FeedSelector';
 import AlertIcon from '../../constants/alert/AlertIcon';
-import { userModal } from '../../contexts/userContext';
 
 const Feed = () => {
-	const userContext = useContext(userModal)
+
 	const [searchVal, setSearchVal] = useState('')
 	// const [selectedFeed, setSelectedFeed] = useState('recent')
 	const [page, setPage] = useState(1)
