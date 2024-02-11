@@ -2,14 +2,14 @@ import React, { useEffect, useState, useContext } from "react";
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from "axios";
-import {userModal} from '../../contexts/userContext';
+import {UserProvider} from '../../contexts/userContext'
 import formImg from '../../assets/login-img.jpg'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "react-toastify/dist/ReactToastify.css";
 import GoogleIcon from '@mui/icons-material/Google';
 import {jwtDecode} from 'jwt-decode'
 import { useNavigate } from "react-router-dom";
-import { faJarWheat } from "@fortawesome/free-solid-svg-icons";
+
 
 
 
@@ -22,13 +22,15 @@ const AuthModal = () => {
     email: "",
     password: "",
     username: "",
-    address: "",
     phone: "",
     name: "",
-    profession: "",
+    occupation: "",
+    birthdate:"",
+    gender:""
+   
   });
-
-  const userContext = useContext(userModal);
+  // const {updateUser,user,logout} = useContext(UserProvider);
+  const userContext = useContext(UserProvider);
   //add this function after cors updated in case of custom button
   const login = useGoogleLogin({
     onSuccess: async(response)=>{
@@ -67,6 +69,7 @@ const AuthModal = () => {
   const handleChange = (e) => {
     setcreds({ ...creds, [e.target.name]: e.target.value });
     console.log(creds)
+    
   };
   const handleGoBack = async() =>{
     navigate('/home')
@@ -77,29 +80,35 @@ const AuthModal = () => {
       const user = {
         email : creds.email,
         name: creds.name,
-        address : creds.address,
         password : creds.password,
         phone : creds.phone,
-        profession: creds.profession
+        occupation: creds.occupation,
+        birthdate:creds.birthdate,
+        gender:creds.gender
+        
+        
       }
       console.log(user);
-      axios.post("http://localhost:5173/user/register",creds).
+      axios.post("http://localhost:5000/user/register",creds).
       then((response)=>{
-        console.log(response.data)
-        if(response.status == 201 ){
-          console.log("Registration Successfull");
-          userContext.updateUser(response.data.user);
-        }
+        console.log(response)
+          if(response.status == 200){
+          updateUser(user);
+          navigate('/feed')
+          }
+        
       }).catch((err)=>{
-        console.log(err)
-        setError(response.data.error);
+        console.log(err.response.data.massage)
+        setError(err.response.data.message)
+        // setError(err.data)
+        // setError(response.data.error);
       }) 
       
-      navigate('/feed');     
+     
   };
 
   const handleLogin = () =>{
-    axios.post("http://localhost:5173/user/login",{email : creds.email, password : creds.password}).
+    axios.post("http://localhost:5000/user/login",{email : creds.email, password : creds.password}).
     then((response)=>{
       console.log(response.data);
       userContext.updateUser(response.data.user)
@@ -141,7 +150,7 @@ const AuthModal = () => {
                 <h3 className="text-2xl font-semibold mt-2">Register to Join FlinQ</h3>
               </div>
               <div className="w-full flex flex-col overflow-scroll">
-                <label>Email</label>
+                <label>Email<span className="text-red-700">*</span></label>
                 <input 
                 className="w-full text-black py-2 rounded-[10px] px-2 bg-transparent my-4 border border-slate outline-none focus:outline-none"
                 type="email"
@@ -150,7 +159,7 @@ const AuthModal = () => {
                 onChange={handleChange}
                 name="email"
                 />
-                <label>Name</label>
+                <label>Name<span className="text-red-700">*</span></label>
                 <input 
                 className="w-full text-black py-2 rounded-[10px] px-2 bg-transparent my-4 border border-slate outline-none focus:outline-none"
                 type="text"
@@ -159,18 +168,10 @@ const AuthModal = () => {
                 onChange={handleChange}
                 name="name"
                 />
-                <label>Address</label>
-                <input 
-                className="w-full text-black py-2 rounded-[10px] px-2 bg-transparent my-4 border border-slate outline-none focus:outline-none"
-                type="text"
-                placeholder="29,Shakespeer Street."
-                value={creds.address}
-                onChange={handleChange}
-                name="address"
-                />
+               
                 <div className="flex justify-between">
-                <div className="flex flex-col w-1/2 px-2">
-                <label>Phone</label>
+                <div className="flex flex-col w-1/2 pr-2">
+                <label>Phone<span className="text-red-700">*</span></label>
                 <input 
                 className="w-full text-black py-2 px-2 rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none"
                 type="number"
@@ -180,8 +181,8 @@ const AuthModal = () => {
                 name="phone"
                 />
                 </div>
-                <div className="flex flex-col w-1/2 px-2">
-                  <label>Username</label>
+                <div className="flex flex-col w-1/2 pl-2">
+                  <label>Username<span className="text-red-700">*</span></label>
                 <input 
                 className="w-full text-black py-2 px-2  rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none"
                 type="text"
@@ -192,8 +193,37 @@ const AuthModal = () => {
                 />
                 </div>
                 </div>
-                <label value={creds.profession} onChange={handleChange}>Proffession</label>
+                        
+                <div className="flex justify-between">
+                <div className="flex flex-col w-1/2 pr-2">
+                <label>Gender</label>
                 <select 
+                  name="gender"
+                  value={creds.gender} 
+                  onChange={handleChange}
+                  className="w-full text-black py-2 px-2 rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none">
+                  <option value="" disabled defaultValue>Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                 
+                </select>
+                </div>
+                <div className="flex flex-col w-1/2 pl-2">
+                <label>Birthdate</label>
+                <input 
+                className="w-full text-black py-2 px-2  rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none"
+                type="date"
+                placeholder=""
+                onChange={handleChange}
+                value={creds.birthdate}
+                name="birthdate"
+                />
+                </div>
+                </div>
+                <label >Occupation<span className="text-red-700">*</span></label>
+                <select 
+                  name = "occupation"
+                  value={creds.occupation} onChange={handleChange}
                   className="w-full text-black py-2 px-2 rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none">
                   <option value="" disabled defaultValue>Select Profession</option>
                   <option value="gynaecologist">Gynaecologist</option>
@@ -203,19 +233,27 @@ const AuthModal = () => {
                   <option value="other">Other</option>
                 </select>
           
-                <label>Password</label>
+                <label>Password<span className="text-red-700">*</span></label>
                 <input 
                 className="w-full text-black py-2 px-2 rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none"
                 type="password"
-                placeholder="Must conatain 8-16 characters"
+                placeholder="Must conatain an uppercase, digits and a special character"
                 value={creds.password}
                 onChange={handleChange}
                 name="password"
                 />
+                {
+                  error ? (
+                    <>
+                      <div className="w-full flex  font-sans text-lg self-center text-red-600 ">{error}</div>
+                    </>
+                  ):
+                  null
+                }
                 <div className=" w-full md:flex md:flex-row flex flex-col  justify-between">
                 <button className="md:w-1/4 px-3  rounded-[10px] py-2 border border-solid bg-red-300 text-black hover:text-black hover:bg-white" onClick={handleSubmit}>Register</button>
                  
-                <div className="flex items-center text-slate-400 justify-center text-lg">Or</div>
+                <div className="flex items-center text-slate-400 justify-center  text-lg">Or</div>
                 {/* <button className="border bg-black text-white px-1 md:mt-0 mt-4 md:px-4 py-2  rounded-[10px]  md:text-lg" onClick={() => login()} ><span className="px-2 mr-3 md:mr-5"><GoogleIcon/></span>Sign in with Google</button> */} 
                 <GoogleLogin className="w-full"
                 onSuccess={credentialResponse =>{
@@ -231,14 +269,7 @@ const AuthModal = () => {
                 </div>
               </div>           
             </div>
-            {
-              error ? (
-                <>
-                  <div className="w-full flex jusify-center text-center text-xl ">{error.message}</div>
-                </>
-              ):
-              null
-            }
+            
             <div className="w-full flex items-center  justify-center">
               <p className="text-lg  font-normal mb-10 text-black"  onClick={()=>setisloginClicked(true)}>Already have an account?<span className="font-semibold underline underline-offset-2 cursor-pointer ">Login</span></p>
             </div>
@@ -248,13 +279,13 @@ const AuthModal = () => {
           ):(
             <>
             <div className="md:w-1/2 justify-center w-full h-full flex flex-col md:p-20 p-10 ">
-            <button className="text-base text-black font-sans px-3 self-start rounded-[20px] py-2 border border-solid bg-red-300" onClick={handleGoBack}><span className="p-2"><ArrowBackIcon className="w-10 h-10"/></span>Go back</button>
+            <button className="text-base text-black font-sans px-3 self-start rounded-[20px] py-2 border border-solid bg-red-300" onClick={handleGoBack}><span className="p-2"><ArrowBackIcon className="w-5 h-5"/></span>Go back</button>
             <div className="w-full  flex flex-col  mb-5 md:justify-center md:items-center ">
               <div className="flex flex-col mb-10  w-full">
                 <h3 className="text-2xl font-semibold mt-2 ">Login to FlinQ</h3>
               </div>
               <div className="w-full flex flex-col overflow-scroll">
-                <label>Email</label>
+                <label>Email<span className="text-red-700">*</span></label>
                 <input 
                 className="w-full text-black py-2 rounded-[10px] px-2 bg-transparent my-4 border border-slate outline-none focus:outline-none"
                 type="email"
@@ -263,7 +294,7 @@ const AuthModal = () => {
                 onChange={handleChange}
                 name="email"
                 />
-                 <label>Password</label>
+                 <label>Password<span className="text-red-700">*</span></label>
                 <input 
                 className="w-full text-black py-2 px-2 rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none"
                 type="password"

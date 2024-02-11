@@ -20,7 +20,7 @@ export function UserProvider({ children }) {
         address: "",
         phone: "",
         name: "",
-        profession: "",
+        occupation: "",
     }
     const [user, setUser] = useState(emptyUser)
 
@@ -32,7 +32,7 @@ export function UserProvider({ children }) {
             address:user.address,
             phone:user.phone,
             name:user.name,
-            profession:user.profession
+            occupation:user.profession
         })
 
     }
@@ -46,6 +46,6 @@ export function UserProvider({ children }) {
     )
 }
 
-export function userModal() {
-    return (useContext(UserContext))
-}
+// export function userModal() {
+//     return (useContext(UserContext))
+// }
