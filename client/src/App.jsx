@@ -28,6 +28,7 @@ function App() {
 				<FeedTypeState>
 					<Routes>
 						<Route path="/" element={<Home />} />
+						<Route path="/home" element = {<Home/>}/>
 						<Route path="/events" element= {<Event/>}/>
 						<Route path="/feed" element={<Feed />} />
 						<Route path="/jobs" element={<Jobs />}/>

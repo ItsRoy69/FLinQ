@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import LoginHeader from "../../constants/home_navbar/LoginHeader";
+import {motion} from 'framer-motion';
 import NavBar from "../../constants/navbar/NavBar";
 import img1 from "../../assets/home_image.png";
 import img2 from "../../assets/cline.png";
@@ -17,10 +18,8 @@ const Home = () => {
     
     <LoginHeader/>
     
-    <div>
-     
-      <div  className="home-bd-main md:flex flex flex-col md:flex-row  w-auto justify-center  md:justify-evenly bg-slate-900 font-sans font-normal items-center pt-[15vh] text-white text-center md:text-start    ">
-      
+    <div> 
+      <div  className="home-bd-main md:flex flex flex-col md:flex-row  w-auto justify-center  md:justify-evenly bg-slate-900 font-sans font-normal items-center pt-[15vh] text-white text-center md:text-start">
         <div  className="hf1 flex flex-col mt-10 md:w-[40vw] w-screen">
             <p className="hh text-2xl md:text-4xl md:w-[34vw] w-screen flex justify-center md:justify-start font-sans font-normal md:leading-loose" id="hh">Your One-stop Solution To every Problem</p>
           <img src={img2} alt="" className=" w-[250px] md:w-[300px] h-auto md:ml-[0.51vw] md:mt-[0vh] md:mb-[20px] md:p-[0]  p-[20px] md:justify-start justify-center mb-0 md:self-start self-center" />
@@ -112,8 +111,6 @@ const Home = () => {
       </div>
     </div>
   </div>
-
-
   );
 };
 
