@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from "axios";
-import {UserProvider} from '../../contexts/userContext'
+import {UserContext} from '../../contexts/userContext'
 import formImg from '../../assets/login-img.jpg'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "react-toastify/dist/ReactToastify.css";
@@ -10,13 +10,11 @@ import GoogleIcon from '@mui/icons-material/Google';
 import {jwtDecode} from 'jwt-decode'
 import { useNavigate } from "react-router-dom";
 
-
-
-
 const AuthModal = () => {
   const navigate = useNavigate();
   const[isloginClicked,setisloginClicked] = useState(false);
   const [error, setError] = useState('');
+  const [loginerror, setLoginError]  = useState('');
   
   const [creds, setcreds] = useState({
     email: "",
@@ -30,7 +28,7 @@ const AuthModal = () => {
    
   });
   // const {updateUser,user,logout} = useContext(UserProvider);
-  const userContext = useContext(UserProvider);
+  const userContext = useContext(UserContext);
   //add this function after cors updated in case of custom button
   const login = useGoogleLogin({
     onSuccess: async(response)=>{
@@ -68,7 +66,7 @@ const AuthModal = () => {
   
   const handleChange = (e) => {
     setcreds({ ...creds, [e.target.name]: e.target.value });
-    console.log(creds)
+    // console.log(creds)
     
   };
   const handleGoBack = async() =>{
@@ -77,23 +75,12 @@ const AuthModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      const user = {
-        email : creds.email,
-        name: creds.name,
-        password : creds.password,
-        phone : creds.phone,
-        occupation: creds.occupation,
-        birthdate:creds.birthdate,
-        gender:creds.gender
-        
-        
-      }
-      console.log(user);
+      // console.log(user);
       axios.post("http://localhost:5000/user/register",creds).
       then((response)=>{
         console.log(response)
           if(response.status == 200){
-          updateUser(user);
+          userContext.updateUser(response.data.user);
           navigate('/feed')
           }
         
@@ -107,16 +94,22 @@ const AuthModal = () => {
      
   };
 
-  const handleLogin = () =>{
+  const handleLogin = (e) =>{
+    e.preventDefault()
     axios.post("http://localhost:5000/user/login",{email : creds.email, password : creds.password}).
     then((response)=>{
-      console.log(response.data);
-      userContext.updateUser(response.data.user)
+      if(response.status == 200)
+      {console.log(response.data);
+      userContext.updateUser(response.data.user) 
+      navigate('/feed');
+        
+    }
     })
     .catch((error)=>{
       console.log(error);
+      setLoginError(error.response.data.message);
     })
-    navigate('/feed');
+   
   }
   //add this fucntion with login with google button
   const handleSuccess = (credentialDecode) =>{
@@ -245,7 +238,7 @@ const AuthModal = () => {
                 {
                   error ? (
                     <>
-                      <div className="w-full flex  font-sans text-lg self-center text-red-600 ">{error}</div>
+                      <div className="w-full flex   font-sans text-lg self-center text-red-600 ">{error}</div>
                     </>
                   ):
                   null
@@ -303,6 +296,14 @@ const AuthModal = () => {
                 onChange={handleChange}
                 name="password"
                 />
+                {
+                  loginerror ? (
+                    <>
+                      <div className="w-full flex  font-sans text-lg self-center text-red-600 ">{loginerror}</div>
+                    </>
+                  ):
+                  null
+                }
               <div className=" w-full  flex md:flex-row flex-col justify-between">
                 <button className="md:w-1/4 px-3  rounded-[10px] py-2 border border-solid bg-red-300 text-black hover:text-black hover:bg-white" onClick={handleLogin}>Login</button>
                 <div className="flex items-center text-slate-400 justify-center text-lg">Or</div>

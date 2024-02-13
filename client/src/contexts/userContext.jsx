@@ -1,8 +1,11 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-const UserContext = React.createContext()
+export const UserContext = React.createContext(null)
 
 export function UserProvider({ children }) {
+
+    
 
     const [isuserreg, setisuserreg] = useState(true);
     const [isuser, setisuser] = useState(false);
@@ -14,6 +17,7 @@ export function UserProvider({ children }) {
         setisuser,
     }
     const emptyUser = {
+        _id: "",
         email: "",
         password: "",
         username: "",
@@ -21,23 +25,34 @@ export function UserProvider({ children }) {
         phone: "",
         name: "",
         occupation: "",
+        gender : "",
+        birthdate : "",
+
     }
-    const [user, setUser] = useState(emptyUser)
+    const [user, setUser] = useState({})
 
     const updateUser = (user) => {
         setUser({
+            _id : user._id,
             email : user.email,
             password: user.password,
             username : user.username,
             address:user.address,
             phone:user.phone,
             name:user.name,
-            occupation:user.profession
+            occupation:user.occupation,
+            gender : user.gender,
+            birthdate : user.birthdate
         })
 
     }
+
+    useEffect(()=>{
+        updateUser(emptyUser)
+    },[])
     const logout = () => {
         setUser(emptyUser)
+        
     }
     return (
         <UserContext.Provider value={{user, updateUser, logout}}>
