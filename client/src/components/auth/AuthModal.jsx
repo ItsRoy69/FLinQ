@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+import React, {  useState, useContext } from "react";
 import { GoogleLogin } from '@react-oauth/google';
+import {auth,provider} from './Config';
+import {signInWithPopup} from "firebase/auth";
 import axios from "axios";
 import {UserContext} from '../../contexts/userContext'
 import formImg from '../../assets/login-img.jpg'
@@ -29,37 +30,13 @@ const AuthModal = () => {
   });
   // const {updateUser,user,logout} = useContext(UserProvider);
   const userContext = useContext(UserContext);
-  //add this function after cors updated in case of custom button
-  const login = useGoogleLogin({
-    onSuccess: async(response)=>{
-      try {
-        const res = await axios.get(
-          'https://www.googleapis.com/oauth2/userinfo',
-          {
-            headers : {
-             
-              Authorization :`Bearer ${response.access_token}`,
-              
-            },
-          }
-        );
-        console.log(res);
-        navigate('/feed');
-      }catch(error){
-        console.log(error);
-      }
-    }
-  });
-  // firebase.auth().signInWithGoogle()
-  // .then((userCredential) => {
-  //   const user = jwtDecode(userCredential.user);
-  //   userContext.updateUser(user)
-  //   navigate('/feed')
-  // })
-  // .catch((error) => {
-   
-  //   console.error(error.message);
-  // });
+  
+  const handleGoogleLogin = ()=>{
+    signInWithPopup(auth, provider).then((data)=>{
+      console.log(data.user.displayName)
+      navigate("/userinfo", {state : {email : data.user.email, name : data.user.displayName}})
+    })
+  }
 
 
  
@@ -87,8 +64,7 @@ const AuthModal = () => {
       }).catch((err)=>{
         console.log(err.response.data.massage)
         setError(err.response.data.message)
-        // setError(err.data)
-        // setError(response.data.error);
+        
       }) 
       
      
@@ -111,19 +87,7 @@ const AuthModal = () => {
     })
    
   }
-  //add this fucntion with login with google button
-  const handleSuccess = (credentialDecode) =>{
-      
-      try {
-        axios.post('http://localhost:5173/gooleAuth',{email : credentialDecode.email, name : credentialDecode.name }).then((res)=>{
-          console.log(res);
-          userContext.updateUser(res.user);
-        })
-       
-      }catch{(error)=>
-        console.log(error);
-      }
-  }
+  
 
   return (
     <>
@@ -245,20 +209,11 @@ const AuthModal = () => {
                 }
                 <div className=" w-full md:flex md:flex-row flex flex-col  justify-between">
                 <button className="md:w-1/4 px-3  rounded-[10px] py-2 border border-solid bg-red-300 text-black hover:text-black hover:bg-white" onClick={handleSubmit}>Register</button>
-                 
+                
+
                 <div className="flex items-center text-slate-400 justify-center  text-lg">Or</div>
-                {/* <button className="border bg-black text-white px-1 md:mt-0 mt-4 md:px-4 py-2  rounded-[10px]  md:text-lg" onClick={() => login()} ><span className="px-2 mr-3 md:mr-5"><GoogleIcon/></span>Sign in with Google</button> */} 
-                <GoogleLogin className="w-full"
-                onSuccess={credentialResponse =>{
-                  var credentialDecode = jwtDecode(credentialResponse.credential)
-                  console.log(credentialDecode.name)
-                  navigate('/feed')
-                }}
-                onError = {()=>{
-                  console.log("Login Failed")
-                }}
-                >
-                </GoogleLogin>
+                <button className="border bg-black text-white px-1 md:mt-0 mt-4 md:px-4 py-2  rounded-[10px]  md:text-lg" onClick={handleGoogleLogin} ><span className="px-2 mr-3 md:mr-5"><GoogleIcon/></span>Sign in with Google</button> 
+                
                 </div>
               </div>           
             </div>
@@ -307,7 +262,7 @@ const AuthModal = () => {
               <div className=" w-full  flex md:flex-row flex-col justify-between">
                 <button className="md:w-1/4 px-3  rounded-[10px] py-2 border border-solid bg-red-300 text-black hover:text-black hover:bg-white" onClick={handleLogin}>Login</button>
                 <div className="flex items-center text-slate-400 justify-center text-lg">Or</div>
-                <button className="border  bg-black text-white md:mt-0 mt-4 px-4 py-2 rounded-[10px]" onClick={() => login()}><span className="px-2 md:mr-5 mr-3"><GoogleIcon/></span>Sign in with Google</button>
+                <button className="border  bg-black text-white md:mt-0 mt-4 px-4 py-2 rounded-[10px]" onClick={handleLogin}><span className="px-2 md:mr-5 mr-3"><GoogleIcon/></span>Sign in with Google</button>
               </div>
                 
               </div>

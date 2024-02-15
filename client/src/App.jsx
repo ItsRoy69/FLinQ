@@ -13,6 +13,7 @@ import EditProfile from "./pages/profile/EditProfile";
 import MapComponent from './pages/map/MapComponent'
 import ChatBot from "./pages/chat/bot/ChatBot"
 import AuthModal from "./components/auth/AuthModal"
+import UserInfo from "./pages/user/UserInfo";
 import ChatCommunity from "./pages/chat/community/ChatCommunity";
 import ChatAnonymous from "./pages/chat/anonymous/ChatAnonymous";
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -41,6 +42,7 @@ function App() {
 							<Route path="/register" element = {<AuthModal/>}/>
 							<Route path="/profile" element = {<Profile/>}/>
 							<Route path="/edit" element ={<EditProfile/>}/>
+							<Route path="/userinfo" element = {<UserInfo/>}/>
 
 						</Routes>
 					</FeedTypeState>
