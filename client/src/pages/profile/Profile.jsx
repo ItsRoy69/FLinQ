@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { UserContext } from '../../contexts/userContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faMapLocationDot } from '@fortawesome/free-solid-svg-icons';
@@ -18,14 +18,23 @@ import ListItem from '@mui/material/ListItem';
 const Profile = () => {
     const [user,setUser] = useState([]);
     const navigate = useNavigate()
+
+    const usercontext = useContext(UserContext);
     useEffect(()=>{
-        setUser(dummyProfile);
+        // usercontext.updateUser(dummyProfile);
+        console.log(usercontext.user)
+        setUser(usercontext.user)
+
     },[])
     const handleBackClick = () =>{
         navigate('/feed')
     }
     const handleEditProfileClick = ()=>{
         navigate('/edit')
+    }
+    const handleLogout = () =>{
+        usercontext.logout();
+        navigate('/home');
     }
     return (
         <div className='container bg-slate-900 min-h-screen font-sans text-white'>
@@ -66,7 +75,7 @@ const Profile = () => {
                             <div><span className='ml-auto absolute m-2 right-5'><FontAwesomeIcon icon={faAngleRight}/></span></div>
                        </div>
                        <div className='flex justify-between items-start '>
-                            <div><li className='flex m-2 font-sans text-xl'><span className='mr-4'><FontAwesomeIcon icon={faArrowRightFromBracket} className='px-2 h-6 w-6'/></span>Logout</li></div>
+                            <div onClick={handleLogout}><li className='flex m-2 font-sans text-xl cursor-pointer'><span className='mr-4'><FontAwesomeIcon icon={faArrowRightFromBracket} className='px-2 h-6 w-6'/></span>Logout</li></div>
                             
                        </div>
                     </ul>

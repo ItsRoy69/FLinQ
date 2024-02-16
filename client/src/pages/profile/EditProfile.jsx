@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Editprofile.css';
+import { UserContext } from '../../contexts/userContext';
 import profile_photo from '../../assets/profile_photo.jpg';
 import { dummyProfile } from '../../data/DummyProfile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +14,20 @@ const EditProfile = () => {
     const navigate = useNavigate()
     const[isFocused, setIsFocused] = useState(false);
     const [user,setUser] = useState([]);
+    const usercontext = useContext(UserContext);
+    const [creds, setcreds] = useState({
+        email: usercontext.user.email,
+        password: "",
+        username: usercontext.user.username,
+        phone: usercontext.user.phone,
+        name: usercontext.user.name,
+        occupation: usercontext.user.occupation,
+        birthdate:usercontext.user.birthdate,
+        gender:usercontext.user.gender
+       
+      });
+
+    
     useEffect(()=>{
         setUser(dummyProfile);
     },[])
@@ -19,11 +35,28 @@ const EditProfile = () => {
     const handleBackClick = () =>{
         navigate('/profile')
     }
-    const handleSaveClick = () =>{
-        navigate('/profile');
+    const handleSaveClick = (e) =>{
+        const userId = usercontext.user._id;
+        e.preventDefault();
+        axios.put(`http://localhost:5000/user/update/${userId}`,creds).then((response)=>{
+            if(response.status == 200){
+            console.log(response)
+            usercontext.updateUser(response.data.result)
+            navigate('/profile')
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+        
     }
 
     const [profilePhoto, setProfilePhoto] = useState(null);
+
+    const handleChange = (e) => {
+        setcreds({ ...creds, [e.target.name]: e.target.value });
+        
+      };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -90,34 +123,34 @@ const EditProfile = () => {
                         onChange={handleImageChange}
                     />
                     </div>
-                    <div className='flex justify-center items-center  text-xl text-white m-[5px] '>{user.name}</div>
-                    <div className='flex justify-center items-center  text-lg text-stone-600 mb-2'>{user.username}</div>
+                    <div className='flex justify-center items-center  text-xl text-white m-[5px] '>{usercontext.user.name}</div>
+                    <div className='flex justify-center items-center  text-lg text-stone-600 mb-2'>{usercontext.user.username}</div>
                 </div>
                 <div className='flex flex-col  p-1 mt-3'>
                     <div className='w-full relative border-2 mt-2 border-slate-500 rounded-[10px]'>
-                        <input type='text' id='fullname' className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
+                        <input type='text' id='fullname' value={creds.name} onChange={handleChange} name='name'  className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
                         <label for='fullname' className='absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600'>Full Name</label>
                     </div>
                     <div className='flex'>
                         <div className='w-[50%] relative border-2 mt-2 border-slate-500 rounded-[10px] mr-1'>
-                            <input type='select' id='gender'  className=' w-full bg-transparent mt-4 px-2   py-1.5 focus:outline-none peer'/>
+                            <input type='select' id='gender' value={creds.gender} onChange={handleChange} name ="gender"  className=' w-full bg-transparent mt-4 px-2   py-1.5 focus:outline-none peer'/>
                             <label for='gender' className='absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600'>Gender</label>
                         </div>
                         <div className='w-[50%] relative border-2 mt-2 border-slate-500 rounded-[10px] ml-1'>
-                            <input type='text' id='birthday' className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
+                            <input type='text' id='birthday' value={creds.birthdate} onChange={handleChange} name = "birthdate" className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
                             <label for='birthday' className='absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600'>Birthday</label>
                         </div>
                     </div>
                     <div className='w-full relative border-2 mt-2 border-slate-500 rounded-[10px]'>
-                        <input type='digit' id='phone' className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
+                        <input type='digit' id='phone' value={creds.phone} onChange={handleChange} className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
                         <label for='phone' className='absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600'>Phone Number</label>
                     </div>
                     <div className='w-full relative border-2 mt-2 border-slate-500 rounded-[10px]'>
-                        <input type='email' id='email' className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
+                        <input type='email' id='email' value={creds.email} onChange={handleChange} className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
                         <label for='email' className='absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600'>Email</label>
                     </div>
                     <div className='w-full relative border-2 mt-2 border-slate-500 rounded-[10px]'>
-                        <input type='text' id='username' className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
+                        <input type='text' id='username' value={creds.username} onChange={handleChange} className=' w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer'/>
                         <label for='username' className='absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600'>Username</label>
                     </div>
                     <div className='bg-color-white w-full pt-4 mt-1.5'>

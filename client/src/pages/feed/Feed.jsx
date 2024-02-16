@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 
 import "./feed.css"
 
 import { dummyPostArray, dummyStatusArray } from '../../data/DummyFeed';
 import { dummyUser } from '../../data/DummyUser';
-
+import { UserContext } from '../../contexts/userContext';
 import FeedPostCard from '../../components/feed/post/FeedPostCard';
 import FeedStatusCard from '../../components/feed/status/FeedStatusCard';
 import NavBar from '../../constants/navbar/NavBar';
@@ -19,6 +19,9 @@ const Feed = () => {
 	const [postArray, setPostArray] = useState([])
 	const [statusArray, setStatusArray] = useState([])
 	const [user, setUser] = useState(dummyUser)
+
+	const usercontext = useContext(UserContext)
+
 
 	useEffect(() => {
 		setPostArray(dummyPostArray)
@@ -64,7 +67,7 @@ const Feed = () => {
 		<>
 			<div className="feed-header-card h-16 flex justify-between items-center fixed top-0 left-0 px-4 w-full z-10 bg-inherit dark:bg-slate-900 dark:text-white">
 				<div className="feed-header-greet flex flex-col justify-center items-start w-fit max-w-4/5 h-12">
-					<p className="font-medium truncate w-full">Hello {user.name}</p>
+					<p className="font-medium truncate w-full">Hello {usercontext.user.name}</p>
 					<p className="text-xs sm:text-lg font-thin">Find your interests here!</p>
 				</div>
 				<AlertIcon/>

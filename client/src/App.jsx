@@ -13,9 +13,11 @@ import EditProfile from "./pages/profile/EditProfile";
 import MapComponent from './pages/map/MapComponent'
 import ChatBot from "./pages/chat/bot/ChatBot"
 import AuthModal from "./components/auth/AuthModal"
+import UserInfo from "./pages/user/UserInfo";
 import ChatCommunity from "./pages/chat/community/ChatCommunity";
 import ChatAnonymous from "./pages/chat/anonymous/ChatAnonymous";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { UserProvider } from "./contexts/userContext";
 
 
 function App() {
@@ -24,25 +26,28 @@ function App() {
 	return (
 	<GoogleOAuthProvider clientId={client_id}>
 		<SkeletonTheme baseColor='#5c5b5b' highlightColor='#aba9a9'>
-			<Router>
-				<FeedTypeState>
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/home" element = {<Home/>}/>
-						<Route path="/events" element= {<Event/>}/>
-						<Route path="/feed" element={<Feed />} />
-						<Route path="/jobs" element={<Jobs />}/>
-						<Route path='/chat/aibot' element={<ChatBot/>}/>
-						<Route path='/chat/community/*' element={<ChatCommunity/>}/>
-						<Route path='/chat/anonymous' element={<ChatAnonymous/>}/>
-						<Route path="/map" element ={<MapComponent/>}/>
-						<Route path="/register" element = {<AuthModal/>}/>
-						<Route path="/profile" element = {<Profile/>}/>
-						<Route path="/edit" element ={<EditProfile/>}/>
+			<UserProvider>
+				<Router>
+					<FeedTypeState>
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route path="/home" element = {<Home/>}/>
+							<Route path="/events" element= {<Event/>}/>
+							<Route path="/feed" element={<Feed />} />
+							<Route path="/jobs" element={<Jobs />}/>
+							<Route path='/chat/aibot' element={<ChatBot/>}/>
+							<Route path='/chat/community/*' element={<ChatCommunity/>}/>
+							<Route path='/chat/anonymous' element={<ChatAnonymous/>}/>
+							<Route path="/map" element ={<MapComponent/>}/>
+							<Route path="/register" element = {<AuthModal/>}/>
+							<Route path="/profile" element = {<Profile/>}/>
+							<Route path="/edit" element ={<EditProfile/>}/>
+							<Route path="/userinfo" element = {<UserInfo/>}/>
 
-					</Routes>
-				</FeedTypeState>
-			</Router>
+						</Routes>
+					</FeedTypeState>
+				</Router>
+			</UserProvider>
 		</SkeletonTheme>
 	</GoogleOAuthProvider>
 	)
