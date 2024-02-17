@@ -35,7 +35,8 @@
     "react-router-dom": "^6.21.1",
     "react-speech-recognition": "^3.10.0",
     "react-toastify": "^10.0.3",
-    "react-typed": "^2.0.12"
+    "react-typed": "^2.0.12",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
