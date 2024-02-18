@@ -1,50 +1,37 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import "./chatBody.css";
-
-import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
-
-import ReceivedMessage from "../../received/ReceivedMessage";
 import SentMessage from "../../sent/SentMessage";
-
+import ReceivedMessage from "../../received/ReceivedMessage";
+import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import { UserContext } from "../../../../contexts/userContext";
 const ChatBody = ({
   chatArray,
   setChatArray,
   isScrollingUp,
   setIsScrollingUp,
 }) => {
-  useEffect(() => {
-    setChatArray([...chatArray]);
-  }, []);
-
-  // NECESSARIES FOR STARTING THE CHAT UI FROM BOTTOM
-
   const chatContainerBodyRef = useRef(null);
+  const { user } = useContext(UserContext);
 
   const showFromBottom = () => {
     chatContainerBodyRef.current.scrollTop =
       chatContainerBodyRef.current.scrollHeight;
-    // setTimeout(() => {
     document.removeEventListener("scroll", handleChatScroll);
     document.removeEventListener("wheel", handleChatScroll);
-    // }, 1)
+  };
+
+  const handleChatScroll = () => {
+    const isScrolledUp =
+      chatContainerBodyRef.current.scrollHeight -
+        chatContainerBodyRef.current.scrollTop >
+      700;
+    setIsScrollingUp(isScrolledUp);
   };
 
   useEffect(() => {
     showFromBottom();
   }, [chatArray]);
-
-  const handleChatScroll = () => {
-    if (
-      chatContainerBodyRef.current.scrollHeight -
-        chatContainerBodyRef.current.scrollTop >
-      700
-    ) {
-      setIsScrollingUp(true);
-    } else {
-      setIsScrollingUp(false);
-    }
-  };
 
   useEffect(() => {
     document.addEventListener("scroll", handleChatScroll);
@@ -63,7 +50,7 @@ const ChatBody = ({
         ref={chatContainerBodyRef}
       >
         {chatArray.map((message, index) =>
-          message.sender === "You" ? (
+          message.sender === user.username ? (
             <SentMessage message={message} key={index} />
           ) : (
             <ReceivedMessage message={message} key={index} />
