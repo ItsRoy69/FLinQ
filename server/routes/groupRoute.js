@@ -9,6 +9,6 @@ router.post('/creategroup', groupChatController.createGroupAndAddMessage);
 router.post('/joingroup', groupChatController.joinGroupAndAddMessage);
 
 // get all groups
-router.get('/groups', groupChatController.getAllGroups);
+router.get('/', groupChatController.getAllGroups);
 
 module.exports = router;

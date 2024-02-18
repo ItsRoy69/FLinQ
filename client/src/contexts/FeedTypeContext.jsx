@@ -1,5 +1,5 @@
-import { createContext } from "react"
+import { createContext } from "react";
 
-const FeedTypeContext = createContext(null)
+const FeedTypeContext = createContext(null);
 
-export default FeedTypeContext
+export default FeedTypeContext;
