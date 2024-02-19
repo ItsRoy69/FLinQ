@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Editprofile.css";
 import { UserContext } from "../../contexts/userContext";
-
+import profile_photo from "../../assets/profile_photo.jpg";
+import { dummyProfile } from "../../data/DummyProfile";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";

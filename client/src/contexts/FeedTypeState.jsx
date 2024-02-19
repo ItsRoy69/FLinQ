@@ -1,31 +1,30 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
-import FeedTypeContext from "./FeedTypeContext.jsx"
+import FeedTypeContext from "./FeedTypeContext.jsx";
 
 const FeedTypeState = (props) => {
+  const [selectedFeed, setSelectedFeed] = useState();
 
-    const [selectedFeed, setSelectedFeed] = useState()
-
-    useEffect(() => {
-        const feedType = localStorage.getItem('feedType')
-        if (feedType === null) {
-            setSelectedFeed('recent')
-            localStorage.setItem('feedType', 'recent')
-        } else {
-            setSelectedFeed(feedType)
-        }
-    }, [])
-
-    const handleSelectFeed = (feedType) => {
-        setSelectedFeed(feedType)
-        localStorage.setItem('feedType', feedType)
+  useEffect(() => {
+    const feedType = localStorage.getItem("feedType");
+    if (feedType === null) {
+      setSelectedFeed("recent");
+      localStorage.setItem("feedType", "recent");
+    } else {
+      setSelectedFeed(feedType);
     }
+  }, []);
 
-    return (
-        <FeedTypeContext.Provider value={{selectedFeed, handleSelectFeed}}>
-            {props.children}
-        </FeedTypeContext.Provider>
-    )
-}
+  const handleSelectFeed = (feedType) => {
+    setSelectedFeed(feedType);
+    localStorage.setItem("feedType", feedType);
+  };
 
-export default FeedTypeState
+  return (
+    <FeedTypeContext.Provider value={{ selectedFeed, handleSelectFeed }}>
+      {props.children}
+    </FeedTypeContext.Provider>
+  );
+};
+
+export default FeedTypeState;

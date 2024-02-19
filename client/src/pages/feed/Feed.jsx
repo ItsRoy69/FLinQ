@@ -11,6 +11,14 @@ import FeedStatusCard from "../../components/feed/status/FeedStatusCard";
 import NavBar from "../../constants/navbar/NavBar";
 import FeedSelector from "../../constants/feed-selector/FeedSelector";
 import AlertIcon from "../../constants/alert/AlertIcon";
+import { dummyPostArray, dummyStatusArray } from "../../data/DummyFeed";
+import { dummyUser } from "../../data/DummyUser";
+import { UserContext } from "../../contexts/userContext";
+import FeedPostCard from "../../components/feed/post/FeedPostCard";
+import FeedStatusCard from "../../components/feed/status/FeedStatusCard";
+import NavBar from "../../constants/navbar/NavBar";
+import FeedSelector from "../../constants/feed-selector/FeedSelector";
+import AlertIcon from "../../constants/alert/AlertIcon";
 
 const Feed = () => {
   const [searchVal, setSearchVal] = useState("");
@@ -27,6 +35,10 @@ const Feed = () => {
   // const name = location.state.name;
   // const email = location.state.email;
 
+  useEffect(() => {
+    setPostArray(dummyPostArray);
+    setStatusArray(dummyStatusArray);
+  }, []);
   useEffect(() => {
     setPostArray(dummyPostArray);
     setStatusArray(dummyStatusArray);
@@ -56,7 +68,32 @@ const Feed = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [page]);
+  useEffect(() => {
+    const feedBody = document.getElementById("feed-body");
+    const handleScroll = () => {
+      if (
+        feedBody.scrollHeight - feedBody.offsetHeight - feedBody.scrollTop <
+        1
+      ) {
+        // bottom touched
+        setPostArray([...postArray, ...dummyPostArray]);
+        window.removeEventListener("wheel", handleScroll);
+        window.removeEventListener("scroll", handleScroll);
+        setTimeout(() => {
+          setPage((page) => page + 1);
+        }, 1000);
+      }
+    };
 
+    window.addEventListener("wheel", handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [page]);
+
+  
   const handleSearchValChange = (e) => {
     setSearchVal(e.target.value);
   };
@@ -73,7 +110,7 @@ const Feed = () => {
       <div className="feed-header-card h-16 flex justify-between items-center fixed top-0 left-0 px-4 w-full z-10 bg-inherit dark:bg-slate-900 dark:text-white">
         <div className="feed-header-greet flex flex-col justify-center items-start w-fit max-w-4/5 h-12">
           <p className="font-medium truncate w-full">
-            Hello {usercontext.user.name || name}
+            Hello {usercontext.user.name}
           </p>
           <p className="text-xs sm:text-lg font-thin">
             Find your interests here!

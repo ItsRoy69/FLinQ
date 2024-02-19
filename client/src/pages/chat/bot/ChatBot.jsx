@@ -1,31 +1,32 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import './chatBot.css'
+import "./chatBot.css";
 
-import { DummyAIChatArray } from '../../../data/DummyAiChat'
+import { DummyAIChatArray } from "../../../data/DummyAiChat";
 
-import ChatHeader from '../../../components/chat/chat-container/chat-header/ChatHeader'
-import ChatBody from '../../../components/chat/chat-container/chat-body/ChatBody'
-import ChatFooter from '../../../components/chat/chat-container/chat-footer/ChatFooter'
+import ChatHeader from "../../../components/chat/chat-container/chat-header/ChatHeader";
+import ChatBody from "../../../components/chat/chat-container/chat-body/ChatBody";
+import ChatFooter from "../../../components/chat/chat-container/chat-footer/ChatFooter";
 
 const ChatBot = () => {
+  const [chatArray, setChatArray] = useState([]);
 
-    const [chatArray, setChatArray] = useState([])
+  
 
     useEffect(() => {
         // setChatArray([...DummyAIChatArray])
     }, [])
 
-    // NECESSARIES FOR NAVIGATION
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
-    const handleBackClick=() => {
-		navigate(-1)
-	}
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
 
-    const [isScrollingUp, setIsScrollingUp] = useState(false)
+  
 
     return (
         <>

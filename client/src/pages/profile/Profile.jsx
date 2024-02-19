@@ -10,7 +10,6 @@ import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-
 const Profile = () => {
   const [user, setUser] = useState([]);
   const navigate = useNavigate();

@@ -57,7 +57,6 @@ const AuthModal = () => {
     });
   };
 
-
   const handleChange = (e) => {
     setcreds({ ...creds, [e.target.name]: e.target.value });
     // console.log(creds)
@@ -103,7 +102,6 @@ const AuthModal = () => {
         setLoginError(error.response.data.message);
       });
   };
- 
 
   return (
     <>
