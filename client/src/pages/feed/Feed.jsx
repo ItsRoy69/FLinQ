@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useLocation } from "react-router-dom";
 
 import "./feed.css";
 
@@ -20,6 +21,11 @@ const Feed = () => {
   const [user, setUser] = useState(dummyUser);
 
   const usercontext = useContext(UserContext);
+
+  const location = useLocation();
+
+  // const name = location.state.name;
+  // const email = location.state.email;
 
   useEffect(() => {
     setPostArray(dummyPostArray);
@@ -67,7 +73,7 @@ const Feed = () => {
       <div className="feed-header-card h-16 flex justify-between items-center fixed top-0 left-0 px-4 w-full z-10 bg-inherit dark:bg-slate-900 dark:text-white">
         <div className="feed-header-greet flex flex-col justify-center items-start w-fit max-w-4/5 h-12">
           <p className="font-medium truncate w-full">
-            Hello {usercontext.user.name}
+            Hello {usercontext.user.name || name}
           </p>
           <p className="text-xs sm:text-lg font-thin">
             Find your interests here!

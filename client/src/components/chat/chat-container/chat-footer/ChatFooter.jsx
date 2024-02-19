@@ -1,36 +1,59 @@
-import { useState, useEffect } from "react";
-
-import "./chatFooter.css";
-
-import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import React, { useState, useEffect, useContext } from "react";
 import MicRoundedIcon from "@mui/icons-material/MicRounded";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import { UserContext } from "../../../../contexts/userContext";
 
-const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp }) => {
-  // NECESSARIES FOR SENDING QUERY
 
+const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp,apiEndPoint }) => {
+  const { user } = useContext(UserContext);
   const [queryInputVal, setQueryInputVal] = useState("");
 
   const handleQueryInputChange = (e) => {
     setQueryInputVal(e.target.value);
   };
 
-  const sendQuery = () => {
+  const sendQuery = async () => {
     if (queryInputVal?.length > 0) {
       const date = new Date();
       const newMessage = {
-        sender: "You",
-        text: `${queryInputVal}`,
-        timestamp: `${date.getHours()}:${
-          date.getMinutes().toString().length > 1
-            ? date.getMinutes()
-            : `0${date.getMinutes()}`
-        }`,
+        sender: user.username || "Anonymous",
+        text: queryInputVal,
+        question: queryInputVal,
+        timestamp: date.toISOString(),
+        type: "sent"
       };
+
       setChatArray([...chatArray, newMessage]);
-      setTimeout(() => {
-        setQueryInputVal("");
-        setIsScrollingUp(false);
-      }, 1);
+
+      let responseData ;
+      try {
+        const response = await fetch(`${apiEndPoint}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newMessage),
+          // "question": JSON.stringify(newMessage)
+        });
+        responseData = await response.json()
+        console.log(responseData);
+        if (!response.ok) {
+          console.error("Failed to send message to the server");
+        }
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
+     
+      const responseMessage = {
+        sender: 'Bot',
+        text: responseData.response,
+        timestamp: date.toString(),
+        type : "received"
+      }
+
+      setChatArray([...chatArray,newMessage,responseMessage]);
+      setQueryInputVal("");
+      setIsScrollingUp(false);
     }
   };
 
@@ -42,7 +65,9 @@ const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp }) => {
 
   useEffect(() => {
     const chatFooter = document.getElementById("chat-footer");
+
     chatFooter.addEventListener("keydown", handleEnterPress);
+
     return () => {
       chatFooter.removeEventListener("keydown", handleEnterPress);
     };

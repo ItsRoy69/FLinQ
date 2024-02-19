@@ -1,21 +1,38 @@
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useContext } from "react";
 import "./chatAnonymous.css";
-
-import { DummyChatAnonymousArray } from "../../../data/DummyChatAnonymous";
-
+import { UserContext } from "../../../contexts/userContext";
 import ChatHeader from "../../../components/chat/chat-container/chat-header/ChatHeader";
 import ChatBody from "../../../components/chat/chat-container/chat-body/ChatBody";
 import ChatFooter from "../../../components/chat/chat-container/chat-footer/ChatFooter";
 
 const ChatAnonymous = () => {
   const [chatArray, setChatArray] = useState([]);
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
+  const userContext = useContext(UserContext);
+  const { username } = userContext;
 
   useEffect(() => {
-    setChatArray([...DummyChatAnonymousArray]);
-  }, []);
+    const fetchChatData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/chat/messages");
+        if (response.ok) {
+          const data = await response.json();
+          setChatArray(data.result);
+        } else {
+          console.error("Failed to fetch chat data");
+        }
+      } catch (error) {
+        console.error("Error fetching chat data:", error);
+      }
+    };
 
-  const [isScrollingUp, setIsScrollingUp] = useState(false);
+    fetchChatData();
+
+    const intervalId = setInterval(fetchChatData, 5000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <>
@@ -27,9 +44,11 @@ const ChatAnonymous = () => {
         setIsScrollingUp={setIsScrollingUp}
       />
       <ChatFooter
+        apiEndPoint={"http://localhost:5000/chat/messages"}
         chatArray={chatArray}
         setChatArray={setChatArray}
         setIsScrollingUp={setIsScrollingUp}
+        username={username}
       />
     </>
   );

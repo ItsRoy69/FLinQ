@@ -14,7 +14,7 @@ const ChatBot = () => {
     const [chatArray, setChatArray] = useState([])
 
     useEffect(() => {
-        setChatArray([...DummyAIChatArray])
+        // setChatArray([...DummyAIChatArray])
     }, [])
 
     // NECESSARIES FOR NAVIGATION
@@ -39,6 +39,7 @@ const ChatBot = () => {
                 setIsScrollingUp={setIsScrollingUp}
             />
             <ChatFooter
+                apiEndPoint = {"https://flinq-chatbot.onrender.com/chat"}
                 chatArray={chatArray}
                 setChatArray={setChatArray}
                 setIsScrollingUp={setIsScrollingUp}
