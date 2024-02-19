@@ -169,9 +169,6 @@ const UserInfo = () => {
           >
             Register
           </button>
-
-          {/* <div className="flex items-center text-slate-400 justify-center  text-lg">Or</div> */}
-          {/* <button className="border bg-black text-white px-1 md:mt-0 mt-4 md:px-4 py-2  rounded-[10px]  md:text-lg" onClick={handleGoogleLogin} ><span className="px-2 mr-3 md:mr-5"><GoogleIcon/></span>Sign in with Google</button>  */}
         </div>
       </div>
     </div>

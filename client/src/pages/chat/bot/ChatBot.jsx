@@ -12,11 +12,11 @@ import ChatFooter from "../../../components/chat/chat-container/chat-footer/Chat
 const ChatBot = () => {
   const [chatArray, setChatArray] = useState([]);
 
-  useEffect(() => {
-    setChatArray([...DummyAIChatArray]);
-  }, []);
+  
 
-  // NECESSARIES FOR NAVIGATION
+    useEffect(() => {
+        // setChatArray([...DummyAIChatArray])
+    }, [])
 
   const navigate = useNavigate();
 
@@ -26,22 +26,27 @@ const ChatBot = () => {
 
   const [isScrollingUp, setIsScrollingUp] = useState(false);
 
-  return (
-    <>
-      <ChatHeader roomName={"Helpyy"} />
-      <ChatBody
-        chatArray={chatArray}
-        setChatArray={setChatArray}
-        isScrollingUp={isScrollingUp}
-        setIsScrollingUp={setIsScrollingUp}
-      />
-      <ChatFooter
-        chatArray={chatArray}
-        setChatArray={setChatArray}
-        setIsScrollingUp={setIsScrollingUp}
-      />
-    </>
-  );
-};
+  
 
-export default ChatBot;
+    return (
+        <>
+            <ChatHeader
+                roomName={'Helpyy'}
+            />
+            <ChatBody
+                chatArray={chatArray}
+                setChatArray={setChatArray}
+                isScrollingUp={isScrollingUp}
+                setIsScrollingUp={setIsScrollingUp}
+            />
+            <ChatFooter
+                apiEndPoint = {"https://flinq-chatbot.onrender.com/chat"}
+                chatArray={chatArray}
+                setChatArray={setChatArray}
+                setIsScrollingUp={setIsScrollingUp}
+            />
+        </>
+    )
+}
+
+export default ChatBot

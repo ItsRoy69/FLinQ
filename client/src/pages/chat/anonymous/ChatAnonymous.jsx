@@ -44,6 +44,7 @@ const ChatAnonymous = () => {
         setIsScrollingUp={setIsScrollingUp}
       />
       <ChatFooter
+        apiEndPoint={"http://localhost:5000/chat/messages"}
         chatArray={chatArray}
         setChatArray={setChatArray}
         setIsScrollingUp={setIsScrollingUp}

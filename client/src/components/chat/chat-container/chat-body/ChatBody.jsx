@@ -50,8 +50,10 @@ const ChatBody = ({
         ref={chatContainerBodyRef}
       >
         {chatArray.map((message, index) =>
-          message.sender === user.username ? (
+           message.type === "sent" ? (
+        
             <SentMessage message={message} key={index} />
+          
           ) : (
             <ReceivedMessage message={message} key={index} />
           )

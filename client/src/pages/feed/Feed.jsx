@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useLocation } from "react-router-dom";
 
 import "./feed.css";
 
@@ -20,6 +21,15 @@ const Feed = () => {
 
   const usercontext = useContext(UserContext);
 
+  const location = useLocation();
+
+  // const name = location.state.name;
+  // const email = location.state.email;
+
+  useEffect(() => {
+    setPostArray(dummyPostArray);
+    setStatusArray(dummyStatusArray);
+  }, []);
   useEffect(() => {
     setPostArray(dummyPostArray);
     setStatusArray(dummyStatusArray);
@@ -49,7 +59,32 @@ const Feed = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [page]);
+  useEffect(() => {
+    const feedBody = document.getElementById("feed-body");
+    const handleScroll = () => {
+      if (
+        feedBody.scrollHeight - feedBody.offsetHeight - feedBody.scrollTop <
+        1
+      ) {
+        // bottom touched
+        setPostArray([...postArray, ...dummyPostArray]);
+        window.removeEventListener("wheel", handleScroll);
+        window.removeEventListener("scroll", handleScroll);
+        setTimeout(() => {
+          setPage((page) => page + 1);
+        }, 1000);
+      }
+    };
 
+    window.addEventListener("wheel", handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [page]);
+
+  
   const handleSearchValChange = (e) => {
     setSearchVal(e.target.value);
   };

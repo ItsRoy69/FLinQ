@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Editprofile.css";
 import { UserContext } from "../../contexts/userContext";
-import profile_photo from "../../assets/profile_photo.jpg";
-import { dummyProfile } from "../../data/DummyProfile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+
+
 const EditProfile = () => {
   const navigate = useNavigate();
-  const [isFocused, setIsFocused] = useState(false);
+  
   const [user, setUser] = useState([]);
   const usercontext = useContext(UserContext);
   const [creds, setcreds] = useState({
@@ -25,9 +25,7 @@ const EditProfile = () => {
     gender: usercontext.user.gender,
   });
 
-  useEffect(() => {
-    setUser(dummyProfile);
-  }, []);
+  
 
   const handleBackClick = () => {
     navigate("/profile");
