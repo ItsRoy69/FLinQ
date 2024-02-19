@@ -10,6 +10,8 @@ import Person2Icon from "@mui/icons-material/Person2";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import PlaceIcon from "@mui/icons-material/Place";
 
+import AddPostModal from "../../components/navbar/AddPostModal";
+
 const NavBar = () => {
   // NECESSARIES FOR NAVIGATION
 
@@ -38,6 +40,9 @@ const NavBar = () => {
       setChatPromptWindowOpen(false);
     }
   };
+
+  // NECESSARIES FOR ADDING POST
+  const [openAddPostModal, setOpenAddPostModal] = useState(false)
 
   return (
     <>
@@ -72,7 +77,10 @@ const NavBar = () => {
           />
         </div>
 
-        <div className="w-1/5 flex justify-center">
+        <div 
+          className="w-1/5 flex justify-center"
+            onClick={() => setOpenAddPostModal(true)}
+        >
           <div className="create-post flex justify-center items-center h-16 w-16 rounded-full bg-gradient-to-b from-pink-600 to-purple-700 -translate-y-2">
             <AddRoundedIcon fontSize="large" />
           </div>
@@ -98,6 +106,12 @@ const NavBar = () => {
           />
         </div>
       </nav>
+      {
+        (openAddPostModal) && 
+          <AddPostModal
+            setOpenAddPostModal={setOpenAddPostModal}
+          />
+      }
     </>
   );
 };
