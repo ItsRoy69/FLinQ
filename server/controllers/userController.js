@@ -75,6 +75,26 @@ const loginUser = async (req, res) => {
     }
 }
 
+//POST
+const googleLogin = async(req,res)=>{
+    const {email, verified} = await  req.body;
+    console.log(email,verified);
+    if(!verified){
+        console.log('check')
+        return res.status(400).json({message : "Email is not verified."});
+    }
+    const user = await UserModel.findOne({email : email})
+    if(user){
+        return res.status(200).json({message: "Login successful.",user});
+    }
+    else {
+        console.log('check 2')
+        return res.status(400).json({message : "Signup required for new account."});
+    }
+
+
+}
+
 // get all users
 const getUsers = async (req, res) => {
     try {
@@ -146,4 +166,4 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser, getUsers, getUserById, updateUser, deleteUser };
+module.exports = { registerUser, loginUser, getUsers, googleLogin, getUserById, updateUser, deleteUser };

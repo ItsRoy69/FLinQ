@@ -10,7 +10,6 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, origins=["https://flinq-chatbot.onrender.com", "http://localhost:5173"])
 
-
 # Accessing environment variables
 credential_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path

@@ -9,10 +9,6 @@ import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { dummyProfile } from "../../data/DummyProfile";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 
 const Profile = () => {
   const [user, setUser] = useState([]);
@@ -20,7 +16,7 @@ const Profile = () => {
 
   const usercontext = useContext(UserContext);
   useEffect(() => {
-    // usercontext.updateUser(dummyProfile);
+    
     console.log(usercontext.user);
     setUser(usercontext.user);
   }, []);
