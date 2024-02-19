@@ -7,6 +7,7 @@ import AddRounded from '@mui/icons-material/AddRounded';
 const AddPostModal = ({setOpenAddPostModal}) => {
 
     const [selectedImage, setSelectedImage] = useState(null);
+    const [caption, setCaption] = useState('')
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]
@@ -35,7 +36,7 @@ const AddPostModal = ({setOpenAddPostModal}) => {
                         onClick={() => setOpenAddPostModal(false)}
                     ><CloseRounded/></span>
                 </div>
-                <div className="add-post--body h-[calc(100vh-184px)] w-full p-3 flex flex-col gap-3 mt-10">
+                <div className="add-post--body h-[calc(100vh-184px)] w-full p-3 flex flex-col gap-3 mt-2">
                     <span className="pl-2 text-2xl">Add Photo:</span>
                     <input
                         type="file"
@@ -58,11 +59,18 @@ const AddPostModal = ({setOpenAddPostModal}) => {
                             )}
                         </div>
                     </label>
+                    <span className='pl-2 text-2xl'>Add Caption:</span>
+                    <input 
+                        type="text" 
+                        placeholder='e.g., Feeling lucky!'
+                        className='p-2 rounded-md bg-transparent border focus:border-purple-700 outline-none focus:outline-none'
+                        onChange={(e) => setCaption(e.target.value)}
+                    />
                     {
                         (selectedImage !== null) &&
                         <span 
                             className='pl-1 underline text-lg w-fit h-fit'
-                            onClick={() => clearImage()}
+                            onClick={() => {clearImage(); setCaption('')}}
                         >Cancel changes</span>
                     }
                 </div>
