@@ -11,14 +11,6 @@ import FeedStatusCard from "../../components/feed/status/FeedStatusCard";
 import NavBar from "../../constants/navbar/NavBar";
 import FeedSelector from "../../constants/feed-selector/FeedSelector";
 import AlertIcon from "../../constants/alert/AlertIcon";
-import { dummyPostArray, dummyStatusArray } from "../../data/DummyFeed";
-import { dummyUser } from "../../data/DummyUser";
-import { UserContext } from "../../contexts/userContext";
-import FeedPostCard from "../../components/feed/post/FeedPostCard";
-import FeedStatusCard from "../../components/feed/status/FeedStatusCard";
-import NavBar from "../../constants/navbar/NavBar";
-import FeedSelector from "../../constants/feed-selector/FeedSelector";
-import AlertIcon from "../../constants/alert/AlertIcon";
 
 const Feed = () => {
   const [searchVal, setSearchVal] = useState("");
