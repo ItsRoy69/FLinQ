@@ -11,7 +11,8 @@ const postSchema = new mongoose.Schema({
         required: [true, "userId is required"]
     },
     image: {
-        type: Buffer
+        type: String,
+        trim:true
     }
 
 }, { timestamps: true });

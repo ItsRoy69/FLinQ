@@ -39,15 +39,16 @@ const getPostById = async (req, res) => {
 
 // create a new post
 const addPost = async (req, res) => {
+    console.log(req.body);
     try {
-        const { userId: _id, image } = req.body;
+        const { userId:_id, image } = await req.body;
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(422).json({ message: "Id not valid" });
         }
 
         const newPostData = { ...req.body };
         if (req.file) {
-            newPostData.image = req.file.buffer; // Save the image buffer
+            newPostData.image = req.file.buffer; 
         }
 
         const newpost = await PostModel.create(newPostData);

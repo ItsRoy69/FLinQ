@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const http = require('http');
 const socketIo = require('socket.io');
+const bodyParser = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
@@ -60,6 +61,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '30mb', extended: true })); // images that are going to be send have limit 30mb
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
 // Routes
 app.get('/', (req, res) => res.send("Welcome to Flinq server"));
