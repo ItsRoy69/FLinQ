@@ -13,8 +13,7 @@ import FeedSelector from "../../constants/feed-selector/FeedSelector";
 import AlertIcon from "../../constants/alert/AlertIcon";
 
 const Feed = () => {
-  const [searchVal, setSearchVal] = useState("");
-  // const [selectedFeed, setSelectedFeed] = useState('recent')
+  const [searchVal, setSearchVal] = useState("")
   const [page, setPage] = useState(1);
   const [postArray, setPostArray] = useState([]);
   const [statusArray, setStatusArray] = useState([]);
@@ -89,13 +88,6 @@ const Feed = () => {
   const handleSearchValChange = (e) => {
     setSearchVal(e.target.value);
   };
-
-  // const navigate = useNavigate()
-
-  // const handleFeedChange = (feedtype) => {
-  // 	setSelectedFeed(feedtype)
-  // 	navigate(`/${feedtype}`)
-  // }
 
   return (
     <>
