@@ -116,18 +116,19 @@ const getUserById = async (req, res) => {
         const { id: _id } = await req.params;
         if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(422).json({ message: "Id is invalid" });
-        }        const userExist = await UserModel.exists({ _id });
+        }        
+        const userExist = await UserModel.find({ _id: userId });
         if (!userExist) {
             return res.status(404).json({ message: "User not found" });
         }
-        const user = await UserModel.findById(_id, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 });
+        const user = await UserModel.findById(userId, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 });
         if (!user) throw new Error("Failed to fetch user");
         // success
-        res.status(200).json({ message: "Fetched user", result: user });
+        return res.status(200).json({ message: "Fetched user", result: user });
 
     } catch (error) {
         console.log(error);
-        res.status(400).json({ message: error?.message });
+        return res.status(400).json({ message: error?.message });
     }
 }
 

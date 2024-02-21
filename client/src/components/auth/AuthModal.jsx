@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 
 import { GoogleLogin } from "@react-oauth/google";
 import { auth, provider } from "./Config";
@@ -9,6 +9,7 @@ import formImg from "../../assets/login-img.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleIcon from "@mui/icons-material/Google";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const AuthModal = () => {
@@ -28,47 +29,98 @@ const AuthModal = () => {
     gender: "",
   });
   const userContext = useContext(UserContext);
-
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      navigate("/userinfo", {
-        state: { email: data.user.email, name: data.user.displayName },
+  const handleGoogleLogin = async () => {
+    signInWithPopup(auth, provider)
+      .then((data) => {
+        navigate("/userinfo", {
+          state: { email: data.user.email, name: data.user.displayName },
+        });
+      })
+      .catch((error) => {
+        console.error("Google login error:", error);
       });
-    });
   };
 
   const handleGoogleLogins = async () => {
-    await signInWithPopup(auth, provider).then(async (data) => {
-      await axios
-        .post("https://flinq-backend.onrender.com/user/googleLogin", {
-          email: data.user.email,
-          verified: data.user.emailVerified,
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            userContext.updateUser(response.data.user);
-            navigate("/feed");
-          }
-        })
-        .catch((err) => {
-          setLoginError(err.response.data.message);
-        });
-    });
+    signInWithPopup(auth, provider)
+      .then(async (data) => {
+        await axios
+          .post("http://localhost:5000/user/googleLogin", {
+            email: data.user.email,
+            verified: data.user.emailVerified,
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              userContext.updateUser(response.data.user);
+              localStorage.setItem("userData", JSON.stringify(response.data.user));
+              navigate("/feed");
+            }
+          })
+          .catch((err) => {
+            setLoginError(err.response.data.message);
+          });
+      })
+      .catch((error) => {
+        console.error("Google login error:", error);
+      });
   };
 
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      const userData = JSON.parse(storedUserData);
+      userContext.updateUser(userData);
+      navigate("/feed");
+    }
+  }, []);
+
   const handleChange = (e) => {
+    
     setcreds({ ...creds, [e.target.name]: e.target.value });
   };
   const handleGoBack = async () => {
-    navigate("/");
+    navigate("/home");
   };
+
+  const checkPassword =() => {
+    const password = creds.password
+    let upperCase = 0, specialChar = 0, digitCount = 0;
+    var specialCharRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/
+    if (!specialCharRegex.test(password)) {
+      setError("Password must contain at least one special character.")
+      return false;
+    }
+    for(let i = 0; i < password.length; i++) {
+      let ascii = (int)(password[i])
+      if(ascii >= 65 && ascii <= 90) {
+          upperCase += 1;
+      }
+      if(ascii >= 48 && ascii <= 57){
+          digitCount += 1;
+      }
+     
+    }
+    if(upperCase == 0){
+      setError("Password must contain at least one upper case character.")
+      return false ;
+    }
+    if(digitCount == 0){
+      setError("Password must contain at least one digit.")
+      return false;
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    axios
-      .post("https://flinq-backend.onrender.com/user/register", creds)
+    const passwordValid = checkPassword();
+    if (!passwordValid) {
+        return; 
+    }
+    
+    await axios
+      .post("http://localhost:5000/user/register", creds)
       .then((response) => {
+        console.log(response);
         if (response.status == 200) {
           userContext.updateUser(response.data.user);
           navigate("/feed");
@@ -80,15 +132,20 @@ const AuthModal = () => {
       });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
-    axios
-      .post("https://flinq-backend.onrender.com/user/login", {
+    const passwordValid = checkPassword();
+    if (!passwordValid) {
+        return; 
+    }
+    await axios
+      .post("http://localhost:5000/user/login", {
         email: creds.email,
         password: creds.password,
       })
       .then((response) => {
         if (response.status == 200) {
+          console.log(response.data);
           userContext.updateUser(response.data.user);
           navigate("/feed");
         }
@@ -231,12 +288,14 @@ const AuthModal = () => {
                     Password<span className="text-red-700">*</span>
                   </label>
                   <input
+                    id = "password"
                     className="w-full text-black py-2 px-2 rounded-[10px] bg-transparent my-4 border border-slate outline-none focus:outline-none"
                     type="password"
-                    placeholder="Must conatain an uppercase, digits and a special character"
+                    placeholder="Must contain an uppercase, digits and a special character"
                     value={creds.password}
                     onChange={handleChange}
                     name="password"
+                    
                   />
                   {error ? (
                     <>
@@ -342,8 +401,7 @@ const AuthModal = () => {
                     </div>
                     <button
                       className="border  bg-black text-white md:mt-0 mt-4 px-4 py-2 rounded-[10px]"
-                      onClick={() => handleGoogleLogins()}
-                    >
+                      onClick={() => handleGoogleLogins()}>
                       <span className="px-2 md:mr-5 mr-3">
                         <GoogleIcon />
                       </span>

@@ -7,12 +7,6 @@ export function UserProvider({ children }) {
   const [isuserreg, setisuserreg] = useState(true);
   const [isuser, setisuser] = useState(false);
 
-  const value = {
-    isuserreg,
-    setisuserreg,
-    isuser,
-    setisuser,
-  };
   const emptyUser = {
     _id: "",
     email: "",
@@ -25,7 +19,7 @@ export function UserProvider({ children }) {
     gender: "",
     birthdate: "",
   };
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(emptyUser);
 
   const updateUser = (user) => {
     setUser({
@@ -42,9 +36,6 @@ export function UserProvider({ children }) {
     });
   };
 
-  useEffect(() => {
-    updateUser(emptyUser);
-  }, []);
   const logout = () => {
     setUser(emptyUser);
   };

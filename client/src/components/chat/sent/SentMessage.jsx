@@ -8,7 +8,7 @@ const SentMessage = ({ message }) => {
           <div className="sent-message-header font-semibold text-pink-400">
             {message.sender}
           </div>
-          <div className="sent-message-body">{message.text}</div>
+          <div className="sent-message-body">{message.message||message.text}</div>
         </div>
       </div>
 

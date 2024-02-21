@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const groupSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -23,6 +22,7 @@ const groupSchema = new mongoose.Schema({
       },
     },
   ],
+  timestamp: { type: Date, default: Date.now }
 });
 
 const Group = mongoose.model('Group', groupSchema);

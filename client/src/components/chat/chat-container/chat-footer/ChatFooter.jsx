@@ -8,6 +8,7 @@ const ChatFooter = ({
   chatArray,
   setIsScrollingUp,
   apiEndPoint,
+  groupId,
 }) => {
   const { user } = useContext(UserContext);
   const [queryInputVal, setQueryInputVal] = useState("");
@@ -21,13 +22,14 @@ const ChatFooter = ({
       const date = new Date();
       const newMessage = {
         sender: user.username || "Anonymous",
+        senderId: user._id,
         text: queryInputVal,
+        message: queryInputVal,
         question: queryInputVal,
         timestamp: date.toISOString(),
+        groupId: groupId,
         type: "sent",
       };
-
-      setChatArray([...chatArray, newMessage]);
 
       let responseData;
       try {
@@ -39,27 +41,29 @@ const ChatFooter = ({
           body: JSON.stringify(newMessage),
         });
         responseData = await response.json();
-
+        console.log("from chatfooter:", responseData.response);
         if (!response.ok) {
           console.error("Failed to send message to the server");
         }
       } catch (error) {
         console.error("Error sending message:", error);
       }
-
-      const responseMessage = {
-        sender: "Bot",
-        text: responseData.response,
-        timestamp: date.toString(),
-        type: "received",
-      };
-
-      setChatArray([...chatArray, newMessage, responseMessage]);
+      if (responseData.response) {
+        console.log("response found");
+        const responseMessage = {
+          sender: "Bot",
+          text: responseData.response,
+          timestamp: date.toString(),
+          type: "received",
+        };
+        setChatArray([...chatArray, newMessage, responseMessage]);
+      } else {
+        setChatArray([...chatArray, newMessage]);
+      }
       setQueryInputVal("");
       setIsScrollingUp(false);
     }
   };
-
   const handleEnterPress = (e) => {
     if (e.key === "Enter") {
       sendQuery();
