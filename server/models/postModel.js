@@ -10,9 +10,19 @@ const postSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: [true, "userId is required"]
     },
+    username: {
+        type: String,
+        trim: true,
+        required: [true, "username is required"]
+    },
     image: {
         type: String,
-        trim:true
+        trim: true
+    },
+    postedAt: {
+        type: Date,
+        default: Date.now,
+        required: [true, "date is required"]
     }
 
 }, { timestamps: true });

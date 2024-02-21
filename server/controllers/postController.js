@@ -39,17 +39,20 @@ const getPostById = async (req, res) => {
 
 // create a new post
 const addPost = async (req, res) => {
-    console.log(req.body);
     try {
-        const { userId:_id, image } = await req.body;
-        if (!mongoose.Types.ObjectId.isValid(_id)) {
-            return res.status(422).json({ message: "Id not valid" });
+        const { userId: _id, image, postName, username } = req.body;
+
+        if (!username) {
+            return res.status(400).json({ message: "Username is required in the request body" });
         }
 
-        const newPostData = { ...req.body };
-        if (req.file) {
-            newPostData.image = req.file.buffer; 
-        }
+        const newPostData = {
+            userId: _id,
+            image,
+            username,
+            postedAt: new Date(),
+            postName
+        };
 
         const newpost = await PostModel.create(newPostData);
         res.status(201).json({ message: "Post created", result: newpost });
@@ -58,7 +61,8 @@ const addPost = async (req, res) => {
         console.log(error?.message);
         res.status(400).json({ message: error?.message });
     }
-}
+};
+
 
 // edit a post
 const editPost = async (req, res) => {
@@ -85,18 +89,11 @@ const editPost = async (req, res) => {
 // get posts by userId
 const getUserPosts = async (req, res) => {
     try {
-        const { userId: _id } = await req.query;
+        const { id: _id } = req.params;
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(422).json({ message: "Id not valid" });
         }
-        const userPosts = await PostModel.find({ userId: _id }, (err, result) => {
-            if (err) {
-                console.log(err);
-                throw new Error(err);
-            } else {
-                console.log(result);
-            }
-        });
+        const userPosts = await PostModel.find({ userId: _id });
         res.status(200).json({ message: "Fetched Posts by User", result: userPosts });
 
     } catch (error) {
@@ -104,6 +101,7 @@ const getUserPosts = async (req, res) => {
         res.status(400).json({ message: error?.message });
     }
 }
+
 
 // delete post
 const deletePost = async (req, res) => {

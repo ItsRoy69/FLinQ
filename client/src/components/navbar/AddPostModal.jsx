@@ -6,7 +6,7 @@ import CloseRounded from "@mui/icons-material/CloseRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import AddRounded from "@mui/icons-material/AddRounded";
 
-import FileBase64 from 'react-file-base64';
+import FileBase64 from "react-file-base64";
 
 const AddPostModal = ({ setOpenAddPostModal }) => {
   const { user } = useContext(UserContext);
@@ -22,11 +22,31 @@ const AddPostModal = ({ setOpenAddPostModal }) => {
 
   const handlePostSubmit = async () => {
     try {
-      console.log(user._id,caption,selectedImage);
-      await axios.post("http://localhost:5000/post/",{
-        userId:user._id,
-        postName:caption,
-        image:selectedImage
+      if (selectedImage) {
+        const base64Image = selectedImage.split(",")[1];
+        const blob = atob(base64Image);
+        const arrayBuffer = new ArrayBuffer(blob.length);
+        const uint8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < blob.length; i++) {
+          uint8Array[i] = blob.charCodeAt(i);
+        }
+
+        const imageSizeInBytes = uint8Array.length;
+        const imageSizeInKB = imageSizeInBytes / 1024;
+
+        if (imageSizeInKB > 100) {
+          alert("Image size should be within 100KB.");
+          return;
+        }
+      }
+
+      const username = user ? user.username : "Unknown User";
+      await axios.post("http://localhost:5000/post/", {
+        userId: user._id,
+        postName: caption,
+        image: selectedImage,
+        username: user.username,
+        postedAt: new Date().toISOString(),
       });
 
       setOpenAddPostModal(false);
@@ -49,12 +69,12 @@ const AddPostModal = ({ setOpenAddPostModal }) => {
         </div>
         <div className="add-post--body h-[calc(100vh-184px)] w-full p-3 flex flex-col gap-3 mt-2">
           <span className="pl-2 text-2xl">Add Photo:</span>
-          <FileBase64 
+          <FileBase64
             type="file"
             id="imageInput"
             accept="image/*"
             style={{ display: "none" }}
-            onDone={({base64})=> setSelectedImage(base64)}
+            onDone={({ base64 }) => setSelectedImage(base64)}
             multiple={false}
           />
           <label htmlFor="imageInput">
