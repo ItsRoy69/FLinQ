@@ -9,7 +9,7 @@ const FeedPostCard = ({ post }) => {
   useEffect(() => {
     const fetchPostData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/post/");
+        const response = await fetch("https://flinq-backend.onrender.com/post/");
         const data = await response.json();
         setPostData(data.result);
       } catch (error) {

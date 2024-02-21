@@ -41,7 +41,7 @@ const AddPostModal = ({ setOpenAddPostModal }) => {
       }
 
       const username = user ? user.username : "Unknown User";
-      await axios.post("http://localhost:5000/post/", {
+      await axios.post("https://flinq-backend.onrender.com/post/", {
         userId: user._id,
         postName: caption,
         image: selectedImage,
