@@ -30,7 +30,7 @@ const EditProfile = () => {
     const userId = usercontext.user._id;
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/user/update/${userId}`, creds)
+      .put(`https://flinq-backend.onrender.com/user/update/${userId}`, creds)
       .then((response) => {
         if (response.status == 200) {
           console.log(response);

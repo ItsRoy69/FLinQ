@@ -34,7 +34,7 @@ const UserInfo = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:5000/user/register", creds)
+      .post("https://flinq-backend.onrender.com/user/register", creds)
       .then((response) => {
         if (response.status == 200) {
           usercontext.updateUser(response.data.user);

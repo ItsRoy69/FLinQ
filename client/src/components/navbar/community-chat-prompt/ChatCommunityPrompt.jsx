@@ -20,7 +20,7 @@ const ChatCommunityPrompt = ({
   const usercontext = useContext(UserContext);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/group/")
+      .get("https://flinq-backend.onrender.com/group/")
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
@@ -56,7 +56,7 @@ const ChatCommunityPrompt = ({
         name: newCommunityName,
       };
       axios
-        .post("http://localhost:5000/group/creategroup", {
+        .post("https://flinq-backend.onrender.com/group/creategroup", {
           groupName: newCommunity.name,
           sender: usercontext.user._id,
         })

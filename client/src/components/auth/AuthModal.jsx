@@ -45,7 +45,7 @@ const AuthModal = () => {
     signInWithPopup(auth, provider)
       .then(async (data) => {
         await axios
-          .post("http://localhost:5000/user/googleLogin", {
+          .post("https://flinq-backend.onrender.com/user/googleLogin", {
             email: data.user.email,
             verified: data.user.emailVerified,
           })
@@ -118,7 +118,7 @@ const AuthModal = () => {
     }
     
     await axios
-      .post("http://localhost:5000/user/register", creds)
+      .post("https://flinq-backend.onrender.com/user/register", creds)
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
@@ -139,7 +139,7 @@ const AuthModal = () => {
         return; 
     }
     await axios
-      .post("http://localhost:5000/user/login", {
+      .post("https://flinq-backend.onrender.com/user/login", {
         email: creds.email,
         password: creds.password,
       })

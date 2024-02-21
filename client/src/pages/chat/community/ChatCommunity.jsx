@@ -21,7 +21,7 @@ const ChatCommunity = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/group/")
+      .get("https://flinq-backend.onrender.com/group/")
       .then((response) => {
         setCommunityArray(response.data.groups);
         console.log(response.data.groups);
@@ -55,7 +55,7 @@ const ChatCommunity = () => {
         setIsScrollingUp={setIsScrollingUp}
       />
       <ChatFooter
-        apiEndPoint={"http://localhost:5000/group/joingroup"}
+        apiEndPoint={"https://flinq-backend.onrender.com/group/joingroup"}
         chatArray={chatArray}
         setChatArray={setChatArray}
         setIsScrollingUp={setIsScrollingUp}
