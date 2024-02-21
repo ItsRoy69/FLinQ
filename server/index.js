@@ -57,8 +57,9 @@ app.use((req, res, next) => {
 // Middlewares
 app.use(cors({
   credentials: true,
-  origin: ["http://localhost:5173"]
+  origin: ["http://localhost:5173", "https://flinq.vercel.app"]
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '30mb', extended: true })); // images that are going to be send have limit 30mb
