@@ -54,7 +54,3 @@ export function UserProvider({ children }) {
     </UserContext.Provider>
   );
 }
-
-// export function userModal() {
-//     return (useContext(UserContext))
-// }

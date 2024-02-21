@@ -20,8 +20,6 @@ const ChatCommunityPrompt = ({
     setCommunityChatArray([...DummyChatCommunityArray]);
   }, []);
 
-  // NECESSARIES TO ADD A COMMUNITY
-
   const [commAddPromptOpen, setCommAddPromptOpen] = useState(false);
   const [newCommunityName, setNewCommunityName] = useState("");
   const [addCommunityError, setAddCommunityError] = useState("");

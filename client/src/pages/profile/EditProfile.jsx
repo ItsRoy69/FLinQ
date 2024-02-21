@@ -7,11 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-
-
 const EditProfile = () => {
   const navigate = useNavigate();
-  
+
   const [user, setUser] = useState([]);
   const usercontext = useContext(UserContext);
   const [creds, setcreds] = useState({
@@ -24,8 +22,6 @@ const EditProfile = () => {
     birthdate: usercontext.user.birthdate,
     gender: usercontext.user.gender,
   });
-
-  
 
   const handleBackClick = () => {
     navigate("/profile");
@@ -135,7 +131,7 @@ const EditProfile = () => {
               className=" w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer"
             />
             <label
-              for="fullname"
+              htmlFor="fullname"
               className="absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600"
             >
               Full Name
@@ -152,7 +148,7 @@ const EditProfile = () => {
                 className=" w-full bg-transparent mt-4 px-2   py-1.5 focus:outline-none peer"
               />
               <label
-                for="gender"
+                htmlFor="gender"
                 className="absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600"
               >
                 Gender
@@ -168,7 +164,7 @@ const EditProfile = () => {
                 className=" w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer"
               />
               <label
-                for="birthday"
+                htmlFor="birthday"
                 className="absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600"
               >
                 Birthday
@@ -184,7 +180,7 @@ const EditProfile = () => {
               className=" w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer"
             />
             <label
-              for="phone"
+              htmlFor="phone"
               className="absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600"
             >
               Phone Number
@@ -199,7 +195,7 @@ const EditProfile = () => {
               className=" w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer"
             />
             <label
-              for="email"
+              htmlFor="email"
               className="absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600"
             >
               Email
@@ -214,7 +210,7 @@ const EditProfile = () => {
               className=" w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer"
             />
             <label
-              for="username"
+              htmlFor="username"
               className="absolute left-0 pt-1 px-2  text-slate-400 peer-focus:text-xs cursor-text transition-all peer-focus:top-[-2px] peer-focus:text-slate-600"
             >
               Username

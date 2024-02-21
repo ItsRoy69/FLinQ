@@ -3,8 +3,12 @@ import MicRoundedIcon from "@mui/icons-material/MicRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { UserContext } from "../../../../contexts/userContext";
 
-
-const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp,apiEndPoint }) => {
+const ChatFooter = ({
+  setChatArray,
+  chatArray,
+  setIsScrollingUp,
+  apiEndPoint,
+}) => {
   const { user } = useContext(UserContext);
   const [queryInputVal, setQueryInputVal] = useState("");
 
@@ -20,12 +24,12 @@ const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp,apiEndPoint }) =
         text: queryInputVal,
         question: queryInputVal,
         timestamp: date.toISOString(),
-        type: "sent"
+        type: "sent",
       };
 
       setChatArray([...chatArray, newMessage]);
 
-      let responseData ;
+      let responseData;
       try {
         const response = await fetch(`${apiEndPoint}`, {
           method: "POST",
@@ -33,25 +37,24 @@ const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp,apiEndPoint }) =
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newMessage),
-          // "question": JSON.stringify(newMessage)
         });
-        responseData = await response.json()
-        console.log(responseData);
+        responseData = await response.json();
+
         if (!response.ok) {
           console.error("Failed to send message to the server");
         }
       } catch (error) {
         console.error("Error sending message:", error);
       }
-     
+
       const responseMessage = {
-        sender: 'Bot',
+        sender: "Bot",
         text: responseData.response,
         timestamp: date.toString(),
-        type : "received"
-      }
+        type: "received",
+      };
 
-      setChatArray([...chatArray,newMessage,responseMessage]);
+      setChatArray([...chatArray, newMessage, responseMessage]);
       setQueryInputVal("");
       setIsScrollingUp(false);
     }

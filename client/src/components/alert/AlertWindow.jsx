@@ -24,7 +24,7 @@ const AlertWindow = ({ alertActive, setAlertActive, setAlertWindowOpen }) => {
             <div className="flex gap-1 items-center">
               <p>If this is a mistake,</p>
               <div
-                className="rounded-xl w-fit bg-green-500 p-2 flex items-center justify-center font-semibold"
+                className="rounded-xl w-fit  cursor-pointer bg-green-500 p-2 flex items-center justify-center font-semibold"
                 onClick={() => handleCancelAlert()}
               >
                 I'm Safe

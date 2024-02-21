@@ -11,7 +11,7 @@ const FeedPostCard = ({ post }) => {
       try {
         const response = await fetch("http://localhost:5000/post/");
         const data = await response.json();
-        setPostData(data.result); 
+        setPostData(data.result);
       } catch (error) {
         console.error("Error fetching post data:", error);
       }
@@ -86,9 +86,7 @@ const FeedPostCard = ({ post }) => {
                   <p className="truncate text-sm sm:text-lg">{post.username}</p>
                 </div>
                 <div className="feed-post-header-utilities flex justify-end items-center gap-6 h-full w-2/6 ">
-                  <p className="text-xs font-light">
-                    {TimeGap(post.postedAt)}
-                  </p>
+                  <p className="text-xs font-light">{TimeGap(post.postedAt)}</p>
                   <MoreVertOutlinedIcon className="dark:text-white" />
                 </div>
               </div>

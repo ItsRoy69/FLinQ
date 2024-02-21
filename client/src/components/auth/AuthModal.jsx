@@ -9,7 +9,6 @@ import formImg from "../../assets/login-img.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleIcon from "@mui/icons-material/Google";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const AuthModal = () => {
@@ -28,50 +27,48 @@ const AuthModal = () => {
     birthdate: "",
     gender: "",
   });
-  // const {updateUser,user,logout} = useContext(UserProvider);
   const userContext = useContext(UserContext);
 
   const handleGoogleLogin = () => {
     signInWithPopup(auth, provider).then((data) => {
-      console.log(data.user.displayName);
       navigate("/userinfo", {
         state: { email: data.user.email, name: data.user.displayName },
       });
     });
   };
 
-  const handleGoogleLogins = async() => {
-    await signInWithPopup(auth, provider).then(async(data) => {
-      console.log(data.user);
-      await axios.post('http://localhost:5000/user/googleLogin',
-      {email: data.user.email , verified: data.user.emailVerified}).then((response)=>{
-        console.log(response);
-        if(response.status === 200){
-          userContext.updateUser(response.data.user);
-          navigate('/feed')
-        }
-      }).catch((err)=>{
-        setLoginError(err.response.data.message);
-      })
-      
+  const handleGoogleLogins = async () => {
+    await signInWithPopup(auth, provider).then(async (data) => {
+      await axios
+        .post("http://localhost:5000/user/googleLogin", {
+          email: data.user.email,
+          verified: data.user.emailVerified,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            userContext.updateUser(response.data.user);
+            navigate("/feed");
+          }
+        })
+        .catch((err) => {
+          setLoginError(err.response.data.message);
+        });
     });
   };
 
   const handleChange = (e) => {
     setcreds({ ...creds, [e.target.name]: e.target.value });
-    // console.log(creds)
   };
   const handleGoBack = async () => {
-    navigate("/home");
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(user);
+
     axios
       .post("http://localhost:5000/user/register", creds)
       .then((response) => {
-        console.log(response);
         if (response.status == 200) {
           userContext.updateUser(response.data.user);
           navigate("/feed");
@@ -92,7 +89,6 @@ const AuthModal = () => {
       })
       .then((response) => {
         if (response.status == 200) {
-          console.log(response.data);
           userContext.updateUser(response.data.user);
           navigate("/feed");
         }
@@ -346,7 +342,8 @@ const AuthModal = () => {
                     </div>
                     <button
                       className="border  bg-black text-white md:mt-0 mt-4 px-4 py-2 rounded-[10px]"
-                      onClick={() => handleGoogleLogins()}>
+                      onClick={() => handleGoogleLogins()}
+                    >
                       <span className="px-2 md:mr-5 mr-3">
                         <GoogleIcon />
                       </span>

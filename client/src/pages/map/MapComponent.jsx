@@ -12,8 +12,6 @@ const MapComponent = () => {
   const [directionsRenderer, setDirectionsRenderer] = useState(null);
   const [directionsService, setDirectionsService] = useState(null);
   const [selectedspotLocation, setSelectedspotLocation] = useState(null);
-
-  const [userLocation, setUserLocation] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -40,7 +38,7 @@ const MapComponent = () => {
         const position = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject);
         });
-        console.log(position);
+        
         const userLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
