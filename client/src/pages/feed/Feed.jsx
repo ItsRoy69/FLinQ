@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import "./feed.css";
 
@@ -20,6 +20,13 @@ const Feed = () => {
   const [user, setUser] = useState(dummyUser);
 
   const usercontext = useContext(UserContext);
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (usercontext.user === null) {
+      navigate('/home')
+    }
+  }, [])
 
   const location = useLocation();
 

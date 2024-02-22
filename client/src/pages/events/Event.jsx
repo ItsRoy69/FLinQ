@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { UserContext } from "../../contexts/userContext";
 import { dummyEventsArray } from "../../data/DummyEvent";
 
 import "./event.css";
@@ -14,7 +15,14 @@ import AlertIcon from "../../constants/alert/AlertIcon";
 import AddRounded from "@mui/icons-material/AddRounded";
 
 const Event = () => {
-  const navigate = useNavigate();
+
+  const navigate = useNavigate()
+  const userContext = useContext(UserContext)
+  useEffect(() => {
+    if (userContext.user === null) {
+      navigate('/home')
+    }
+  }, [])
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [eventArray, setEventArray] = useState([]);
