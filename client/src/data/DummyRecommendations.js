@@ -7,14 +7,14 @@ export const dummyRecommendationsArray = [
         logo: 'https://shorturl.at/dqHI2'
     },
     {
-        role: 'Sr. Product Manager',
+        role: 'Sr. Software Manager',
         salary: 'USD 150k P.A.',
         location: 'New Delhi',
         company: 'Google',
         logo: 'https://shorturl.at/dqHI2'
     },
     {
-        role: 'Sr. Product Manager',
+        role: 'Sr. Data Manager',
         salary: 'USD 150k P.A.',
         location: 'New Delhi',
         company: 'Google',

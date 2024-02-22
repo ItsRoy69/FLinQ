@@ -152,9 +152,9 @@ const Jobs = () => {
             id="recommendation-container"
             className="recommendation-container h-full flex gap-5 overflow-x-auto"
             key={currentSlide}
-            initial={{ opacity: 1, x: "100%", width: "100%", height: "100%" }}
-            animate={{ opacity: 1, x: "0%", width: "100%", height: "100%" }}
-            exit={{ opacity: 1, x: "-100%", width: "100%", height: "100%" }}
+            initial={{ opacity: 1, x: "100%"}}
+            animate={{ opacity: 1, x: "0%" }}
+            exit={{ opacity: 1, x: "-200%" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
             {dummyRecommendationsArray.map((recommentation, index) => (
