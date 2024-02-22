@@ -40,7 +40,7 @@ const getPostById = async (req, res) => {
 // create a new post
 const addPost = async (req, res) => {
     try {
-        const { userId: _id, image, postName, username } = req.body;
+        const { userId: _id, image, postName, username, postedAt } = req.body;
 
         if (!username) {
             return res.status(400).json({ message: "Username is required in the request body" });

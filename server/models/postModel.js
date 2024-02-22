@@ -44,6 +44,11 @@ const postSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    postedAt: {
+        type: Date,
+        default: Date.now,
+        required: [true, "date is required"]
+    },
     likes: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'UserModel'
