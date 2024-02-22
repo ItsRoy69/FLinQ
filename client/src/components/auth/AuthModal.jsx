@@ -52,7 +52,8 @@ const AuthModal = () => {
           .then((response) => {
             if (response.status === 200) {
               userContext.updateUser(response.data.user);
-              localStorage.setItem("userData", JSON.stringify(response.data.user));
+              saveUserDataToLocalStorage(response.data.user)
+              // localStorage.setItem("userData", JSON.stringify(response.data.user));
               navigate("/feed");
             }
           })
@@ -91,7 +92,7 @@ const AuthModal = () => {
       return false;
     }
     for(let i = 0; i < password.length; i++) {
-      let ascii = (int)(password[i])
+      let ascii = parseInt (password[i])
       if(ascii >= 65 && ascii <= 90) {
           upperCase += 1;
       }
@@ -112,10 +113,10 @@ const AuthModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const passwordValid = checkPassword();
-    if (!passwordValid) {
-        return; 
-    }
+    // const passwordValid = checkPassword();
+    // if (!passwordValid) {
+    //     return; 
+    // }
     
     await axios
       .post("https://flinq-backend.onrender.com/user/register", creds)
@@ -123,6 +124,7 @@ const AuthModal = () => {
         console.log(response);
         if (response.status == 200) {
           userContext.updateUser(response.data.user);
+          saveUserDataToLocalStorage(response.data.user)
           navigate("/feed");
         }
       })
@@ -134,10 +136,10 @@ const AuthModal = () => {
 
   const handleLogin = async(e) => {
     e.preventDefault();
-    const passwordValid = checkPassword();
-    if (!passwordValid) {
-        return; 
-    }
+    // const passwordValid = checkPassword();
+    // if (!passwordValid) {
+    //     return; 
+    // }
     await axios
       .post("https://flinq-backend.onrender.com/user/login", {
         email: creds.email,
@@ -147,6 +149,7 @@ const AuthModal = () => {
         if (response.status == 200) {
           console.log(response.data);
           userContext.updateUser(response.data.user);
+          saveUserDataToLocalStorage(response.data.user)
           navigate("/feed");
         }
       })
@@ -154,6 +157,10 @@ const AuthModal = () => {
         console.log(error);
         setLoginError(error.response.data.message);
       });
+  };
+
+  const saveUserDataToLocalStorage = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
   };
 
   return (

@@ -17,7 +17,7 @@ const Feed = () => {
   const [page, setPage] = useState(1);
   const [postArray, setPostArray] = useState([]);
   const [statusArray, setStatusArray] = useState([]);
-  const [user, setUser] = useState(dummyUser);
+  const [user, setUser] = useState({});
 
   const usercontext = useContext(UserContext);
 

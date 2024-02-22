@@ -6,6 +6,7 @@ import FeedTypeState from "./contexts/FeedTypeState";
 import Feed from "./pages/feed/Feed";
 import Home from "./pages/home/Home";
 import Jobs from "./pages/jobs/Jobs";
+import JobDetails from "./components/jobs/jobDetails/JobDetails";
 import Event from "./pages/events/Event";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
@@ -53,6 +54,10 @@ function App() {
                       <Route path="/events" element={<Event />} />
                       <Route path="/feed" element={<Feed />} />
                       <Route path="/jobs" element={<Jobs />} />
+                      <Route
+                         path="/jobs/jobdetails"
+                         element = {<JobDetails/>}
+                      />
                       <Route path="/chat/aibot" element={<ChatBot />} />
                       <Route
                         path="/chat/community/*"

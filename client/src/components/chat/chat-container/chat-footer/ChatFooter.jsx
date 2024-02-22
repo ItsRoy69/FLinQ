@@ -9,6 +9,7 @@ const ChatFooter = ({
   setIsScrollingUp,
   apiEndPoint,
   groupId,
+  messagetype
 }) => {
   const { user } = useContext(UserContext);
   const [queryInputVal, setQueryInputVal] = useState("");
@@ -25,11 +26,13 @@ const ChatFooter = ({
         senderId: user._id,
         text: queryInputVal,
         message: queryInputVal,
+        messagetype : messagetype,
         question: queryInputVal,
         timestamp: date.toISOString(),
         groupId: groupId,
         type: "sent",
       };
+      console.log("newMessage",newMessage)
       setChatArray([...chatArray,newMessage])
       let responseData;
       try {
@@ -41,7 +44,7 @@ const ChatFooter = ({
           body: JSON.stringify(newMessage),
         });
         responseData = await response.json();
-        console.log("from chatfooter:", responseData.response);
+        // console.log("from chatfooter:", responseData.response);
         if (!response.ok) {
           console.error("Failed to send message to the server");
         }
