@@ -95,7 +95,7 @@ const Event = () => {
           <AlertIcon />
         </div>
 
-        <div className="event-container pt-16 pb-10 px-4 mt-2 flex flex-col min-h-screen h-fit">
+        <div className="event-container pt-16 pb-10 px-4 mt-2 flex flex-col w-screen min-h-screen h-fit">
           <FeedSelector />
 
           <div className="pb-2">

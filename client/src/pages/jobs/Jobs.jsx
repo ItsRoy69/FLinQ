@@ -138,7 +138,7 @@ const Jobs = () => {
       </div>
 
       <div
-        className="jobs-body dark:bg-custom-dark dark:text-white min-h-screen h-fit py-16 px-4 mt-2 flex flex-col gap-3 items-center overflow-auto"
+        className="jobs-body dark:bg-custom-dark dark:text-white min-h-screen w-full h-fit py-16 px-4 mt-2 flex flex-col gap-3 items-center overflow-auto"
         ref={jobsBodyRef}
       >
         <FeedSelector />

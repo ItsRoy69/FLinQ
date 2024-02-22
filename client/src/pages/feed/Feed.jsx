@@ -106,7 +106,7 @@ const Feed = () => {
 
       <div
         id="feed-body"
-        className="feed-body h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16"
+        className="feed-body w-screen h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16"
       >
         <div className="feed-contents-extra flex flex-col gap-4 mt-20">
           <div className="feed-search-card flex justify-between items-center gap-2 h-16">
