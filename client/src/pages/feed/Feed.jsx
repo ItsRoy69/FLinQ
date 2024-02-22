@@ -20,19 +20,21 @@ const Feed = () => {
 
 	const usercontext = useContext(UserContext);
 
-	const navigate = useNavigate()
-	useEffect(() => {
-		if (usercontext.user === null) {
-		navigate('/home')
-		}
-	}, [])
-
-	useEffect(() => {
-		const storedUser = localStorage.getItem('userData');
-		if (storedUser) {
-		setUser(JSON.parse(storedUser));
-		}
-	}, []);
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (usercontext.user === null) {
+      navigate('/home')
+    }
+  }, [])
+  
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+  
+  const location = useLocation();
 
 	useEffect(() => {
 		const fetchPostData = async () => {

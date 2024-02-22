@@ -41,7 +41,7 @@ const ChatBody = ({
       document.removeEventListener("wheel", handleChatScroll);
     };
   }, []);
-
+  console.log("chatArray: ",chatArray)
   return (
     <>
       <div

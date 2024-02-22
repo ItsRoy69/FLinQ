@@ -44,6 +44,7 @@ const ChatAnonymous = () => {
         setIsScrollingUp={setIsScrollingUp}
       />
       <ChatFooter
+        messagetype = "anonymous"
         apiEndPoint={"https://flinq-backend.onrender.com/chat/messages"}
         chatArray={chatArray}
         setChatArray={setChatArray}

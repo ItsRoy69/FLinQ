@@ -21,6 +21,7 @@ const ChatBot = () => {
         setIsScrollingUp={setIsScrollingUp}
       />
       <ChatFooter
+        messagetype = "Bot"
         apiEndPoint={"https://flinq-chatbot.onrender.com/chat"}
         chatArray={chatArray}
         setChatArray={setChatArray}

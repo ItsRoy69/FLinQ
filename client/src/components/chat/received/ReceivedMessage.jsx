@@ -3,16 +3,19 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 const ReceivedMessage = ({ message }) => {
-  console.log(message)
+  // console.log(message)
   const [username, setUsername] = useState('');
 
  if(message.sender != "Bot")  {
       const userId = message.sender
-      console.log("userId:",userId)
+      // console.log("userId:",userId)
       const getUsername = async() => {
         await axios.post(`https://flinq-backend.onrender.com/user/getuser/${userId}`,{userId}).then((response)=>{
         console.log(response.data.result.username)
         setUsername(response.data.result.username)
+      }).catch((error)=>{
+        console.log(error)
+        // setUsername("Unknown User")
       })
     }
     useEffect(()=>{

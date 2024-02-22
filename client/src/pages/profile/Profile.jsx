@@ -26,6 +26,7 @@ const Profile = () => {
     navigate("/edit");
   };
   const handleLogout = () => {
+    localStorage.removeItem("userData");
     usercontext.logout();
     navigate("/");
   };

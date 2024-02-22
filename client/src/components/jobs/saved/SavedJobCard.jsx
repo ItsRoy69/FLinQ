@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./savedJobCard.css";
 
 import randomcolor from "randomcolor";
 
 const SavedJobCard = ({ job }) => {
   const [bgColor, setBgColor] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     setBgColor(randomcolor());
   }, []);
+
+  const handlejobsclicked = () =>{
+      navigate('/jobs/jobdetails')
+  }
 
   return (
     <>
@@ -17,6 +22,7 @@ const SavedJobCard = ({ job }) => {
         style={{
           backgroundColor: `${bgColor}`,
         }}
+        onClick= {handlejobsclicked}
       >
         <div className="job-card-header w-full flex items-center gap-5">
           <div className="h-16 w-16 rounded-xl overflow-hidden object-cover shadow-md dark:bg-slate-200 shadow-slate-900">
