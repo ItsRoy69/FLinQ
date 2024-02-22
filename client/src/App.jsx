@@ -38,8 +38,8 @@ function App() {
   return (
     <main className="flex">
       {isSmallScreen ? (
-        <div className="flex items-center justify-center h-screen w-screen">
-          <p className="text-red-500">Sorry, no responsiveness, it is for mobile screens</p>
+        <div className="h-screen w-screen">
+          <p className="h-full w-full flex justify-center items-center text-red-500">Sorry, no responsiveness, it is for mobile screens</p>
         </div>
       ) : (
         <>

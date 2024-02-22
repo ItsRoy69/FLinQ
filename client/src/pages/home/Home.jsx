@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/userContext";
+
 import LoginHeader from "../../constants/home_navbar/LoginHeader";
 import { motion } from "framer-motion";
 import NavBar from "../../constants/navbar/NavBar";
@@ -9,7 +12,17 @@ import img4 from "../../assets/self-def.png";
 import "../../constants/home_navbar/LoginHeader.css";
 import "./home.css";
 
+
 const Home = () => {
+
+  const navigate = useNavigate()
+  const userContext = useContext(UserContext)
+  useEffect(() => {
+    if (userContext.user !== null) {
+      navigate('/feed')
+    }
+  }, [])
+
   return (
     <div id="homemain" className="bg-fixed">
       <LoginHeader />
