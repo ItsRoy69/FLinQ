@@ -15,14 +15,6 @@ import "./home.css";
 
 const Home = () => {
 
-  const navigate = useNavigate()
-  const userContext = useContext(UserContext)
-  useEffect(() => {
-    if (userContext.user !== null) {
-      navigate('/feed')
-    }
-  }, [])
-
   return (
     <div id="homemain" className="bg-fixed">
       <LoginHeader />
