@@ -24,18 +24,18 @@ const ChatCommunity = () => {
       .get("https://flinq-backend.onrender.com/group/")
       .then((response) => {
         setCommunityArray(response.data.groups);
-        console.log(response.data.groups);
+       
         if (communityParam === null) {
           navigate("/feed");
         } else {
           const foundCommunity = response.data.groups.find(
             (community) => community.name === communityParam
           );
-          console.log(foundCommunity);
+        
           if (foundCommunity) {
             setCommunity(foundCommunity);
             setChatArray(...chatArray, foundCommunity.messages);
-            console.log("foundCommunity", foundCommunity.messages);
+           
           }
         }
       })
@@ -43,7 +43,7 @@ const ChatCommunity = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
-  console.log("chatArray", chatArray);
+  
   const [isScrollingUp, setIsScrollingUp] = useState(false);
   return (
     <>

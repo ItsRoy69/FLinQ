@@ -1,6 +1,6 @@
 const UserModel = require('../models/userModel');
 const jwt = require('jsonwebtoken');
-
+const mongoose = require('mongoose');
 // create jwt token
 const createToken = (payload, secret, expiry) => {
     return jwt.sign({ payload }, secret, { expiresIn: `${expiry}` });
