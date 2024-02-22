@@ -91,6 +91,7 @@ const ChatFooter = ({
         placeholder="Ask something..."
         value={queryInputVal}
         onChange={handleQueryInputChange}
+        onKeyDown={handleEnterPress}
       />
       {queryInputVal?.length > 0 ? (
         <div

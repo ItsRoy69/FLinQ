@@ -39,6 +39,21 @@ export function UserProvider({ children }) {
   const logout = () => {
     setUser(emptyUser);
   };
+  useEffect(() => {
+    // Retrieve user data from localStorage on component mount
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save user data to localStorage whenever it changes
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user]);
+
   return (
     <UserContext.Provider value={{ user, updateUser, logout }}>
       {children}

@@ -16,6 +16,7 @@ const postRoute = require('./routes/postRoute');
 const chatRoute = require('./routes/chatRoute');
 const groupRoute = require('./routes/groupRoute');
 const jobsRoute = require('./routes/jobsRoute');
+const eventsRoute = require('./routes/eventsRoute');
 
 // Socket Chat
 const chatNamespace = io.of('/chat');
@@ -73,6 +74,7 @@ app.use('/post', postRoute);
 app.use('/chat', chatRoute);
 app.use('/group', groupRoute);
 app.use('/jobs', jobsRoute);
+app.use('/events', eventsRoute);
 
 const connectToDb = async () => {
   try {
