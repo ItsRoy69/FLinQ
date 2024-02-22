@@ -17,15 +17,6 @@ const Feed = () => {
 	const [page, setPage] = useState(1);
 	const [postArray, setPostArray] = useState([]);
 	const [user, setUser] = useState(dummyUser);
-
-	const usercontext = useContext(UserContext);
-
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (usercontext.user === null) {
-      navigate('/home')
-    }
-  }, [])
   
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
