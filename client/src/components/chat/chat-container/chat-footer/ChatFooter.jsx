@@ -30,7 +30,7 @@ const ChatFooter = ({
         groupId: groupId,
         type: "sent",
       };
-
+      setChatArray([...chatArray,newMessage])
       let responseData;
       try {
         const response = await fetch(`${apiEndPoint}`, {

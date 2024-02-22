@@ -3,19 +3,21 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 const ReceivedMessage = ({ message }) => {
-  const userId = message.sender
-  console.log(userId)
+  
   const [username, setUsername] = useState('');
 
-  const getUsername = async() => {
-      await axios.post("https://flinq-backend.onrender.com/user/getuser",{userId}).then((response)=>{
-      console.log(response.data.result.username)
-      setUsername(response.data.result.username)
-    })
-  }
-  useEffect(()=>{
-    getUsername()
-  },[])
+ if(message.sender != "Bot")  {
+      const userId = message.sender
+      const getUsername = async() => {
+        await axios.post("https://flinq-backend.onrender.com/user/getuser",{userId}).then((response)=>{
+        console.log(response.data.result.username)
+        setUsername(response.data.result.username)
+      })
+    }
+    useEffect(()=>{
+      getUsername()
+    },[])
+ }
   return (
     <div className="w-full flex flex-col gap-1">
       <div className="flex justify-start">
