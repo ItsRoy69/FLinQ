@@ -40,7 +40,7 @@ const getPostById = async (req, res) => {
 // create a new post
 const addPost = async (req, res) => {
     try {
-        const { userId: _id, image, postName, username } = req.body;
+        const { userId: _id, image, postName, username, postedAt } = req.body;
 
         if (!username) {
             return res.status(400).json({ message: "Username is required in the request body" });
@@ -120,4 +120,78 @@ const deletePost = async (req, res) => {
     }
 }
 
-module.exports = { getAllPosts, getPostById, addPost, editPost, getUserPosts, deletePost };
+// like a post
+const likePost = async (req, res) => {
+    try {
+        const { id: _id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(422).json({ message: "Id not valid" });
+        }
+
+        const postExist = await PostModel.exists({ _id: _id });
+        if (!postExist) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        const likedPost = await PostModel.findByIdAndUpdate(_id, { $addToSet: { likes: req.body.userId } }, { new: true });
+        res.status(200).json({ message: 'Post liked', result: likedPost });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error?.message });
+    }
+}
+
+// unlike a post
+const unlikePost = async (req, res) => {
+    try {
+        const { id: _id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(422).json({ message: "Id not valid" });
+        }
+
+        const postExist = await PostModel.exists({ _id: _id });
+        if (!postExist) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        const unlikedPost = await PostModel.findByIdAndUpdate(_id, { $pull: { likes: req.body.userId } }, { new: true });
+        res.status(200).json({ message: 'Post unliked', result: unlikedPost });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error?.message });
+    }
+}
+
+// add a comment to a post
+const addComment = async (req, res) => {
+    try {
+        const { id: _id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(422).json({ message: "Id not valid" });
+        }
+
+        const postExist = await PostModel.exists({ _id: _id });
+        if (!postExist) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        const { userId, username, content } = req.body;
+
+        const newComment = {
+            userId,
+            username,
+            content
+        };
+
+        const commentedPost = await PostModel.findByIdAndUpdate(_id, { $push: { comments: newComment } }, { new: true });
+        res.status(200).json({ message: 'Comment added to post', result: commentedPost });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error?.message });
+    }
+}
+
+
+module.exports = {
+    getAllPosts, getPostById, addPost, editPost, getUserPosts, deletePost, likePost, unlikePost, addComment
+};

@@ -75,7 +75,7 @@ const FeedPostCard = ({ post }) => {
         postData.map((post) => (
           <div
             key={post._id}
-            className="feed-post-container h-60 sm:h-80 md:h-96 rounded-xl overflow-hidden flex flex-col"
+            className="feed-post-container min-h-60 h-fit sm:h-80 md:h-96 rounded-xl overflow-hidden flex flex-col"
           >
             <div className="feed-post h-5/6 bg-gradient-to-r from-fuchsia-950 to-purple-950 rounded-b-3xl">
               <div className="feed-post-header w-full h-1/5 flex justify-start sm:p-1">
@@ -90,7 +90,7 @@ const FeedPostCard = ({ post }) => {
                   <MoreVertOutlinedIcon className="dark:text-white" />
                 </div>
               </div>
-              <div className="feed-post-body w-full h-4/5 rounded-3xl object-cover overflow-hidden sm:max-h-fit">
+              <div className="feed-post-body w-full min-h-4/5 h-fit rounded-3xl object-cover overflow-hidden sm:max-h-fit">
                 <img className="w-full" src={post.image} />
               </div>
             </div>

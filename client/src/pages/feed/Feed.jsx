@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import "./feed.css";
 
@@ -20,8 +20,15 @@ const Feed = () => {
   const [user, setUser] = useState({});
 
   const usercontext = useContext(UserContext);
+
+  const navigate = useNavigate()
   useEffect(() => {
-    
+    if (usercontext.user === null) {
+      navigate('/home')
+    }
+  }, [])
+  
+  useEffect(() => {
     const storedUser = localStorage.getItem('userData');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -106,7 +113,7 @@ const Feed = () => {
 
       <div
         id="feed-body"
-        className="feed-body h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16"
+        className="feed-body w-screen h-screen dark:bg-slate-900 dark:text-white px-4 overflow-auto pb-16"
       >
         <div className="feed-contents-extra flex flex-col gap-4 mt-20">
           <div className="feed-search-card flex justify-between items-center gap-2 h-16">

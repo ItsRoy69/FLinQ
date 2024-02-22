@@ -8,19 +8,6 @@ const SentMessage = ({ message }) => {
   const [username, setUsername] = useState('');
   const { user } = useContext(UserContext)
 
-  // if(message.sender != "Bot")  {
-  //     const userId = message.sender
-  //     console.log("userId:",userId)
-  //     const getUsername = async() => {
-  //       await axios.post(`http://localhost:5000/user/getuser/${userId}`,{userId}).then((response)=>{
-  //       console.log(response.data.result.username)
-  //       setUsername(response.data.result.username)
-  //     })
-  //   }
-  //   useEffect(()=>{
-  //     getUsername()
-  //   },[])
-  // }
   return (
     <div className="w-full flex flex-col gap-1">
       <div className="flex justify-end">

@@ -20,5 +20,13 @@ router.get('/:id', controllers.getPostById);
 // delete post
 router.delete('/:id', controllers.deletePost);
 
+// like a post
+router.post('/:id/like', controllers.likePost);
+
+// unlike a post
+router.post('/:id/unlike', controllers.unlikePost);
+
+// add comment to a post
+router.post('/:id/comment', controllers.addComment);
 
 module.exports = router;
