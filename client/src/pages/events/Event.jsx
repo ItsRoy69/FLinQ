@@ -16,14 +16,6 @@ import AddRounded from "@mui/icons-material/AddRounded";
 
 const Event = () => {
 
-  const navigate = useNavigate()
-  const userContext = useContext(UserContext)
-  useEffect(() => {
-    if (userContext.user === null) {
-      navigate('/home')
-    }
-  }, [])
-
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [eventArray, setEventArray] = useState([]);
   const [searchVal, setSearchVal] = useState("");
