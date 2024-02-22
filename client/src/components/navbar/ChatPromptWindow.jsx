@@ -14,8 +14,6 @@ const ChatPromptWindow = ({
   closeChatPromptWindow,
   handlePageSwitch,
 }) => {
-  // NECESSARY FOR NAVIGATION
-
   const handleOutsideClick = (e) => {
     if (
       !e.target.closest("#chat-prompt-box") &&

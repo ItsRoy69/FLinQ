@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { useContext } from "react";
 
 import "./chatCommunityPrompt.css";
-
+import axios from "axios";
 import CommunityChatCard from "./community-chat-card/CommunityChatCard";
 import { DummyChatCommunityArray } from "../../../data/DummyChatCommunity";
-
+import { UserContext } from "../../../contexts/userContext";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -16,11 +17,20 @@ const ChatCommunityPrompt = ({
 }) => {
   const [communityChatArray, setCommunityChatArray] = useState([]);
 
+  const usercontext = useContext(UserContext);
   useEffect(() => {
-    setCommunityChatArray([...DummyChatCommunityArray]);
+    axios
+      .get("https://flinq-backend.onrender.com/group/")
+      .then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          setCommunityChatArray(response.data.groups);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-  // NECESSARIES TO ADD A COMMUNITY
 
   const [commAddPromptOpen, setCommAddPromptOpen] = useState(false);
   const [newCommunityName, setNewCommunityName] = useState("");
@@ -45,8 +55,18 @@ const ChatCommunityPrompt = ({
       const newCommunity = {
         name: newCommunityName,
       };
-      setCommunityChatArray([...communityChatArray, newCommunity]);
-      setNewCommunityName("");
+      axios
+        .post("https://flinq-backend.onrender.com/group/creategroup", {
+          groupName: newCommunity.name,
+          sender: usercontext.user._id,
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status == 201) {
+            setCommunityChatArray([...communityChatArray, newCommunity]);
+            setNewCommunityName("");
+          }
+        });
     } else {
       setAddCommunityError("Community name cannot be blank.");
     }
@@ -111,13 +131,17 @@ const ChatCommunityPrompt = ({
       )}
 
       <div className="flex flex-col gap-4">
-        {communityChatArray.map((community, index) => (
-          <CommunityChatCard
-            handlePageSwitch={handlePageSwitch}
-            community={community}
-            key={index}
-          />
-        ))}
+        {communityChatArray.length === 0 ? (
+          <p>No groups to show</p>
+        ) : (
+          communityChatArray.map((community, index) => (
+            <CommunityChatCard
+              handlePageSwitch={handlePageSwitch}
+              community={community}
+              key={index}
+            />
+          ))
+        )}
       </div>
     </>
   );

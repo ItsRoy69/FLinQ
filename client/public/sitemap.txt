@@ -1,0 +1,13 @@
+https://flinq.vercel.app/
+https://flinq.vercel.app/events
+https://flinq.vercel.app/feed
+https://flinq.vercel.app/jobs
+https://flinq.vercel.app/chat/aibot
+https://flinq.vercel.app/chat/community/*
+https://flinq.vercel.app/chat/anonymous
+https://flinq.vercel.app/map
+https://flinq.vercel.app/register
+https://flinq.vercel.app/profile
+https://flinq.vercel.app/edit
+https://flinq.vercel.app/userinfo
+https://flinq.vercel.app/error

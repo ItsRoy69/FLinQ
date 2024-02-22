@@ -6,7 +6,7 @@ const controllers = require('../controllers/postController');
 router.get('/', controllers.getAllPosts);
 
 // get posts by userId
-router.get('/userPosts', controllers.getUserPosts);
+router.get('/userPosts/:id', controllers.getUserPosts);
 
 // create post 
 router.post('/', controllers.addPost);

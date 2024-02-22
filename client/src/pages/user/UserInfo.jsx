@@ -32,11 +32,10 @@ const UserInfo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(user);
+
     axios
-      .post("http://localhost:5000/user/register", creds)
+      .post("https://flinq-backend.onrender.com/user/register", creds)
       .then((response) => {
-        console.log(response);
         if (response.status == 200) {
           usercontext.updateUser(response.data.user);
           navigate("/feed");

@@ -9,6 +9,7 @@ import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import NavBar from "../../constants/navbar/NavBar";
 
 const Profile = () => {
   const [user, setUser] = useState([]);
@@ -16,8 +17,6 @@ const Profile = () => {
 
   const usercontext = useContext(UserContext);
   useEffect(() => {
-    
-    console.log(usercontext.user);
     setUser(usercontext.user);
   }, []);
   const handleBackClick = () => {
@@ -28,7 +27,7 @@ const Profile = () => {
   };
   const handleLogout = () => {
     usercontext.logout();
-    navigate("/home");
+    navigate("/");
   };
   return (
     <div className="container bg-slate-900 min-h-screen font-sans text-white">
@@ -138,6 +137,7 @@ const Profile = () => {
           </ul>
         </div>
       </div>
+      <NavBar />
     </div>
   );
 };

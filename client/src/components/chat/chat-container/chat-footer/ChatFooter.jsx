@@ -3,8 +3,13 @@ import MicRoundedIcon from "@mui/icons-material/MicRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { UserContext } from "../../../../contexts/userContext";
 
-
-const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp,apiEndPoint }) => {
+const ChatFooter = ({
+  setChatArray,
+  chatArray,
+  setIsScrollingUp,
+  apiEndPoint,
+  groupId,
+}) => {
   const { user } = useContext(UserContext);
   const [queryInputVal, setQueryInputVal] = useState("");
 
@@ -17,15 +22,16 @@ const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp,apiEndPoint }) =
       const date = new Date();
       const newMessage = {
         sender: user.username || "Anonymous",
+        senderId: user._id,
         text: queryInputVal,
+        message: queryInputVal,
         question: queryInputVal,
         timestamp: date.toISOString(),
-        type: "sent"
+        groupId: groupId,
+        type: "sent",
       };
 
-      setChatArray([...chatArray, newMessage]);
-
-      let responseData ;
+      let responseData;
       try {
         const response = await fetch(`${apiEndPoint}`, {
           method: "POST",
@@ -33,30 +39,31 @@ const ChatFooter = ({ setChatArray, chatArray, setIsScrollingUp,apiEndPoint }) =
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newMessage),
-          // "question": JSON.stringify(newMessage)
         });
-        responseData = await response.json()
-        console.log(responseData);
+        responseData = await response.json();
+        console.log("from chatfooter:", responseData.response);
         if (!response.ok) {
           console.error("Failed to send message to the server");
         }
       } catch (error) {
         console.error("Error sending message:", error);
       }
-     
-      const responseMessage = {
-        sender: 'Bot',
-        text: responseData.response,
-        timestamp: date.toString(),
-        type : "received"
+      if (responseData.response) {
+        console.log("response found");
+        const responseMessage = {
+          sender: "Bot",
+          text: responseData.response,
+          timestamp: date.toString(),
+          type: "received",
+        };
+        setChatArray([...chatArray, newMessage, responseMessage]);
+      } else {
+        setChatArray([...chatArray, newMessage]);
       }
-
-      setChatArray([...chatArray,newMessage,responseMessage]);
       setQueryInputVal("");
       setIsScrollingUp(false);
     }
   };
-
   const handleEnterPress = (e) => {
     if (e.key === "Enter") {
       sendQuery();

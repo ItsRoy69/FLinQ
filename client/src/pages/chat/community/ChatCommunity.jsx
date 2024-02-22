@@ -2,8 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import "./chatCommunity.css";
-
-import { DummyChatCommunityArray } from "../../../data/DummyChatCommunity";
+import axios from "axios";
 
 import ChatHeader from "../../../components/chat/chat-container/chat-header/ChatHeader";
 import ChatBody from "../../../components/chat/chat-container/chat-body/ChatBody";
@@ -15,25 +14,37 @@ const ChatCommunity = () => {
 
   const queryParams = new URLSearchParams(location.search);
   const communityParam = queryParams.get("comm");
-
+  const community_id = queryParams.get("g_id");
+  const [communityArray, setCommunityArray] = useState([]);
   const [community, setCommunity] = useState({});
   const [chatArray, setChatArray] = useState([]);
 
   useEffect(() => {
-    if (communityParam === null) {
-      navigate("/feed");
-    } else {
-      DummyChatCommunityArray.map((community) => {
-        if (community.name === communityParam) {
-          setCommunity(community);
-          setChatArray(community.chatHistory);
+    axios
+      .get("https://flinq-backend.onrender.com/group/")
+      .then((response) => {
+        setCommunityArray(response.data.groups);
+        console.log(response.data.groups);
+        if (communityParam === null) {
+          navigate("/feed");
+        } else {
+          const foundCommunity = response.data.groups.find(
+            (community) => community.name === communityParam
+          );
+          console.log(foundCommunity);
+          if (foundCommunity) {
+            setCommunity(foundCommunity);
+            setChatArray(...chatArray, foundCommunity.messages);
+            console.log("foundCommunity", foundCommunity.messages);
+          }
         }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
-    }
   }, []);
-
+  console.log("chatArray", chatArray);
   const [isScrollingUp, setIsScrollingUp] = useState(false);
-
   return (
     <>
       <ChatHeader roomName={community.name} />
@@ -44,9 +55,11 @@ const ChatCommunity = () => {
         setIsScrollingUp={setIsScrollingUp}
       />
       <ChatFooter
+        apiEndPoint={"https://flinq-backend.onrender.com/group/joingroup"}
         chatArray={chatArray}
         setChatArray={setChatArray}
         setIsScrollingUp={setIsScrollingUp}
+        groupId={community_id}
       />
     </>
   );

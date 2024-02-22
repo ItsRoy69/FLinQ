@@ -10,7 +10,7 @@ router.post('/login', controllers.loginUser);
 // get all users
 router.get('/', controllers.getUsers);
 // get user by id
-router.post('/getuser/:id', controllers.getUserById);
+router.post('/getuser', controllers.getUserById);
 //google login
 router.post('/googleLogin',controllers.googleLogin)
 // update user

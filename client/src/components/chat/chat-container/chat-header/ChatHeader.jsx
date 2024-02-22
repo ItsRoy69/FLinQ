@@ -6,8 +6,6 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import AlertIcon from "../../../../constants/alert/AlertIcon";
 
 const ChatHeader = ({ roomName }) => {
-  // NECESSARIES FOR NAVIGATION
-
   const navigate = useNavigate();
 
   const handleBackClick = () => {

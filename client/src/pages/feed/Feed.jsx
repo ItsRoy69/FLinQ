@@ -13,7 +13,7 @@ import FeedSelector from "../../constants/feed-selector/FeedSelector";
 import AlertIcon from "../../constants/alert/AlertIcon";
 
 const Feed = () => {
-  const [searchVal, setSearchVal] = useState("")
+  const [searchVal, setSearchVal] = useState("");
   const [page, setPage] = useState(1);
   const [postArray, setPostArray] = useState([]);
   const [statusArray, setStatusArray] = useState([]);
@@ -30,9 +30,6 @@ const Feed = () => {
 
   const location = useLocation();
 
-  // const name = location.state.name;
-  // const email = location.state.email;
-
   useEffect(() => {
     setPostArray(dummyPostArray);
     setStatusArray(dummyStatusArray);
@@ -49,7 +46,6 @@ const Feed = () => {
         feedBody.scrollHeight - feedBody.offsetHeight - feedBody.scrollTop <
         1
       ) {
-        // bottom touched
         setPostArray([...postArray, ...dummyPostArray]);
         window.removeEventListener("wheel", handleScroll);
         window.removeEventListener("scroll", handleScroll);
@@ -73,7 +69,6 @@ const Feed = () => {
         feedBody.scrollHeight - feedBody.offsetHeight - feedBody.scrollTop <
         1
       ) {
-        // bottom touched
         setPostArray([...postArray, ...dummyPostArray]);
         window.removeEventListener("wheel", handleScroll);
         window.removeEventListener("scroll", handleScroll);
@@ -91,7 +86,6 @@ const Feed = () => {
     };
   }, [page]);
 
-  
   const handleSearchValChange = (e) => {
     setSearchVal(e.target.value);
   };

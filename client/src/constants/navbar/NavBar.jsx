@@ -42,7 +42,7 @@ const NavBar = () => {
   };
 
   // NECESSARIES FOR ADDING POST
-  const [openAddPostModal, setOpenAddPostModal] = useState(false)
+  const [openAddPostModal, setOpenAddPostModal] = useState(false);
 
   return (
     <>
@@ -57,10 +57,10 @@ const NavBar = () => {
       <nav className="navbar h-14 dark:bg-slate-900 dark:text-white fixed bottom-0 flex w-screen justify-between items-center gap-2 px-2 z-20">
         <div
           className="nav-home h-full w-1/5 flex items-center justify-center rounded-xl hover:cursor-pointer"
-          onClick={() => handlePageSwitch("home")}
+          onClick={() => handlePageSwitch("feed")}
         >
           <HomeRoundedIcon
-            className={`${selectedPage === "home" ? "text-pink-600" : ""}`}
+            className={`${selectedPage === "feed" ? "text-pink-600" : ""}`}
             fontSize="medium"
           />
         </div>
@@ -77,9 +77,9 @@ const NavBar = () => {
           />
         </div>
 
-        <div 
+        <div
           className="w-1/5 flex justify-center"
-            onClick={() => setOpenAddPostModal(true)}
+          onClick={() => setOpenAddPostModal(true)}
         >
           <div className="create-post flex justify-center items-center h-16 w-16 rounded-full bg-gradient-to-b from-pink-600 to-purple-700 -translate-y-2">
             <AddRoundedIcon fontSize="large" />
@@ -106,12 +106,9 @@ const NavBar = () => {
           />
         </div>
       </nav>
-      {
-        (openAddPostModal) && 
-          <AddPostModal
-            setOpenAddPostModal={setOpenAddPostModal}
-          />
-      }
+      {openAddPostModal && (
+        <AddPostModal setOpenAddPostModal={setOpenAddPostModal} />
+      )}
     </>
   );
 };
