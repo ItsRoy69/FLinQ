@@ -111,7 +111,10 @@ const Jobs = () => {
     }
   };
 
-  useEffect(() => {
+  const handlejobsclicked = () =>{
+    navigate('/jobdetails')
+  }  
+    useEffect(() => {
     document.addEventListener("scroll", handleChatScroll);
     document.addEventListener("wheel", handleChatScroll);
     return () => {
@@ -120,6 +123,8 @@ const Jobs = () => {
     };
   }, []);
 
+ 
+ 
   return (
     <>
       {searchOpen && (
@@ -150,17 +155,19 @@ const Jobs = () => {
 
           <motion.div
             id="recommendation-container"
-            className="recommendation-container h-full flex gap-5 overflow-x-auto"
-            key={currentSlide}
-            initial={{ opacity: 1, x: "100%"}}
-            animate={{ opacity: 1, x: "0%" }}
-            exit={{ opacity: 1, x: "-200%" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-          >
-            {dummyRecommendationsArray.map((recommentation, index) => (
-              <JobsRecommendation key={index} job={recommentation} />
+            className="recommendation-container w-full h-full flex gap-5 overflow-x-auto">
+            {dummyRecommendationsArray.map((recommendation, index) => (
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: "100%" }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: "-100%"  }}
+                    transition={{ delay: index * 0.3, duration: 5, ease: "easeInOut" }}
+                >
+                    <JobsRecommendation job={recommendation} />
+                </motion.div>
             ))}
-          </motion.div>
+        </motion.div>
         </div>
         <div className="jobs-saved flex flex-col w-full h-60 px-1 pb-5 gap-2">
           <div className="saved-title text-sm font-sm">
@@ -169,9 +176,10 @@ const Jobs = () => {
           <div
             id="saved-container"
             className="saved-container w-full h-full flex items-center gap-2 overflow-x-auto"
+           
           >
             {dummySavedJobsArray.map((job, index) => (
-              <SavedJobCard key={index} job={job} />
+              <SavedJobCard  key={index} job={job} />
             ))}
           </div>
         </div>

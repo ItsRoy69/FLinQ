@@ -55,6 +55,7 @@ const ChatCommunity = () => {
         setIsScrollingUp={setIsScrollingUp}
       />
       <ChatFooter
+        messagetype = "community"
         apiEndPoint={"https://flinq-backend.onrender.com/group/joingroup"}
         chatArray={chatArray}
         setChatArray={setChatArray}
