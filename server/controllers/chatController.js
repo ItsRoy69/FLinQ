@@ -5,8 +5,8 @@ const postMessage = async (req, res) => {
     try {
       const { sender, text, timestamp } = req.body;
       const newMessage = new ChatMessage({ sender, text, timestamp });
-      await newMessage.save();
-      res.status(201).json({ message: 'Message sent successfully', result: newMessage });
+      const savedMessage = await newMessage.save();
+      res.status(201).json({ message: 'Message sent successfully', result: savedMessage });
     } catch (error) {
       console.error('Error posting message:', error);
       res.status(500).json({ message: 'Internal Server Error' });

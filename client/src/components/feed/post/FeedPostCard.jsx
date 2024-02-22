@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+
+import { UserContext } from "../../../contexts/userContext";
 import "./feedPostCard.css";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 const FeedPostCard = ({ post, deletePostFromFeed }) => {
 	const [isLiked, setIsLiked] = useState(false);
+
+	const { user } = useContext(UserContext)
 
 	const TimeGap = (date) => {
 		const postTime = new Date(date);
@@ -53,7 +58,9 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 
 	const handleLikePress = () => {
 		if (isLiked) {
-
+			unlikePost()
+		} else {
+			likePost()
 		}
 		setIsLiked((liked) => !liked)
 	};
@@ -62,13 +69,27 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 	const [readingMore, setReadingMore] = useState(false)
 
 	const [comments, setComments] = useState([])
-	const getComments = () => {
-
+	const getComments = async() => {
+		setComments(post?.comments)
 	}
 
-	const likePost = async(postId) => {
-		
+	const likePost = async() => {
+		try {
+			const response = await axios.post(`https://flinq-backend.onrender.com/post/${post._id}/like`, {userId: user._id})
+			console.log(response.data.message)
+		} catch (err) {
+			console.log('An error occurred: ', err)
+		}
 	}
+
+	const unlikePost = async() => {
+		try {
+			const response = await axios.post(`https://flinq-backend.onrender.com/post/${post._id}/unlike`, {userId: user._id})
+			console.log(response.data.message)
+		} catch (err) {
+			console.log('An error occurred: ', err)
+		}
+	} 
 
 	useEffect(() => {
 		if (post?.postName?.length > 50) {
