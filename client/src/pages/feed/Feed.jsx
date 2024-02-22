@@ -20,9 +20,14 @@ const Feed = () => {
   const [user, setUser] = useState(dummyUser);
 
   const usercontext = useContext(UserContext);
-  useEffect(()=>{
-    setUser(usercontext)
-  },[])
+  useEffect(() => {
+    
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+  
   const location = useLocation();
 
   useEffect(() => {
