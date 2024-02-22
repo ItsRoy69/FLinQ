@@ -1,8 +1,15 @@
 import "./eventCard.css";
+import { useNavigate } from "react-router-dom";
 
 const EventCard = ({ event }) => {
+  const navigate = useNavigate();
+  
+  const handleEventsClicked = () =>{
+    navigate('/events/eventdetails')
+  }
+
   return (
-    <div className="w-full h-60 object-cover flex justify-center rounded-2xl relative backdrop-blur-sm overflow-hidden">
+    <div className="w-full h-60 object-cover flex justify-center rounded-2xl relative backdrop-blur-sm overflow-hidden" onClick={handleEventsClicked}>
       <img
         src={event.image}
         alt="image"
