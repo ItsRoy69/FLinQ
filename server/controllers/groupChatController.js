@@ -15,7 +15,12 @@ const createGroupAndAddMessage = async (req, res) => {
         newGroup.members.push(sender);
 
         if (message) {
-            newGroup.messages.push({ sender, message });
+            newGroup.messages.push({
+                sender,
+                message,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            });
         }
 
         await newGroup.save();
@@ -46,7 +51,12 @@ const joinGroupAndAddMessage = async (req, res) => {
         await group.save();
 
         // Add the message to the existing group
-        group.messages.push({ sender: senderId, message });
+        group.messages.push({
+            sender: senderId, 
+            message, 
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        });
         await group.save();
         console.log(group)
         const user = await User.findById(senderId)

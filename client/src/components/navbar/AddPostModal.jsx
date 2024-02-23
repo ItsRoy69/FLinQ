@@ -45,8 +45,8 @@ const AddPostModal = ({ setOpenAddPostModal }) => {
 				const imageSizeInBytes = uint8Array.length;
 				const imageSizeInKB = imageSizeInBytes / 1024;
 
-				if (imageSizeInKB > 100) {
-					alert("Image size should be within 100KB.");
+				if (imageSizeInKB > 50) {
+					alert("Image size should be within 50KB.");
 					return;
 				}
 			}
