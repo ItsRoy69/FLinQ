@@ -64,7 +64,7 @@ const JobDetails = () => {
           </div>
         </div>
         <div
-          className="add-post--footer h-20 w-full flex justify-center items-center"
+          className="add-post--footer h-20 w-full flex justify-center items-center fixed bottom-4"
           onClick={() => setApplied(!applied)}
         >
           {!applied ? (
