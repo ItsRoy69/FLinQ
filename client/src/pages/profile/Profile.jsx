@@ -60,7 +60,7 @@ const Profile = () => {
           </div>
           <button
             onClick={handleEditProfileClick}
-            className="flex justify-center items-center text-xl rounded-[10px] text-black border-solid border-none bg-white border-2 cursor-pointer m-[12px] mb-5 py-2 px-5"
+            className="flex justify-center items-center text-xl rounded-[10px] text-black bg-white border-2 cursor-pointer m-[12px] mb-5 py-2 px-5"
           >
             Edit Profile
           </button>
