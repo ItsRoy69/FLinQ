@@ -51,6 +51,7 @@ const addPost = async (req, res) => {
             image,
             username,
             postedAt: new Date(),
+            comments: [],
             postName
         };
 
@@ -162,29 +163,74 @@ const unlikePost = async (req, res) => {
     }
 }
 
-// add a comment to a post
+// add comments
 const addComment = async (req, res) => {
     try {
-        const { id: _id } = req.params;
-        if (!mongoose.Types.ObjectId.isValid(_id)) {
-            return res.status(422).json({ message: "Id not valid" });
+        const { id: postId } = req.params;
+        const { userId, username, text } = req.body;
+
+        if (!mongoose.Types.ObjectId.isValid(postId)) {
+            return res.status(422).json({ message: "Post Id not valid" });
         }
 
-        const postExist = await PostModel.exists({ _id: _id });
+        const postExist = await PostModel.exists({ _id: postId });
         if (!postExist) {
             return res.status(404).json({ message: "Post not found" });
         }
 
-        const { userId, username, content } = req.body;
-
-        const newComment = {
+        const comment = {
             userId,
             username,
-            content
+            text,
         };
 
-        const commentedPost = await PostModel.findByIdAndUpdate(_id, { $push: { comments: newComment } }, { new: true });
-        res.status(200).json({ message: 'Comment added to post', result: commentedPost });
+        const updatedPost = await PostModel.findByIdAndUpdate(
+            postId,
+            { $push: { comments: comment } },
+            { new: true }
+        );
+
+        res.status(200).json({ message: 'Comment added', result: updatedPost.comments });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error?.message });
+    }
+}
+
+// add reply to a comment
+const addReply = async (req, res) => {
+    try {
+        const { id: postId, commentId: parentCommentId } = req.params;
+        const { userId, username, text } = req.body;
+
+        if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(parentCommentId)) {
+            return res.status(422).json({ message: "Post Id or Comment Id not valid" });
+        }
+
+        const postExist = await PostModel.exists({ _id: postId, "comments._id": parentCommentId });
+        if (!postExist) {
+            return res.status(404).json({ message: "Post or Comment not found" });
+
+        }
+        console.log("Yes")
+        const reply = {
+            userId: userId,
+            username,
+            text,
+        };
+        const parentCommentObjectId = new mongoose.Types.ObjectId(parentCommentId);
+
+        console.log({ result: reply })
+        const updatedPost = await PostModel.findOneAndUpdate(
+            { _id: postId, "comments._id": new mongoose.Types.ObjectId(parentCommentObjectId) },
+            { $push: { "comments.$.replies": new mongoose.Types.ObjectId(reply._id) } },
+            { new: true }
+        );
+       
+
+        console.log({ result: updatedPost })
+
+        res.status(200).json({ message: 'Reply added', result: updatedPost });
     } catch (error) {
         console.log(error);
         res.status(400).json({ message: error?.message });
@@ -192,6 +238,8 @@ const addComment = async (req, res) => {
 }
 
 
+
+
 module.exports = {
-    getAllPosts, getPostById, addPost, editPost, getUserPosts, deletePost, likePost, unlikePost, addComment
+    getAllPosts, getPostById, addPost, editPost, getUserPosts, deletePost, addReply, likePost, addComment, unlikePost
 };
