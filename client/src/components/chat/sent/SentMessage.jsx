@@ -5,7 +5,7 @@ import axios from 'axios'
 import { UserContext } from "../../../contexts/userContext";
 
 const SentMessage = ({ message }) => {
-
+  console.log(message)
   const [username, setUsername] = useState('');
   const { user } = useContext(UserContext)
 

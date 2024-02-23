@@ -29,4 +29,7 @@ router.post('/:id/unlike', controllers.unlikePost);
 // add comment to a post
 router.post('/:id/comment', controllers.addComment);
 
+// add reply to a comment
+router.post('/:id/comment/:commentId/reply', controllers.addReply);
+
 module.exports = router;

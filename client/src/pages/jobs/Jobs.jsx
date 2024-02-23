@@ -22,6 +22,7 @@ import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const Jobs = () => {
   // NECESSARIES FOR NAVIGATION
@@ -47,11 +48,13 @@ const Jobs = () => {
   const [newLatestLoaded, setNewLatestLoaded] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  
+
   // load more latest jobs
   const loadMoreLatest = () => {
     setIsLatestLoading(true);
     setTimeout(() => {
-      setLatestJobsArray([...latestJobsArray, ...dummyLatestJobsArray]);
+      setLatestJobsArray([...latestJobsArray, ...latestJobsArray]);
       setIsLatestLoading(false);
       setNewLatestLoaded(true);
     }, 1000);
@@ -59,11 +62,14 @@ const Jobs = () => {
 
   // load latest jobs on page mount
   useEffect(() => {
-    setTimeout(() => {
-      setLatestPage((page) => page + 1);
-      setLatestJobsArray(dummyLatestJobsArray);
-      setIsLatestLoading(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   setLatestPage((page) => page + 1);
+    //   setLatestJobsArray(dummyLatestJobsArray);
+    //   setIsLatestLoading(false);
+    // }, 2000);
+    const fetchLatestJobs = async() => {
+      
+    }
   }, []);
 
   // hide check out prompt on scroll

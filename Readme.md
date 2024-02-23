@@ -1,4 +1,30 @@
-folder workflow:
+## Welcome to FLINQ!
+
+![FlinQ-Banner-png](https://github.com/ItsRoy69/FLinQ/assets/109765650/f1758b46-4f1c-443a-ab3c-2e46e0437af3)
+
+This project provides a one-stop platform for women facing gender inequality to access safe, empowering resources and connect with diverse professionals, both anonymously and in one-on-one settings.
+
+#### Key Features:
+
+* **Connect with experts:** Choose between anonymous or one-on-one chat with professionals for guidance in healthcare, education, and career development.
+* **Skill and career development:** Access opportunities like Google STEP and Women Techmakers, along with skill-building events and workshops.
+* **Reliable health information:** Combat stigma and get reliable information from healthcare professionals.
+* **Chatbot:** Get instant answers to questions about beauty, health, fitness through our friendly and informative chatbot.
+* **Emergency alerts:** Stay safe with an alert system that empowers you in critical situations.
+* **Community building:** Share experiences and connect with other women through a dedicated feed page.
+* **Job opportunities:** Find your dream career with curated postings on the FlinQ jobs page.
+* **Local resources:** Easily locate nearby pharmacies, education institutes, and other essential services through the interactive map.
+
+By dismantling barriers and fostering connections, FlinQ aims to create a safer and more empowered world for all women, offering both anonymity and the opportunity for deeper engagement.
+
+### User Workflow:
+
+![FlinQ-user-workflow-1](https://github.com/ItsRoy69/FLinQ/assets/109765650/da10a450-0486-4a18-8d75-17e9690eb64d)
+
+![FlinQ-user-workflow-2](https://github.com/ItsRoy69/FLinQ/assets/109765650/19496cbd-d095-467a-a677-f3afdf5d49a1)
+
+
+### Folder Workflow:
 
 cd client:
 
@@ -91,3 +117,4 @@ Few Instructions:
 
 [Chatbot link](https://googlesolchatbot.onrender.com/chat)
 
+_Don't let gender inequality hold you back. Take control, join the growing network of women and professionals on FlinQ and rewrite your story._

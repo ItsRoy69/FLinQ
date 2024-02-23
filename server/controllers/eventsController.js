@@ -40,7 +40,7 @@ const getEventsById = async (req, res) => {
 // create a new event
 const addEvents = async (req, res) => {
     try {
-        const { userId: _id, companyId, eventName, companyName, eventPic, timeAllocated } = req.body;
+        const { userId: _id, companyId, eventName, companyName, eventPic, timeAllocated, location, description, perks } = req.body;
 
         const newEventData = {
             companyId,
@@ -49,6 +49,9 @@ const addEvents = async (req, res) => {
             eventPic,
             timeAllocated,
             userId: _id,
+            location,
+            description,
+            perks,
         };
 
         const newEvent = await EventModel.create(newEventData);
@@ -88,7 +91,7 @@ const editEvents = async (req, res) => {
 const getCompanyEvents = async (req, res) => {
     try {
         const { id: companyId } = req.params;
-       
+
         if (!companyId || typeof companyId !== 'string') {
             return res.status(422).json({ message: "Company ID is not a valid string" });
         }

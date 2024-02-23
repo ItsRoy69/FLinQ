@@ -13,7 +13,7 @@ const ChatBody = ({
 }) => {
   const chatContainerBodyRef = useRef(null);
   const { user } = useContext(UserContext);
-
+  console.log(chatArray)
   const showFromBottom = () => {
     chatContainerBodyRef.current.scrollTop =
       chatContainerBodyRef.current.scrollHeight;

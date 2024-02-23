@@ -51,7 +51,8 @@ const EventDetails = () => {
     }
     const handleCloseClicked = () => {
         navigate("/events");
-      };
+    };
+
     return (
         <div className="bg-custom-dark p-3 backdrop-blur flex flex-col h-screen w-screen">
             <div className="w-full h-full text-white border border-dashed rounded-xl bg-custom-dark flex flex-col items-center  overflow-hidden">
@@ -88,9 +89,9 @@ const EventDetails = () => {
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
                 </div>
-                <div className="flex flex-col items-start w-screen py-1  justify-start">
-                    <div className="text-lg py-2 px-10 font-bold">Perks</div>
-                    <div className="px-8">
+                <div className="flex flex-col items-start w-screen py-1  px-10  justify-start">
+                    <div className="text-lg py-2 font-bold">Perks</div>
+                    <div className="px-2">
                         <ul className="list-disc px-3 text-white">
                         <li className="p-1">Learn Industrial Skill</li>
                         <li className="p-1">Learn Industrial Skill</li>
@@ -105,7 +106,7 @@ const EventDetails = () => {
                 >
                 {!booked ? (
                     <>
-                    <div className="w-4/5 py-3 rounded-lg text-xl flex justify-center items-center gap-5 bg-gradient-to-b from-pink-600 to-purple-700 cursor-pointer active:scale-105">
+                    <div className="w-4/5 py-3 rounded-lg text-xl flex justify-center items-center gap-5 bg-gradient-to-b from-pink-600 to-purple-700 fixed bottom-7 cursor-pointer active:scale-105">
                         Book your seat
                         <span className="-translate-y-1">
                         <ApprovalIcon />
@@ -114,7 +115,7 @@ const EventDetails = () => {
                     </>
                 ) : (
                     <>
-                    <div className="w-4/5 py-3 rounded-lg text-xl flex justify-center items-center gap-5 bg-gradient-to-b from-pink-600 to-purple-700 cursor-pointer active:scale-105">
+                    <div className="w-4/5 py-3 rounded-lg text-xl flex justify-center items-center gap-5 bg-gradient-to-b fixed bottom-7 from-pink-600 to-purple-700 cursor-pointer active:scale-105">
                         Seat booked
                         <span className="-translate-y-1">
                         <DoneIcon />

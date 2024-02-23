@@ -28,6 +28,21 @@ const eventSchema = new mongoose.Schema({
         type: Date,
         required: [true, "Time allocated is required"]
     },
+    location: {
+        type: String,
+        trim: true,
+        required: [true, "Event location is required"]
+    },
+    description: {
+        type: String,
+        trim: true,
+        required: [true, "Event description is required"]
+    },
+    perks: {
+        type: String,
+        trim: true,
+        required: [true, "Event perks are required"]
+    },
     booking: {
         type: Boolean,
         default: false

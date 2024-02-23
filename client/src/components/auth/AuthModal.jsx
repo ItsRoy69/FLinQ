@@ -9,7 +9,6 @@ import formImg from "../../assets/login-img.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleIcon from "@mui/icons-material/Google";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const AuthModal = () => {
@@ -80,7 +79,7 @@ const AuthModal = () => {
     setcreds({ ...creds, [e.target.name]: e.target.value });
   };
   const handleGoBack = async () => {
-    navigate("/home");
+    navigate("/");
   };
 
   const checkPassword =() => {
@@ -113,10 +112,6 @@ const AuthModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const passwordValid = checkPassword();
-    // if (!passwordValid) {
-    //     return; 
-    // }
     
     await axios
       .post("https://flinq-backend.onrender.com/user/register", creds)
@@ -136,10 +131,6 @@ const AuthModal = () => {
 
   const handleLogin = async(e) => {
     e.preventDefault();
-    // const passwordValid = checkPassword();
-    // if (!passwordValid) {
-    //     return; 
-    // }
     await axios
       .post("https://flinq-backend.onrender.com/user/login", {
         email: creds.email,
