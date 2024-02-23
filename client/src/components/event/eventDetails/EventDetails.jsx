@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import axios from 'axios'
+import { TimeGap } from "../EventCard";
 import { useNavigate } from "react-router-dom";
 import CloseRounded from "@mui/icons-material/CloseRounded";
 import LocationOn from "@mui/icons-material/LocationOn";
@@ -8,7 +10,45 @@ import DoneIcon from "@mui/icons-material/Done";
 
 const EventDetails = () => {
     const [booked, setBooked] = useState(false)
+    const [eventDetails, setEventDetails] = useState({})
     const navigate = useNavigate();
+    const queryParams = new URLSearchParams(location.search);
+    const eventParam = queryParams.get("eid");
+
+    useEffect(()=>{
+        const initEventLoad = async() => {
+            await axios.get(`http://localhost:5000/events/${eventParam}`).then((response)=>{
+                setEventDetails(response.data.result)
+                setBooked(response.data.result.booking)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+        initEventLoad()
+    },[])
+
+    const handleBookChange = () =>{
+        
+        handleEventBook()
+    }
+    
+    const handleEventBook = async() =>{ 
+        
+        // console.log("Booking Status: ",booked)
+
+        const updatedEvent = {
+            ...eventDetails,
+           booking: !booked
+        }
+        setEventDetails(updatedEvent)
+        console.log(updatedEvent)
+        await axios.put(`http://localhost:5000/events/${eventParam}`,{updatedEvent}).then((response) =>{
+            
+            setBooked(response.data.result.booking)
+        }).catch((err) =>{
+            console.log(err)
+        })
+    }
     const handleCloseClicked = () => {
         navigate("/events");
       };
@@ -26,18 +66,18 @@ const EventDetails = () => {
                 </div>
                 <div className="flex justify-between w-screen px-10 pt-8 pb-3">
                 <div className="flex flex-col">
-                    <div className=" h-12 mb-2 w-27 font-bold text-xl justify-end">
-                        Advance your career in marketing
+                    <div className=" py-2  w-27 font-bold text-xl justify-end">
+                        {eventDetails.eventName}
                     </div>
-                    <div className=" h-5 mb-2  justify-end text-slate-300">Amazon</div>
-                    <div className=" h-6 mb-2  justify-end">
+                    <div className=" py-1  justify-end text-slate-300">{eventDetails.companyName}</div>
+                    <div className=" py-1  justify-end">
                         Bangalore,India
                     <span>
                         <LocationOn className="h-6 pr-1" />
                     </span>
                     </div>
                     <div className=" flex w-[130px]  rounded items-center bg-slate-300 text-slate-500  justify-center h-6">
-                        Today 6pm
+                    {TimeGap(eventDetails.timeAllocated)}
                     </div>
                 </div>
                 <div className="border flex  w-10 h-10 "></div>
@@ -61,7 +101,7 @@ const EventDetails = () => {
                 
                 <div
                 className="add-post--footer fixed-bottom h-20 w-full flex justify-center items-center"
-                onClick={() => setBooked(!booked)}
+                onClick={handleBookChange}
                 >
                 {!booked ? (
                     <>

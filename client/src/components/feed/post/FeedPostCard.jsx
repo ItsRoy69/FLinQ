@@ -6,6 +6,7 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 	const [isLiked, setIsLiked] = useState(false);
 
 	const TimeGap = (date) => {
+		console.log("feedpostcard",date)
 		const postTime = new Date(date);
 		const currTime = new Date();
 
