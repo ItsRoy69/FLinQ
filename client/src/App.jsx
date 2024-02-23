@@ -56,11 +56,11 @@ function App() {
                       <Route path="/feed" element={<Feed />} />
                       <Route path="/jobs" element={<Jobs />} />
                       <Route
-                         path="/jobs/jobdetails"
+                         path="/jobs/jobdetails/*"
                          element = {<JobDetails/>}
                       />
                       <Route 
-                        path="/events/eventdetails"
+                        path="/events/eventdetails/*"
                         element = {<EventDetails/>}
                       />
                       <Route path="/chat/aibot" element={<ChatBot />} />
