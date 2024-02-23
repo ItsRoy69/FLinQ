@@ -20,6 +20,14 @@ const groupSchema = new mongoose.Schema({
       message: {
         type: String,
       },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+      updatedAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
   ],
   timestamp: { type: Date, default: Date.now }
