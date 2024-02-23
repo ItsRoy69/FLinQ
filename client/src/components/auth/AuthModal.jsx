@@ -80,7 +80,7 @@ const AuthModal = () => {
     setcreds({ ...creds, [e.target.name]: e.target.value });
   };
   const handleGoBack = async () => {
-    navigate("/home");
+    navigate("/");
   };
 
   const checkPassword =() => {
@@ -113,10 +113,6 @@ const AuthModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const passwordValid = checkPassword();
-    // if (!passwordValid) {
-    //     return; 
-    // }
     
     await axios
       .post("https://flinq-backend.onrender.com/user/register", creds)
@@ -136,10 +132,6 @@ const AuthModal = () => {
 
   const handleLogin = async(e) => {
     e.preventDefault();
-    // const passwordValid = checkPassword();
-    // if (!passwordValid) {
-    //     return; 
-    // }
     await axios
       .post("https://flinq-backend.onrender.com/user/login", {
         email: creds.email,

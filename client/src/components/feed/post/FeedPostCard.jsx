@@ -123,7 +123,6 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 				document.addEventListener('click', closePostOptionsModalOnOutsideClick)
 			}, 1)
 		} else {
-			// document.removeEventListener('click', closePostOptionsModalOnOutsideClick)
 		}
 		return () => {
 			document.removeEventListener('click', closePostOptionsModalOnOutsideClick)
