@@ -117,3 +117,4 @@ Few Instructions:
 
 [Chatbot link](https://googlesolchatbot.onrender.com/chat)
 
+_Don't let gender inequality hold you back. Take control, join the growing network of women and professionals on FlinQ and rewrite your story._
