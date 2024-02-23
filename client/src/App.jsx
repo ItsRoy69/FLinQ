@@ -8,6 +8,7 @@ import Home from "./pages/home/Home";
 import Jobs from "./pages/jobs/Jobs";
 import JobDetails from "./components/jobs/jobDetails/JobDetails";
 import Event from "./pages/events/Event";
+import EventDetails from "./components/event/eventDetails/EventDetails";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import MapComponent from "./pages/map/MapComponent";
@@ -57,6 +58,10 @@ function App() {
                       <Route
                          path="/jobs/jobdetails"
                          element = {<JobDetails/>}
+                      />
+                      <Route 
+                        path="/events/eventdetails"
+                        element = {<EventDetails/>}
                       />
                       <Route path="/chat/aibot" element={<ChatBot />} />
                       <Route
