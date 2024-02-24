@@ -76,6 +76,30 @@ By dismantling barriers and fostering connections, FlinQ aims to create a safer 
 └── README.md
 ```
 
+## TECHSTACK
+
+<div align="center">
+
+![React JS](https://img.shields.io/badge/React.js-black?style=for-the-badge&logo=react&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-%23404d59.svg?style=for-the-badge&logo=TailwindCSS&logoColor=%2361DAFB)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=for-the-badge&logo=Vercel&logoColor=#00C7B7)
+![Onrender](https://img.shields.io/badge/Onrender-%23000000.svg?style=for-the-badge&logo=render&logoColor=#00C7B7)
+![Firebase](https://img.shields.io/badge/Firebase-%6DA55F?style=for-the-badge&logo=Firebase&logoColor=#00C7B7)
+![Socket.IO](https://img.shields.io/badge/socket.io-%23000000.svg?style=for-the-badge&logo=socket.io&logoColor=#0000FF)
+![Python](https://img.shields.io/badge/python-38863B?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/flask-742f49?style=for-the-badge&logo=flask&logoColor=fff)
+![Vertex AI](https://img.shields.io/badge/Vertex%20AI-%2343A047?style=for-the-badge&logo=google-cloud&logoColor=white)
+![PaLM](https://img.shields.io/badge/PaLM-orange?style=for-the-badge&logo=google&logoColor=white)
+![Google Auth](https://img.shields.io/badge/Google%20Auth-%234285F4?style=for-the-badge&logo=google&logoColor=white)
+![Google Maps](https://img.shields.io/badge/Google%20Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)
+![Auth0](https://img.shields.io/badge/Auth0-%23333333?style=for-the-badge&logo=auth0&logoColor=fff)
+
+</div>
+
+
 ## INSTALLATION
 
 Clone this repository to your local machine.
