@@ -39,9 +39,8 @@ const jobSchema = new mongoose.Schema({
         trim: true,
         required: [true, "User has clicked applied or not"]
     },
-    partOrFullTime: {
-        type: String,
-        enum: ['part-time', 'full-time'],
+    isFullTime: {
+        type: Boolean,
         required: [true, "Job type is required"]
     }
 }, { timestamps: true });

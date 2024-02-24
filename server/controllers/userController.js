@@ -132,6 +132,29 @@ const getUserById = async (req, res) => {
     }
 }
 
+// saved jobs update 
+// PATH '/
+const updateSavedJobs = async(req, res) => {
+    const {userId, jobId, saveJob} = req.body
+    if (!userId || !jobId || !saveJob) {
+        return res.status(400).json({ message: "Essential fields missing" })
+    }
+    const user = await UserModel.findById( userId )
+    if (!user) {
+        return res.status(404).json({ message: "User doesn't exist" })
+    }
+    let updatedUser = null
+    if (saveJob) {
+        updatedUser = await UserModel.findByIdAndUpdate(userId, { $push: { savedJobs: jobId } })
+    } else {
+        updatedUser = await UserModel.findByIdAndUpdate(userId, { $pull: { savedJobs: jobId } })
+    }
+    if (!updatedUser) {
+        return res.status(400).json({ message: "Couldn't update user" })
+    }
+    return res.status(200).json({ message: "Applied for job successfully", result: updatedUser })
+}
+
 // edit user profile
 const updateUser = async (req, res) => {
     try {
@@ -167,4 +190,13 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser, getUsers, googleLogin, getUserById, updateUser, deleteUser };
+module.exports = { 
+    registerUser, 
+    loginUser, 
+    getUsers, 
+    googleLogin, 
+    getUserById, 
+    updateUser, 
+    deleteUser,
+    updateSavedJobs
+};
