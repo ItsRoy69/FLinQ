@@ -3,8 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import "./feed.css";
 
-import { dummyPostArray, dummyStatusArray } from "../../data/DummyFeed";
-import { dummyUser } from "../../data/DummyUser";
 import { UserContext } from "../../contexts/userContext";
 import FeedPostCard from "../../components/feed/post/FeedPostCard";
 import FeedStatusCard from "../../components/feed/status/FeedStatusCard";
@@ -16,7 +14,7 @@ const Feed = () => {
 	const [searchVal, setSearchVal] = useState("");
 	const [page, setPage] = useState(1);
 	const [postArray, setPostArray] = useState([]);
-	const [user, setUser] = useState(dummyUser);
+	const [user, setUser] = useState({});
   
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
@@ -24,6 +22,7 @@ const Feed = () => {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+  const usercontext = useContext(UserContext);
   
   const location = useLocation();
 
@@ -70,6 +69,8 @@ const Feed = () => {
 		setPostArray((postArray) => postArray.filter((post) => post._id !== postId))
 		console.log('')
 	}
+	
+	
 
 	return (
 		<>
@@ -91,7 +92,7 @@ const Feed = () => {
 		>
 			<div className="feed-contents-extra flex flex-col gap-4 mt-20">
 			<div className="feed-search-card flex justify-between items-center gap-2 h-16">
-				<img src={user.dp} className="h-16 w-16 ml-1 rounded-2xl" />
+				<img src={usercontext.user.image || user.image} className="h-16 w-16 ml-1 rounded-2xl" />
 				<input
 				type="text"
 				value={searchVal}

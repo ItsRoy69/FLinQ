@@ -67,12 +67,14 @@ const addEvents = async (req, res) => {
 const editEvents = async (req, res) => {
     try {
         const { id: _id } = req.params;
+        
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(422).json({ message: "Id not valid" });
         }
         const eventExist = await EventModel.exists({ _id: _id });
         if (!eventExist) return res.status(404).json({ message: "Event not found" });
-        const editedEvent = await EventModel.findByIdAndUpdate(_id, req.body, { new: true });
+        const editedEvent = await EventModel.findByIdAndUpdate(_id, req.body.updatedEvent, { new: true });
+        
         if (!editedEvent) {
             throw new Error("Could not edit event");
         }

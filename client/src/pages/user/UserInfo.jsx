@@ -13,6 +13,7 @@ const UserInfo = () => {
 
   const name = location.state.name;
   const email = location.state.email;
+  const image = location.state.image
 
   const [error, setError] = useState("");
   const [creds, setcreds] = useState({
@@ -24,6 +25,7 @@ const UserInfo = () => {
     occupation: "",
     birthdate: "",
     gender: "",
+    image:image
   });
 
   const handleChange = (e) => {
@@ -34,10 +36,11 @@ const UserInfo = () => {
     e.preventDefault();
 
     axios
-      .post("https://flinq-backend.onrender.com/user/register", creds)
+      .post("http://localhost:5000/user/register", creds)
       .then((response) => {
         if (response.status == 200) {
           usercontext.updateUser(response.data.user);
+          saveUserDataToLocalStorage(response.data.user)
           navigate("/feed");
         }
       })
@@ -46,6 +49,10 @@ const UserInfo = () => {
         setError(err.response.data.message);
       });
   };
+  const saveUserDataToLocalStorage = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
+  };
+
 
   return (
     <div className="md:flex md:flex-row  flex flex-col items-center  font-sans bg-gradient-to-br from-white to-red-200 p-10 h-screen">

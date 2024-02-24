@@ -12,35 +12,67 @@ const EditProfile = () => {
 
   const [user, setUser] = useState([]);
   const usercontext = useContext(UserContext);
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
   const [creds, setcreds] = useState({
-    email: usercontext.user.email,
-    password: "",
-    username: usercontext.user.username,
-    phone: usercontext.user.phone,
-    name: usercontext.user.name,
-    occupation: usercontext.user.occupation,
-    birthdate: usercontext.user.birthdate,
-    gender: usercontext.user.gender,
+    email: user.email,
+    password: user.password,
+    username: user.username,
+    phone: user.phone,
+    name: user.name,
+    occupation: user.occupation,
+    birthdate: user.birthdate,
+    gender: user.gender,
+    image : user.image
   });
 
   const handleBackClick = () => {
     navigate("/profile");
   };
   const handleSaveClick = (e) => {
-    const userId = usercontext.user._id;
+    try {
+			if (profilePhoto) {
+				const base64Image = profilePhoto.split(",")[1];
+				const blob = atob(base64Image);
+				const arrayBuffer = new ArrayBuffer(blob.length);
+				const uint8Array = new Uint8Array(arrayBuffer);
+				for (let i = 0; i < blob.length; i++) {
+					uint8Array[i] = blob.charCodeAt(i);
+				}
+
+				const imageSizeInBytes = uint8Array.length;
+				const imageSizeInKB = imageSizeInBytes / 1024;
+
+				if (imageSizeInKB > 50) {
+					alert("Image size should be within 50KB.");
+					return;
+				}
+			}
+    // setcreds({ ...creds, image: profilePhoto });
+    const userId = user._id;
     e.preventDefault();
+   
     axios
-      .put(`https://flinq-backend.onrender.com/user/update/${userId}`, creds)
+      .put(`http://localhost:5000/user/update/${userId}`, creds)
       .then((response) => {
         if (response.status == 200) {
-          console.log(response);
+          const updatedUserData = response.data.result || response.data.user;
           usercontext.updateUser(response.data.result);
+          saveUserDataToLocalStorage(updatedUserData)
           navigate("/profile");
         }
       })
       .catch((err) => {
         console.log(err);
       });
+    }catch(error){
+      setProfilePhoto(user.image)
+      console.log("Failed to upload image");
+    }
   };
 
   const [profilePhoto, setProfilePhoto] = useState(null);
@@ -51,20 +83,21 @@ const EditProfile = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
     if (file) {
       const reader = new FileReader();
-
       reader.onload = (e) => {
         setProfilePhoto(e.target.result);
+        setcreds({ ...creds, image: e.target.result });
       };
-
       reader.readAsDataURL(file);
     }
   };
 
   const handleImageClick = () => {
     document.getElementById("fileInput").click();
+  };
+  const saveUserDataToLocalStorage = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
   };
 
   return (
@@ -87,6 +120,7 @@ const EditProfile = () => {
               <img
                 className="w-[100px] h-[100px] mt-5 rounded-full border-2 border-white p-2 cursor-pointer"
                 src={profilePhoto}
+                value = {creds.image}
                 alt="profile"
                 onClick={handleImageClick}
               />
@@ -114,10 +148,10 @@ const EditProfile = () => {
             />
           </div>
           <div className="flex justify-center items-center  text-xl text-white m-[5px] ">
-            {usercontext.user.name}
+            {user.name}
           </div>
           <div className="flex justify-center items-center  text-lg text-stone-600 mb-2">
-            {usercontext.user.username}
+            {user.username}
           </div>
         </div>
         <div className="flex flex-col  p-1 mt-3">

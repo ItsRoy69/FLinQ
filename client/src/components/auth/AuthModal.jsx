@@ -6,6 +6,7 @@ import { signInWithPopup } from "firebase/auth";
 import axios from "axios";
 import { UserContext } from "../../contexts/userContext";
 import formImg from "../../assets/login-img.jpg";
+import user_image from "../../assets/default_image.png"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -26,30 +27,41 @@ const AuthModal = () => {
     occupation: "",
     birthdate: "",
     gender: "",
+    image : user_image
   });
   const userContext = useContext(UserContext);
   const handleGoogleLogin = async () => {
     signInWithPopup(auth, provider)
       .then((data) => {
         navigate("/userinfo", {
-          state: { email: data.user.email, name: data.user.displayName },
+          state: { email: data.user.email, name: data.user.displayName,image : user_image },
         });
       })
       .catch((error) => {
         console.error("Google login error:", error);
       });
   };
+  // const getBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
+  // };
+
 
   const handleGoogleLogins = async () => {
     signInWithPopup(auth, provider)
       .then(async (data) => {
         await axios
-          .post("https://flinq-backend.onrender.com/user/googleLogin", {
+          .post("http://localhost:5000/user/googleLogin", {
             email: data.user.email,
             verified: data.user.emailVerified,
           })
           .then((response) => {
             if (response.status === 200) {
+              console.log(response.data.user)
               userContext.updateUser(response.data.user);
               saveUserDataToLocalStorage(response.data.user)
               // localStorage.setItem("userData", JSON.stringify(response.data.user));
@@ -112,11 +124,10 @@ const AuthModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     await axios
-      .post("https://flinq-backend.onrender.com/user/register", creds)
+      .post("http://localhost:5000/user/register", creds)
       .then((response) => {
-        console.log(response);
+        console.log("from Auth",response);
         if (response.status == 200) {
           userContext.updateUser(response.data.user);
           saveUserDataToLocalStorage(response.data.user)
@@ -132,13 +143,12 @@ const AuthModal = () => {
   const handleLogin = async(e) => {
     e.preventDefault();
     await axios
-      .post("https://flinq-backend.onrender.com/user/login", {
+      .post("http://localhost:5000/user/login", {
         email: creds.email,
         password: creds.password,
       })
       .then((response) => {
         if (response.status == 200) {
-          console.log(response.data);
           userContext.updateUser(response.data.user);
           saveUserDataToLocalStorage(response.data.user)
           navigate("/feed");
