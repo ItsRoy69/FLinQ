@@ -17,7 +17,11 @@ const Profile = () => {
 
   const usercontext = useContext(UserContext);
   useEffect(() => {
-    setUser(usercontext.user);
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  
   }, []);
   const handleBackClick = () => {
     navigate("/feed");
@@ -30,6 +34,7 @@ const Profile = () => {
     usercontext.logout();
     navigate("/");
   };
+ 
   return (
     <div className="container bg-slate-900 min-h-screen font-sans text-white">
       <div className="divide-y divide-solid px-4 w-full h-full">
@@ -48,7 +53,7 @@ const Profile = () => {
           <div className="flex justify-center items-center border-white ">
             <img
               className="w-[100px] h-[100px] mt-5 rounded-full border-2 border-white  p-2"
-              src={user.image}
+              src={usercontext.user.image||user.image }
               alt="profile"
             ></img>
           </div>

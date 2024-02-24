@@ -49,7 +49,8 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
     image: {
-      type: Buffer,
+      type: String,
+      trim: true
     },
   },
   { timestamps: true }
@@ -94,6 +95,9 @@ userSchema.statics.register = async function ({
     password: hash,
     occupation,
     phone,
+    birthdate,
+    gender,
+    image
   });
 
   if (!user) {

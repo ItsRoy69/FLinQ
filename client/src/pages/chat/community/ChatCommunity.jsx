@@ -23,7 +23,6 @@ const ChatCommunity = () => {
     axios
       .get("https://flinq-backend.onrender.com/group/")
       .then((response) => {
-        console.log(response.data.groups)
         setCommunityArray(response.data.groups);
        
         if (communityParam === null) {

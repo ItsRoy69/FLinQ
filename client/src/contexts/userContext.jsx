@@ -18,6 +18,7 @@ export function UserProvider({ children }) {
     occupation: "",
     gender: "",
     birthdate: "",
+    image : ""
   };
   const [user, setUser] = useState(emptyUser);
 
@@ -33,6 +34,7 @@ export function UserProvider({ children }) {
       occupation: user.occupation,
       gender: user.gender,
       birthdate: user.birthdate,
+      image : user.image
     });
   };
 
@@ -41,7 +43,7 @@ export function UserProvider({ children }) {
   };
   useEffect(() => {
     // Retrieve user data from localStorage on component mount
-    const storedUser = localStorage.getItem('userData');
+    const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }

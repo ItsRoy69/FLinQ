@@ -13,7 +13,7 @@ const ChatBody = ({
 }) => {
   const chatContainerBodyRef = useRef(null);
   const { user } = useContext(UserContext);
-  console.log(chatArray)
+
   const showFromBottom = () => {
     chatContainerBodyRef.current.scrollTop =
       chatContainerBodyRef.current.scrollHeight;
@@ -50,7 +50,9 @@ const ChatBody = ({
         ref={chatContainerBodyRef}
       >
         {chatArray.map((message, index) =>
-          message.type === "sent" || message.sender == user.username || message.sender == user._id? (
+          message.type === "sent" ||
+          message.sender == user.username ||
+          message.sender == user._id ? (
             <SentMessage message={message} key={index} />
           ) : (
             <ReceivedMessage message={message} key={index} />
