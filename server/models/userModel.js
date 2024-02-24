@@ -92,14 +92,17 @@ userSchema.statics.register = async function ({
 	const salt = await bcrypt.genSalt(10);
 	const hash = await bcrypt.hash(password, salt);
 
-	const user = await this.create({
-		username,
-		name,
-		email,
-		password: hash,
-		occupation,
-		phone,
-	});
+  const user = await this.create({
+    username,
+    name,
+    email,
+    password: hash,
+    occupation,
+    phone,
+    birthdate,
+    gender,
+    image
+  });
 
 	if (!user) {
 		throw new Error("User registration failed");

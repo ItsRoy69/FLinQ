@@ -20,7 +20,9 @@ const ChatFooter = ({
 
   const sendQuery = async () => {
     if (queryInputVal?.length > 0) {
+      
       const date = new Date();
+      
       const newMessage = {
         sender: user.username || "Anonymous",
         senderId: user._id,

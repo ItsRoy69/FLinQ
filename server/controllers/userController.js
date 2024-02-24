@@ -1,6 +1,9 @@
 const UserModel = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 // create jwt token
 const createToken = (payload, secret, expiry) => {
     return jwt.sign({ payload }, secret, { expiresIn: `${expiry}` });
@@ -10,10 +13,13 @@ const createToken = (payload, secret, expiry) => {
 const registerUser = async (req, res) => {
     try {
         const { username, name, email, password, occupation, phone, gender, birthdate } = req.body;
-        const image = req.file ? req.file.buffer : null;
+        
+        const image = req.file ? req.file.buffer : req.body.image;
         if (!username || !name || !email || !password || !occupation || !phone) {
             return res.status(422).json({ message: "Fill all details" });
         }
+
+        // Register the user with UserModel.register method
         const user = await UserModel.register({
             username,
             name,
@@ -23,20 +29,26 @@ const registerUser = async (req, res) => {
             phone,
             gender,
             birthdate,
-            image,
+            image, // Store the image buffer in the database
         });
 
         if (!user) throw Error("Registration failed");
+
         const token = createToken(user._id, process.env.JWT_SECRET, "2D");
         if (!token) throw Error("Token creation failed");
-        res.status(200).json({message:"Registration successful",user:{
-            _id:user._id,
-            completedDetails:user.completedDetails,
-            username:user.username,
-            name:user.name,
-            email:user.email
-        },token});   
 
+        res.status(200).json({
+            message: "Registration successful",
+            user: {
+                _id: user._id,
+                completedDetails: user.completedDetails,
+                username: user.username,
+                name: user.name,
+                email: user.email,
+                image: user.image // Assuming you want to send back the image buffer in the response
+            },
+            token
+        });
     } catch (error) {
         console.log(error);
         res.status(400).json({ message: error.message });
@@ -47,7 +59,6 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(req.body);
         if (!email || !password) {
             return res.status(422).json({ message: "Fill the details correctly" });
         }
@@ -65,7 +76,8 @@ const loginUser = async (req, res) => {
                 _id: user._id,
                 username: user.username,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                image : user.image
             }, token
         });
 
@@ -78,7 +90,6 @@ const loginUser = async (req, res) => {
 //POST
 const googleLogin = async(req,res)=>{
     const {email, verified} = await  req.body;
-    console.log(email,verified);
     if(!verified){
         console.log('check')
         return res.status(400).json({message : "Email is not verified."});
@@ -163,7 +174,9 @@ const updateUser = async (req, res) => {
         if (!userExist) {
             return res.status(404).json({ message: "User doesn't exist" });
         }
-        const updatedUser = await UserModel.findByIdAndUpdate(_id, { ...req.body, completedDetails: true }, { new: true }, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 });
+
+        const image = req.file ? req.file.buffer : req.body.image;
+        const updatedUser = await UserModel.findByIdAndUpdate(_id, { ...req.body, completedDetails: true, image:image}, { new: true }, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 });
         if (!updatedUser) {
             throw new Error("Could not update user");
         }

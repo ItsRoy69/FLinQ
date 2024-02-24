@@ -5,7 +5,7 @@ import { UserContext } from "../../contexts/userContext";
 import { dummyEventsArray } from "../../data/DummyEvent";
 
 import "./event.css";
-
+import axios from 'axios';
 import EventCard from "../../components/event/EventCard";
 import FeedSelector from "../../constants/feed-selector/FeedSelector";
 import SearchJobs from "../../constants/search/SearchJobs";
@@ -22,9 +22,14 @@ const Event = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    setEventArray(dummyEventsArray);
+    axios.get('http://localhost:5000/events/').then((response) =>{
+      setEventArray(response.data.result);
+    }).catch((err)=>{
+      console.log(err)
+    })
+   
   }, []);
-
+  
   useEffect(() => {
     const eventBody = document.getElementById("event-container-body");
     const handleScroll = () => {
@@ -33,7 +38,7 @@ const Event = () => {
         1
       ) {
         // bottom touched
-        setEventArray([...eventArray, ...dummyEventsArray]);
+        setEventArray([...eventArray, ...eventArray]);
         window.removeEventListener("wheel", handleScroll);
         setTimeout(() => {
           setPage((page) => page + 1);
@@ -100,7 +105,7 @@ const Event = () => {
           >
             {eventArray.map(
               (event, index) =>
-                event.status === "active" && (
+                 (
                   <EventCard key={index} event={event} />
                 )
             )}

@@ -18,6 +18,7 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 	}, [])
 
 	const TimeGap = (date) => {
+		
 		const postTime = new Date(date);
 		const currTime = new Date();
 
@@ -95,7 +96,6 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 
 	useEffect(() => {
 		if (post?.postName?.length > 50) {
-			console.log('long cap')
 			setCaptionReadMoreRequired(true)
 			setReadingMore(false)
 		}
