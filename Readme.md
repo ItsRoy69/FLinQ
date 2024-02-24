@@ -88,7 +88,6 @@ git clone https://github.com/ItsRoy69/Google-Solution
 
   1. Navigate to the project directory.
      
-
     ```bash
     cd FlinQ
     cd chatbot
@@ -97,12 +96,10 @@ git clone https://github.com/ItsRoy69/Google-Solution
 
   2. Create a virtual environment:
      
-
     ```bash
     python -m venv venv
     ```
     
-
   3. Activate the virtual environment:
 
      **Windows:**
