@@ -87,17 +87,21 @@ git clone https://github.com/ItsRoy69/Google-Solution
 - ### Chatbot Installation
 
   1. Navigate to the project directory.
+     
 
     ```bash
     cd FlinQ
     cd chatbot
     ```
+    
 
   2. Create a virtual environment:
+     
 
     ```bash
     python -m venv venv
     ```
+    
 
   3. Activate the virtual environment:
 
@@ -131,37 +135,37 @@ git clone https://github.com/ItsRoy69/Google-Solution
 
   1. Navigate to the project directory.
 
-  ```bash
-  cd FlinQ
-  cd client
-  ```
+    ```bash
+    cd FlinQ
+    cd client
+    ```
 
   2. Install dependencies.
 
-  ```bash
-  npm install
-  ```
+    ```bash
+    npm install
+    ```
 
 - ### Server Installation
 
   1. Navigate to the project directory.
 
-  ```bash
-  cd FlinQ
-  cd server
-  ```
+    ```bash
+    cd FlinQ
+    cd server
+    ```
 
   2. Install dependencies.
 
-  ```bash
-  npm install
-  ```
+    ```bash
+    npm install
+    ```
 
   3. Start the server:
 
-  ```bash
-  nodemon start
-  ```
+    ```bash
+    nodemon start
+    ```
 
 
 ### Running the App
