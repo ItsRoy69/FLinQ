@@ -78,6 +78,7 @@ By dismantling barriers and fostering connections, FlinQ aims to create a safer 
 
 ## TECHSTACK
 
+
 <div align="center">
 
 ![React JS](https://img.shields.io/badge/React.js-black?style=for-the-badge&logo=react&logoColor=white)
@@ -197,5 +198,8 @@ Start the frontend application.
 npm run dev
 ```
 
+* NOTE:
 
-_Don't let gender inequality hold you back. Take control, join the growing network of women and professionals on FlinQ and rewrite your story._
+  Rename `env.example` in the **client** folder to `.env` and fill it with the required values. Refer to the `.env.example` file for guidance.
+
+_**Don't let gender inequality hold you back. Take control, join the growing network of women and professionals on FlinQ and rewrite your story.**_
