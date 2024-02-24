@@ -26,12 +26,62 @@ By dismantling barriers and fostering connections, FlinQ aims to create a safer 
 
 ### Folder Workflow:
 
+```FlinQ/
+├── chatbot/
+├── client/
+│   ├── public/
+│   │   ├── icons/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── alert/
+│   │   │   ├── auth/
+│   │   │   ├── chat/
+│   │   │   ├── event/
+│   │   │   ├── feed/
+│   │   │   ├── jobs/
+│   │   │   ├── navbar/
+│   │   │   └── profile/
+│   │   ├── constants/
+│   │   │   ├── alert/
+│   │   │   ├── feed-selector/
+│   │   │   ├── home_navbar/
+│   │   │   └── navbar/
+│   │   │   └── search/
+│   │   ├── contexts/
+│   │   ├── data/
+│   │   ├── pages/
+│   │   │   ├── chat/
+│   │   │   │   ├── anonymous/
+│   │   │   │   ├── bot/
+│   │   │   │   └── community/
+│   │   │   ├── error/
+│   │   │   ├── events/
+│   │   │   ├── feed/
+│   │   │   ├── home/
+│   │   │   ├── jobs/
+│   │   │   ├── map/
+│   │   │   ├── profile/
+│   │   │   └── user/
+│   └── package.json
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   ├── middleware/
+│   ├── services/
+│   └── package.json
+└── README.md
+```
+
 cd client:
 
 client
 ![Alt text](image.png)
 
-### Installation
+## INSTALLATION
 
 1. Clone this repository to your local machine.
 
