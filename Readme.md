@@ -26,31 +26,169 @@ By dismantling barriers and fostering connections, FlinQ aims to create a safer 
 
 ### Folder Workflow:
 
-cd client:
+```FlinQ/
+├── chatbot/
+├── client/
+│   ├── public/
+│   │   ├── icons/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── alert/
+│   │   │   ├── auth/
+│   │   │   ├── chat/
+│   │   │   ├── event/
+│   │   │   ├── feed/
+│   │   │   ├── jobs/
+│   │   │   ├── navbar/
+│   │   │   └── profile/
+│   │   ├── constants/
+│   │   │   ├── alert/
+│   │   │   ├── feed-selector/
+│   │   │   ├── home_navbar/
+│   │   │   └── navbar/
+│   │   │   └── search/
+│   │   ├── contexts/
+│   │   ├── data/
+│   │   ├── pages/
+│   │   │   ├── chat/
+│   │   │   │   ├── anonymous/
+│   │   │   │   ├── bot/
+│   │   │   │   └── community/
+│   │   │   ├── error/
+│   │   │   ├── events/
+│   │   │   ├── feed/
+│   │   │   ├── home/
+│   │   │   ├── jobs/
+│   │   │   ├── map/
+│   │   │   ├── profile/
+│   │   │   └── user/
+│   └── package.json
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   ├── middleware/
+│   ├── services/
+│   └── package.json
+└── README.md
+```
 
-client
-![Alt text](image.png)
+## TECHSTACK
 
-### Installation
 
-1. Clone this repository to your local machine.
+<div align="center">
+
+![React JS](https://img.shields.io/badge/React.js-black?style=for-the-badge&logo=react&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-%23404d59.svg?style=for-the-badge&logo=TailwindCSS&logoColor=%2361DAFB)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=for-the-badge&logo=Vercel&logoColor=#00C7B7)
+![Onrender](https://img.shields.io/badge/Onrender-%23000000.svg?style=for-the-badge&logo=render&logoColor=#00C7B7)
+![Firebase](https://img.shields.io/badge/Firebase-%6DA55F?style=for-the-badge&logo=Firebase&logoColor=#00C7B7)
+![Socket.IO](https://img.shields.io/badge/socket.io-%23000000.svg?style=for-the-badge&logo=socket.io&logoColor=#0000FF)
+![Python](https://img.shields.io/badge/python-38863B?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/flask-742f49?style=for-the-badge&logo=flask&logoColor=fff)
+![Vertex AI](https://img.shields.io/badge/Vertex%20AI-%2343A047?style=for-the-badge&logo=google-cloud&logoColor=white)
+![PaLM](https://img.shields.io/badge/PaLM-orange?style=for-the-badge&logo=google&logoColor=white)
+![Google Auth](https://img.shields.io/badge/Google%20Auth-%234285F4?style=for-the-badge&logo=google&logoColor=white)
+![Google Maps](https://img.shields.io/badge/Google%20Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)
+![Auth0](https://img.shields.io/badge/Auth0-%23333333?style=for-the-badge&logo=auth0&logoColor=fff)
+
+</div>
+
+
+## INSTALLATION
+
+Clone this repository to your local machine.
 
 ```bash
 git clone https://github.com/ItsRoy69/Google-Solution
 ```
 
-2. Navigate to the project directory.
+- ### Chatbot Installation
 
-```bash
-cd Google-Solution
-cd client
-```
+  1. Navigate to the project directory.
+     
+    ```bash
+    cd FlinQ
+    cd chatbot
+    ```
+    
 
-3. Install dependencies.
+  2. Create a virtual environment:
+     
+    ```bash
+    python -m venv venv
+    ```
+    
+  3. Activate the virtual environment:
 
-```bash
-npm install
-```
+     **Windows:**
+
+     ```bash
+     venv\Scripts\Activate.ps1
+     ```
+
+     **MacOS/ Linux:**
+
+     ```bash
+     source venv/bin/activate
+     ```
+
+  4. Install dependencies:
+
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+  5. Run the chatbot:
+
+     _Make sure you have a GCP account with Vertex AI enabled._
+
+    ```bash
+    python chat-flask.py
+    ```
+  
+- ### Client Installation
+
+  1. Navigate to the project directory.
+
+    ```bash
+    cd FlinQ
+    cd client
+    ```
+
+  2. Install dependencies.
+
+    ```bash
+    npm install
+    ```
+
+- ### Server Installation
+
+  1. Navigate to the project directory.
+
+    ```bash
+    cd FlinQ
+    cd server
+    ```
+
+  2. Install dependencies.
+
+    ```bash
+    npm install
+    ```
+
+  3. Start the server:
+
+    ```bash
+    nodemon start
+    ```
+
 
 ### Running the App
 
@@ -60,61 +198,8 @@ Start the frontend application.
 npm run dev
 ```
 
-Few Instructions:
+* NOTE:
 
-- Naming format of folders should be in "smallcase"
+  Rename `env.example` in the **client** folder to `.env` and fill it with the required values. Refer to the `.env.example` file for guidance.
 
-- Used tailwind for consistent styling, if any component has styling which are not needed in other files/pages then use the "name.css" to include the css property tehre, other styles which are same in all componenets should be included and modified inside "index.css"
-
-- Naming format of jsx files should be in "PascalCase"
-
-## CHATBOT
-- To run the chatbot, first create a virtual environment (if you don't already have one).
-  
-  - ### Creating Virtual Environment
-    
-    - Use this command in powershell: ` python -m venv venv` and if it does not work, you may use this command: `python -m virtualenv venv`.
-      
-- Then, activate the virtual environment.
-  
-  - ### Activating the virtual environment
-    
-    - Use `venv/Scripts/Activate.ps1` to activate the virtual environment.
-      
-- After that, you will have to install the packages that are required to run the python files. The packages are listed in the `requirements.txt` file.
-  
-    - ### Installing the packages
-      
-      - Use `pip install -r requirements.txt` to install the packages.
-     
-    - ### Creating venv + Installing packages in one go
-
-      - Use `python -m venv venv && venv/bin/pip install -r requirements.txt` . 
-        
-- To run the `chat.py` file, use the command: `python chat.py`
-  
-- To run the `chat-flask.py` file, use the command: `python chat-flask.py`
-  
-- You will need a GCP (Google Cloud Platform) account to run both the `chat.py` and `chat-flask.py` files.
-  
-  - After creating the GCP account, enable the **Vertex AI API**.
-    
-  - Then, to use the API, you will need to authenticate the request. You may do that by setting **ADC(Application Default Credentials)**.
-    
-    - Docs to refer to set ADC: [ADC using Google Cloud CLI](https://cloud.google.com/docs/authentication/gcloud#gcloud-credentials) , [ADC using Service Account Key](https://cloud.google.com/kubernetes-engine/docs/tutorials/authenticating-to-cloud-platform)
-      
-  - If you are using *service account key* for authentication:
-    
-    - Add the role: **Vertex AI User** to your service account by going to the **IAM** tab on your GCP Console.
-      
-    - Add your service account key as an environment. You may use the variable *GOOGLE_APPLICATION_CREDENTIALS* to name your environment.
-      
-    - **Remember to only provide the path to your service account key file in the environment, and not the content, since only the location of the key is expected.**
-      
-- Once you run the `chat-flask.py` file, you may test if the REST API is working properly either by using `curl` or by using any other API testing platform. Since the API only accepts `POST` requests, clicking on the localhost link will result in a *405 Method Error*.
-
-### Deployed link for the Chatbot: 
-
-[Chatbot link](https://googlesolchatbot.onrender.com/chat)
-
-_Don't let gender inequality hold you back. Take control, join the growing network of women and professionals on FlinQ and rewrite your story._
+_**Don't let gender inequality hold you back. Take control, join the growing network of women and professionals on FlinQ and rewrite your story.**_
