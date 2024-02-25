@@ -14,7 +14,7 @@ const ChatAnonymous = () => {
   useEffect(() => {
     const fetchChatData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/chat/messages");
+        const response = await fetch("https://flinq-backend.onrender.com/chat/messages");
         if (response.ok) {
           const data = await response.json();
           setChatArray(data.result);
@@ -45,7 +45,7 @@ const ChatAnonymous = () => {
       />
       <ChatFooter
         messagetype = "anonymous"
-        apiEndPoint={"http://localhost:5000/chat/messages"}
+        apiEndPoint={"https://flinq-backend.onrender.com/chat/messages"}
         chatArray={chatArray}
         setChatArray={setChatArray}
         setIsScrollingUp={setIsScrollingUp}

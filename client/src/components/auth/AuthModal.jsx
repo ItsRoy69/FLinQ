@@ -115,7 +115,7 @@ const AuthModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:5000/user/register", creds)
+      .post("https://flinq-backend.onrender.com/user/register", creds)
       .then((response) => {
         console.log("from Auth",response);
         if (response.status == 200) {

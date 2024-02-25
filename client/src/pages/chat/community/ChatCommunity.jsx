@@ -21,7 +21,7 @@ const ChatCommunity = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/group/")
+      .get("https://flinq-backend.onrender.com/group/")
       .then((response) => {
         setCommunityArray(response.data.groups);
        
