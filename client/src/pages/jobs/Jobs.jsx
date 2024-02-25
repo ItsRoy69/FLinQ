@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import "./jobs.css";
 
 import { dummyRecommendationsArray } from "../../data/DummyRecommendations";
-import { dummyLatestJobsArray } from "../../data/DummyLatestJobs";
 import { dummySavedJobsArray } from "../../data/DummySavedJobs";
 
 import JobsRecommendation from "../../components/jobs/recommendations/JobsRecommendation";
@@ -16,17 +15,18 @@ import AlertIcon from "../../constants/alert/AlertIcon";
 
 import AddRounded from "@mui/icons-material/AddRounded";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import SyncIcon from "@mui/icons-material/Sync";
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 
 const Jobs = () => {
-  // NECESSARIES FOR NAVIGATION
-
   const [searchOpen, setSearchOpen] = useState(false);
 
   const handleSearchOpen = () => {
@@ -39,16 +39,11 @@ const Jobs = () => {
 
   const navigate = useNavigate();
 
-  // NECESSARIES FOR LATEST JOBS SECTION
-
-  // states for latest jobs
   const [latestJobsArray, setLatestJobsArray] = useState([]);
   const [latestPage, setLatestPage] = useState(0);
   const [isLatestLoading, setIsLatestLoading] = useState(true);
   const [newLatestLoaded, setNewLatestLoaded] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  
 
   // load more latest jobs
   const loadMoreLatest = () => {
@@ -67,9 +62,7 @@ const Jobs = () => {
     //   setLatestJobsArray(dummyLatestJobsArray);
     //   setIsLatestLoading(false);
     // }, 2000);
-    const fetchLatestJobs = async() => {
-      
-    }
+    const fetchLatestJobs = async () => {};
   }, []);
 
   // hide check out prompt on scroll
@@ -117,10 +110,10 @@ const Jobs = () => {
     }
   };
 
-  const handlejobsclicked = () =>{
-    navigate('/jobdetails')
-  }  
-    useEffect(() => {
+  const handlejobsclicked = () => {
+    navigate("/jobdetails");
+  };
+  useEffect(() => {
     document.addEventListener("scroll", handleChatScroll);
     document.addEventListener("wheel", handleChatScroll);
     return () => {
@@ -128,9 +121,20 @@ const Jobs = () => {
       document.removeEventListener("wheel", handleChatScroll);
     };
   }, []);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
- 
- 
+  const goToPrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? dummyRecommendationsArray.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === dummyRecommendationsArray.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <>
       {searchOpen && (
@@ -149,7 +153,7 @@ const Jobs = () => {
       </div>
 
       <div
-        className="jobs-body dark:bg-custom-dark dark:text-white min-h-screen w-full h-fit py-16 px-4 mt-2 flex flex-col gap-3 items-center overflow-auto"
+        className="jobs-body dark:bg-custom-dark dark:text-white min-h-screen w-full h-fit py-16 px-4 mt-2 flex flex-col gap-3 items-center overflow-x-auto"
         ref={jobsBodyRef}
       >
         <FeedSelector />
@@ -159,21 +163,44 @@ const Jobs = () => {
             <p className="text-left text-lg font-semibold">Recommended Jobs</p>
           </div>
 
-          <motion.div
-            id="recommendation-container"
-            className="recommendation-container w-full h-full flex gap-5 overflow-x-auto">
-            {dummyRecommendationsArray.map((recommendation, index) => (
-                <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: "100%" }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: "-100%"  }}
-                    transition={{ delay: index * 0.3, duration: 5, ease: "easeInOut" }}
+          <div className="relative">
+            <div
+              id="recommendation-container"
+              className="recommendation-container relative group w-full h-full flex gap-5 overflow-x-auto"
+            >
+              {dummyRecommendationsArray.map((recommendation, index) => (
+                <div
+                  key={index}
+                  style={{ display: index === currentIndex ? "block" : "none" }}
                 >
-                    <JobsRecommendation job={recommendation} />
-                </motion.div>
-            ))}
-        </motion.div>
+                  <JobsRecommendation job={recommendation} />
+                </div>
+              ))}
+              <div
+                className="absolute border rounded-[50%] backdrop-blur bg-custom-dark top-[40%] left-0 transform [-translate-y-1/2] cursor-pointer"
+                onClick={goToPrevious}
+              >
+                <ChevronLeftRoundedIcon />
+              </div>
+              <div
+                className="absolute border rounded-[50%] backdrop-blur bg-custom-dark top-[40%] right-0 transform [-translate-y-1/2] cursor-pointer"
+                onClick={goToNext}
+              >
+                <ChevronRightRoundedIcon />
+              </div>
+            </div>
+            <div className="flex justify-center mt-3">
+              {dummyRecommendationsArray.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 mx-1 rounded-full ${
+                    index === currentIndex ? "bg-white" : "bg-gray-300"
+                  }`}
+                  onClick={() => setCurrentIndex(index)}
+                ></div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="jobs-saved flex flex-col w-full h-60 px-1 pb-5 gap-2">
           <div className="saved-title text-sm font-sm">
@@ -182,10 +209,9 @@ const Jobs = () => {
           <div
             id="saved-container"
             className="saved-container w-full h-full flex items-center gap-2 overflow-x-auto"
-           
           >
             {dummySavedJobsArray.map((job, index) => (
-              <SavedJobCard  key={index} job={job} />
+              <SavedJobCard key={index} job={job} />
             ))}
           </div>
         </div>

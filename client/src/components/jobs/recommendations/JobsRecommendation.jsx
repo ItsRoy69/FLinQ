@@ -5,7 +5,7 @@ import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 const JobsRecommendation = ({ job }) => {
   return (
     <>
-      <div className="h-full w-full flex-shrink-0 flex-grow-0 bg--500 rounded-3xl flex flex-col justify-evenly items-center bg-violet-500 overflow-hidden">
+      <div className="h-full w-[335px] flex-shrink-0 flex-grow-0 bg--500 rounded-3xl flex flex-col justify-evenly items-center bg-violet-500 overflow-hidden">
         <div className="job-description flex justify-between items-center w-11/12 px-2">
           <div className="job-details w-7/12 h-4/5 flex flex-col justify-between items-center">
             <p className="text-lg sm:text-xl font-semibold w-full h-4/5 flex items-center overflow-hidden text-ellipsis">
