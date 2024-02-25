@@ -200,44 +200,36 @@ const addComment = async (req, res) => {
 // add reply to a comment
 const addReply = async (req, res) => {
     try {
-        const { id: postId, commentId: parentCommentId } = req.params;
+        const { id: postId, commentId } = req.params;
         const { userId, username, text } = req.body;
 
-        if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(parentCommentId)) {
-            return res.status(422).json({ message: "Post Id or Comment Id not valid" });
+        if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(commentId)) {
+            return res.status(422).json({ message: "Post or Comment Id not valid" });
         }
 
-        const postExist = await PostModel.exists({ _id: postId, "comments._id": parentCommentId });
+        const postExist = await PostModel.exists({ _id: postId });
         if (!postExist) {
-            return res.status(404).json({ message: "Post or Comment not found" });
-
+            return res.status(404).json({ message: "Post not found" });
         }
-        console.log("Yes")
-        const reply = {
-            userId: userId,
+
+        const comment = {
+            userId,
             username,
             text,
         };
-        const parentCommentObjectId = new mongoose.Types.ObjectId(parentCommentId);
 
-        console.log({ result: reply })
         const updatedPost = await PostModel.findOneAndUpdate(
-            { _id: postId, "comments._id": new mongoose.Types.ObjectId(parentCommentObjectId) },
-            { $push: { "comments.$.replies": new mongoose.Types.ObjectId(reply._id) } },
+            { _id: postId, "comments._id": commentId },
+            { $push: { "comments.$.replies": comment } },
             { new: true }
         );
-       
-        console.log({ result: updatedPost })
 
-        res.status(200).json({ message: 'Reply added', result: updatedPost });
+        res.status(200).json({ message: 'Reply added', result: updatedPost.comments });
     } catch (error) {
         console.log(error);
         res.status(400).json({ message: error?.message });
     }
 }
-
-
-
 
 module.exports = {
     getAllPosts, getPostById, addPost, editPost, getUserPosts, deletePost, addReply, likePost, addComment, unlikePost

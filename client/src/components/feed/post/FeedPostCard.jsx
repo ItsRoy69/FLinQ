@@ -134,16 +134,22 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 	const [comments, setComments] = useState([])
 	const [commentsModalOpen, setCommentsModalOpen] = useState(false)
 	const getComments = async() => {
-		setComments(post?.comments)
+		try {
+			const response = await axios.get(`https://flinq-backend.onrender.com/post/${post._id}`);
+			setComments(response.data.result.comments);
+		} catch (err) {
+			console.log(err);
+		}
 	}
-
+	
 	useEffect(() => {
-		getComments()
-	}, [])
+		getComments();
+	}, []);
+	
 
 	const refreshComments = async() => {
 		try {
-			const response = await axios.get(`http://localhost:5000/post/${post._id}`)
+			const response = await axios.get(`https://flinq-backend.onrender.com/post/${post._id}`)
 			setComments(response.data.result.comments)
 		} catch (err) {
 			console.log(err)

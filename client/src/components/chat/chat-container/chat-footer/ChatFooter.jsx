@@ -46,7 +46,6 @@ const ChatFooter = ({
           body: JSON.stringify(newMessage),
         });
         responseData = await response.json();
-        // console.log("from chatfooter:", responseData.response);
         if (!response.ok) {
           console.error("Failed to send message to the server");
         }

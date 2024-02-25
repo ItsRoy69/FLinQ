@@ -1,5 +1,48 @@
 const mongoose = require('mongoose');
 
+const replySchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'UserModel',
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    text: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true,
+    },
+});
+
+const commentSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'UserModel',
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    text: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true,
+    },
+    replies: [replySchema],
+});
+
 const postSchema = new mongoose.Schema({
     postName: {
         type: String,
@@ -28,30 +71,7 @@ const postSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'UserModel'
     }],
-    comments: [{
-        userId: {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: 'UserModel',
-            required: true,
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        text: {
-            type: String,
-            required: true,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            required: true,
-        },
-        replies: [{
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: 'CommentModel',
-        }],
-    }],
+    comments: [commentSchema],
 }, { timestamps: true });
 
 module.exports = mongoose.model('PostModel', postSchema);

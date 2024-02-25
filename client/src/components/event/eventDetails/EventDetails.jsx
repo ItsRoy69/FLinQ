@@ -17,7 +17,7 @@ const EventDetails = () => {
 
     useEffect(()=>{
         const initEventLoad = async() => {
-            await axios.get(`http://localhost:5000/events/${eventParam}`).then((response)=>{
+            await axios.get(`https://flinq-backend.onrender.com/events/${eventParam}`).then((response)=>{
                 setEventDetails(response.data.result)
                 setBooked(response.data.result.booking)
             }).catch((err)=>{
@@ -42,7 +42,7 @@ const EventDetails = () => {
         }
         setEventDetails(updatedEvent)
         console.log(updatedEvent)
-        await axios.put(`http://localhost:5000/events/${eventParam}`,{updatedEvent}).then((response) =>{
+        await axios.put(`https://flinq-backend.onrender.com/events/${eventParam}`,{updatedEvent}).then((response) =>{
             
             setBooked(response.data.result.booking)
         }).catch((err) =>{
