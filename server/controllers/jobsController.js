@@ -40,7 +40,7 @@ const getJobsById = async (req, res) => {
 // Create a new job post
 const addJobs = async (req, res) => {
     try {
-        const { userId: _id, icon, companyName, jobRole, location, amount, desc, apply, partOrFullTime } = req.body;
+        const { userId: _id, icon, companyName, jobRole, location, amount, desc, apply, isFullTime } = req.body;
 
         const newJobData = {
             icon,
@@ -51,7 +51,7 @@ const addJobs = async (req, res) => {
             amount,
             desc,
             apply,
-            partOrFullTime,
+            isFullTime,
         };
 
         const newJob = await JobModel.create(newJobData);
@@ -72,7 +72,7 @@ const editJobs = async (req, res) => {
         }
         const jobExist = await JobModel.exists({ _id: _id });
         if (!jobExist) return res.status(404).json({ message: "Job not found" });
-        const editedJob = await JobModel.findByIdAndUpdate(_id, req.body, { new: true });
+        const editedJob = await JobModel.findByIdAndUpdate(_id, req.body.updatedJob, { new: true });
         if (!editedJob) {
             throw new Error("Could not edit job");
         }

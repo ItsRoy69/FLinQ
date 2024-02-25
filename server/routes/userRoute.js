@@ -18,4 +18,7 @@ router.put('/update/:id', controllers.updateUser);
 // delete user
 router.delete('/delete/:id', controllers.deleteUser);
 
+// edit saved jobs array of user
+router.put('/updatesavedjob', controllers.updateSavedJobs)
+
 module.exports = router;

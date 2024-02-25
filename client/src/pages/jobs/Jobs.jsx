@@ -39,88 +39,95 @@ const Jobs = () => {
 
   const navigate = useNavigate();
 
-  const [latestJobsArray, setLatestJobsArray] = useState([]);
-  const [latestPage, setLatestPage] = useState(0);
-  const [isLatestLoading, setIsLatestLoading] = useState(true);
-  const [newLatestLoaded, setNewLatestLoaded] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
+	// NECESSARIES FOR LATEST JOBS SECTION
 
-  // load more latest jobs
-  const loadMoreLatest = () => {
-    setIsLatestLoading(true);
-    setTimeout(() => {
-      setLatestJobsArray([...latestJobsArray, ...latestJobsArray]);
-      setIsLatestLoading(false);
-      setNewLatestLoaded(true);
-    }, 1000);
-  };
+	// states for latest jobs
+	const [latestJobsArray, setLatestJobsArray] = useState([]);
+	const [latestPage, setLatestPage] = useState(0);
+	const [isLatestLoading, setIsLatestLoading] = useState(true);
+	const [newLatestLoaded, setNewLatestLoaded] = useState(false);
+	const [currentSlide, setCurrentSlide] = useState(0);
 
-  // load latest jobs on page mount
-  useEffect(() => {
-    // setTimeout(() => {
-    //   setLatestPage((page) => page + 1);
-    //   setLatestJobsArray(dummyLatestJobsArray);
-    //   setIsLatestLoading(false);
-    // }, 2000);
-    const fetchLatestJobs = async () => {};
-  }, []);
+	
 
-  // hide check out prompt on scroll
-  useEffect(() => {
-    const latestContainer = document.getElementById("latest-container");
-    const handleScroll = () => {
-      setTimeout(() => {
-        setNewLatestLoaded(false);
-        latestContainer.removeEventListener("wheel", handleScroll);
-      }, 500);
-    };
-    latestContainer.addEventListener("wheel", handleScroll);
-    return () => {
-      latestContainer.removeEventListener("wheel", handleScroll);
-    };
-  }, [latestJobsArray]);
+	// load more latest jobs
+	const loadMoreLatest = () => {
+		setIsLatestLoading(true);
+		setTimeout(() => {
+		setLatestJobsArray([...latestJobsArray, ...latestJobsArray]);
+		setIsLatestLoading(false);
+		setNewLatestLoaded(true);
+		}, 1000);
+	};
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide(
-        (prevSlide) => (prevSlide + 1) % dummyRecommendationsArray.length
-      );
-    }, 5000);
+	// load latest jobs on page mount
+	useEffect(() => {
+		const fetchLatestJobs = async() => {
+			try {
+				const response = await axios.get(`https://flinq-backend.onrender.com/jobs/`)
+				console.log(response.data.result)
+				setLatestJobsArray(response.data.result)
+			} catch (err) {
+				console.log(err)
+			} 
+		}
+		fetchLatestJobs()
+	}, []);
 
-    return () => clearInterval(interval);
-  }, []);
+	// hide check out prompt on scroll
+	useEffect(() => {
+		const latestContainer = document.getElementById("latest-container");
+		const handleScroll = () => {
+		setTimeout(() => {
+			setNewLatestLoaded(false);
+			latestContainer.removeEventListener("wheel", handleScroll);
+		}, 500);
+		};
+		latestContainer.addEventListener("wheel", handleScroll);
+		return () => {
+		latestContainer.removeEventListener("wheel", handleScroll);
+		};
+	}, [latestJobsArray]);
 
-  // prompt downward arrow
+	useEffect(() => {
+		const interval = setInterval(() => {
+		setCurrentSlide(
+			(prevSlide) => (prevSlide + 1) % dummyRecommendationsArray.length
+		);
+		}, 5000);
 
-  const [isScrollingUp, setIsScrollingUp] = useState(true);
-  const jobsBodyRef = useRef(null);
+		return () => clearInterval(interval);
+	}, []);
 
-  const showFromBottom = () => {
-    jobsBodyRef.current.scrollTop = jobsBodyRef.current.scrollHeight;
-  };
+	// prompt downward arrow
 
-  const handleChatScroll = () => {
-    if (
-      jobsBodyRef.current.scrollHeight - jobsBodyRef.current.scrollTop >
-      500
-    ) {
-      setIsScrollingUp(true);
-    } else {
-      setIsScrollingUp(false);
-    }
-  };
+	const [isScrollingUp, setIsScrollingUp] = useState(true);
+	const jobsBodyRef = useRef(null);
 
-  const handlejobsclicked = () => {
-    navigate("/jobdetails");
-  };
-  useEffect(() => {
-    document.addEventListener("scroll", handleChatScroll);
-    document.addEventListener("wheel", handleChatScroll);
-    return () => {
-      document.removeEventListener("scroll", handleChatScroll);
-      document.removeEventListener("wheel", handleChatScroll);
-    };
-  }, []);
+	const showFromBottom = () => {
+		jobsBodyRef.current.scrollTop = jobsBodyRef.current.scrollHeight;
+	};
+
+	const handleChatScroll = () => {
+		if (
+		jobsBodyRef.current.scrollHeight - jobsBodyRef.current.scrollTop >
+		500
+		) {
+		setIsScrollingUp(true);
+		} else {
+		setIsScrollingUp(false);
+		}
+	};
+
+	``
+		useEffect(() => {
+		document.addEventListener("scroll", handleChatScroll);
+		document.addEventListener("wheel", handleChatScroll);
+		return () => {
+		document.removeEventListener("scroll", handleChatScroll);
+		document.removeEventListener("wheel", handleChatScroll);
+		};
+	}, []);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToPrevious = () => {
@@ -210,9 +217,10 @@ const Jobs = () => {
             id="saved-container"
             className="saved-container w-full h-full flex items-center gap-2 overflow-x-auto"
           >
-            {dummySavedJobsArray.map((job, index) => (
+            {(latestJobsArray) ? latestJobsArray.map((job, index) => (
               <SavedJobCard key={index} job={job} />
-            ))}
+            )): <span className="">No jobs saved so far.</span>
+            }
           </div>
         </div>
         <div className="jobs-latest flex flex-col w-full h-60 px-1 pb-5 gap-2">

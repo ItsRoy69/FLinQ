@@ -22,7 +22,7 @@ const Event = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/events/').then((response) =>{
+    axios.get('https://flinq-backend.onrender.com/events/').then((response) =>{
       setEventArray(response.data.result);
     }).catch((err)=>{
       console.log(err)

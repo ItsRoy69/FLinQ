@@ -11,7 +11,15 @@ const ChatFooter = ({
   groupId,
   messagetype
 }) => {
-  const { user } = useContext(UserContext);
+  const usercontext = useContext(UserContext);
+  const [user,setUser] = useState({})
+  const storedUser = localStorage.getItem('userData');
+  useEffect(()=>{
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  },[])
+ 
   const [queryInputVal, setQueryInputVal] = useState("");
 
   const handleQueryInputChange = (e) => {
@@ -46,7 +54,6 @@ const ChatFooter = ({
           body: JSON.stringify(newMessage),
         });
         responseData = await response.json();
-        // console.log("from chatfooter:", responseData.response);
         if (!response.ok) {
           console.error("Failed to send message to the server");
         }
