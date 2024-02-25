@@ -22,11 +22,11 @@ const LatestJobCard = ({ job }) => {
           <div className="h-16 w-16 rounded-xl overflow-hidden object-cover shadow-md dark:bg-slate-200 shadow-slate-900">
             <img src={job.logo} className="h-full w-full" />
           </div>
-          <p className="text-xl font-bold text-black truncate">{job.company}</p>
+          <p className="text-xl font-bold text-black truncate">{job.companyName}</p>
         </div>
         <div className="job-card-content w-full flex flex-col justify-evenly items-center">
-          <p className="text-black font-semibold">{job.role}</p>
-          {job.fullTime ? (
+          <p className="text-black font-semibold">{job.jobRole}</p>
+          {job.isFullTime ? (
             <p className="text-sm font-medium text-slate-700">Full Time</p>
           ) : (
             <></>

@@ -40,7 +40,7 @@ const getJobsById = async (req, res) => {
 // Create a new job post
 const addJobs = async (req, res) => {
     try {
-        const { userId: _id, icon, companyName, jobRole, location, amount, desc, apply, partOrFullTime } = req.body;
+        const { userId: _id, icon, companyName, jobRole, location, amount, desc, apply, isFullTime } = req.body;
 
         const newJobData = {
             icon,
@@ -51,7 +51,7 @@ const addJobs = async (req, res) => {
             amount,
             desc,
             apply,
-            partOrFullTime,
+            isFullTime,
         };
 
         const newJob = await JobModel.create(newJobData);

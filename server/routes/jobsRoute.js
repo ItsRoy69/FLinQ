@@ -20,5 +20,4 @@ router.get('/:id', controllers.getJobsById);
 // delete jobs
 router.delete('/:id', controllers.deleteJobs);
 
-
 module.exports = router;

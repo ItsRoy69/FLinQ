@@ -227,7 +227,6 @@ const addReply = async (req, res) => {
             { new: true }
         );
        
-
         console.log({ result: updatedPost })
 
         res.status(200).json({ message: 'Reply added', result: updatedPost });
