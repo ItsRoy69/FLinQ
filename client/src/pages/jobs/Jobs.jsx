@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import "./jobs.css";
 
 import { dummyRecommendationsArray } from "../../data/DummyRecommendations";
-import { dummyLatestJobsArray } from "../../data/DummyLatestJobs";
 import { dummySavedJobsArray } from "../../data/DummySavedJobs";
 
 import JobsRecommendation from "../../components/jobs/recommendations/JobsRecommendation";
@@ -16,28 +15,29 @@ import AlertIcon from "../../constants/alert/AlertIcon";
 
 import AddRounded from "@mui/icons-material/AddRounded";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import SyncIcon from "@mui/icons-material/Sync";
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 
-import { motion, AnimatePresence, spring } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 
 const Jobs = () => {
-	// NECESSARIES FOR NAVIGATION
+  const [searchOpen, setSearchOpen] = useState(false);
 
-	const [searchOpen, setSearchOpen] = useState(false);
+  const handleSearchOpen = () => {
+    setSearchOpen(true);
+  };
 
-	const handleSearchOpen = () => {
-		setSearchOpen(true);
-	};
+  const handleSearchClose = () => {
+    setSearchOpen(false);
+  };
 
-	const handleSearchClose = () => {
-		setSearchOpen(false);
-	};
-
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
 	// NECESSARIES FOR LATEST JOBS SECTION
 
@@ -119,9 +119,7 @@ const Jobs = () => {
 		}
 	};
 
-	const handlejobsclicked = () =>{
-		navigate('/jobdetails')
-	}  
+	``
 		useEffect(() => {
 		document.addEventListener("scroll", handleChatScroll);
 		document.addEventListener("wheel", handleChatScroll);
@@ -130,135 +128,165 @@ const Jobs = () => {
 		document.removeEventListener("wheel", handleChatScroll);
 		};
 	}, []);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-	
-	
-	return (
-		<>
-		{searchOpen && (
-			<SearchJobs searchClose={handleSearchClose} feedType={"jobs"} />
-		)}
-		<div className="jobs-header dark:bg-custom-dark dark:text-white fixed top-0 left-0 h-16 w-full flex justify-between items-center px-4 z-10">
-			<div className="jobs-header-title w-full flex justify-start">
-			<input
-				type="text"
-				placeholder="Search Jobs..."
-				className="dark:bg-slate-800 rounded-3xl h-12 w-5/6 px-5 focus:outline-none focus:outline-purple-800"
-				onClick={handleSearchOpen}
-			/>
-			</div>
-			<AlertIcon />
-		</div>
+  const goToPrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? dummyRecommendationsArray.length - 1 : prevIndex - 1
+    );
+  };
 
-		<div
-			className="jobs-body dark:bg-custom-dark dark:text-white min-h-screen w-full h-fit py-16 px-4 mt-2 flex flex-col gap-3 items-center overflow-auto"
-			ref={jobsBodyRef}
-		>
-			<FeedSelector />
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === dummyRecommendationsArray.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
-			<div className="jobs-recommendation flex flex-col w-full h-60 px-1 py-5 gap-3">
-			<div className="recommendation-title text-sm font-sm">
-				<p className="text-left text-lg font-semibold">Recommended Jobs</p>
-			</div>
+  return (
+    <>
+      {searchOpen && (
+        <SearchJobs searchClose={handleSearchClose} feedType={"jobs"} />
+      )}
+      <div className="jobs-header dark:bg-custom-dark dark:text-white fixed top-0 left-0 h-16 w-full flex justify-between items-center px-4 z-10">
+        <div className="jobs-header-title w-full flex justify-start">
+          <input
+            type="text"
+            placeholder="Search Jobs..."
+            className="dark:bg-slate-800 rounded-3xl h-12 w-5/6 px-5 focus:outline-none focus:outline-purple-800"
+            onClick={handleSearchOpen}
+          />
+        </div>
+        <AlertIcon />
+      </div>
 
-			<motion.div
-				id="recommendation-container"
-				className="recommendation-container w-full h-full flex gap-5 overflow-x-auto">
-				{dummyRecommendationsArray.map((recommendation, index) => (
-					<motion.div
-						key={index}
-						initial={{ opacity: 0, x: "100%" }}
-						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: "-100%"  }}
-						transition={{ delay: index * 0.3, duration: 5, ease: "easeInOut" }}
-					>
-						<JobsRecommendation job={recommendation} />
-					</motion.div>
-				))}
-			</motion.div>
-			</div>
-			<div className="jobs-saved flex flex-col w-full h-60 px-1 pb-5 gap-2">
-			<div className="saved-title text-sm font-sm">
-				<p className="text-left text-lg font-semibold">Saved Jobs</p>
-			</div>
-			<div
-				id="saved-container"
-				className="saved-container w-full h-full flex items-center gap-2 overflow-x-auto"
-			
-			>
-				{
-					(latestJobsArray) ? latestJobsArray.map((job, index) => (
-						<SavedJobCard  key={index} job={job} />
-					))
-					: 
-						<span className="">No jobs saved so far.</span>
-				}
-			</div>
-			</div>
-			<div className="jobs-latest flex flex-col w-full h-60 px-1 pb-5 gap-2">
-			<div className="latest-title flex items-center justify-between max-h-full text-sm overflow-hidden ">
-				<p className="text-left text-lg font-semibold h-full">
-				Recently Added
-				</p>
-				{newLatestLoaded && latestPage > 1 && (
-				<div className="flex items-center gap-2 text-slate-200 h-full overflow-hidden ">
-					<p className="text-sm font-light underline  overflow-hidden">
-					Check Out Fresh!
-					<ArrowRightAltIcon fontSize="large" className="" />
-					</p>
-				</div>
-				)}
-			</div>
-			<div
-				id="latest-container"
-				className="latest-container w-full h-full flex items-center gap-2 overflow-x-auto"
-			>
-				{isLatestLoading ? (
-				<JobCardSkeleton cards={2} />
-				) : (
-				latestJobsArray.map((job, index) => (
-					<LatestJobCard key={index} job={job} />
-				))
-				)}
-				{!isLatestLoading && latestPage > 0 && (
-				<div
-					className="latest-more absolute right-5 min-w-10 w-fit p-1 h-11 flex justify-center items-center rounded-full bg-slate-700"
-					onClick={loadMoreLatest}
-				>
-					{isLatestLoading && latestPage > 1 ? (
-					<SyncIcon
-						className="load-spinner dark:text-slate-200"
-						fontSize="medium"
-					/>
-					) : (
-					<div className="flex justify-center items-center ml-2 hover:cursor-pointer">
-						<p className="text-sm text-center font-light">More</p>
-						<ArrowRightIcon fontSize="medium" />
-					</div>
-					)}
-				</div>
-				)}
-			</div>
-			</div>
-		</div>
+      <div
+        className="jobs-body dark:bg-custom-dark dark:text-white min-h-screen w-full h-fit py-16 px-4 mt-2 flex flex-col gap-3 items-center overflow-x-auto"
+        ref={jobsBodyRef}
+      >
+        <FeedSelector />
 
-		{isScrollingUp && (
-			<div
-			className="w-10 h-10 fixed bottom-24 right-8 border border-slate-600 rounded-full dark:bg-custom-dark dark:text-white flex items-center justify-center"
-			onClick={showFromBottom}
-			>
-			<ArrowDownwardRoundedIcon />
-			</div>
-		)}
+        <div className="jobs-recommendation flex flex-col w-full h-60 px-1 py-5 gap-3">
+          <div className="recommendation-title text-sm font-sm">
+            <p className="text-left text-lg font-semibold">Recommended Jobs</p>
+          </div>
 
-		<div className="jobs-footer dark:bg-custom-dark dark:text-white fixed bottom-0 right-0 h-16 w-full flex justify-center items-center z-10">
-			<div className="job-postnew h-4/5 w-11/12 flex justify-center items-center gap-2 rounded-2xl bg-gradient-to-r dark:from-fuchsia-600 dark:to-purple-600 hover:cursor-pointer">
-			<AddRounded fontSize="large" />
-			<p className="font-medium text-2xl">Post Job</p>
-			</div>
-		</div>
-		</>
-	);
+          <div className="relative">
+            <div
+              id="recommendation-container"
+              className="recommendation-container relative group w-full h-full flex gap-5 overflow-x-auto"
+            >
+              {dummyRecommendationsArray.map((recommendation, index) => (
+                <div
+                  key={index}
+                  style={{ display: index === currentIndex ? "block" : "none" }}
+                >
+                  <JobsRecommendation job={recommendation} />
+                </div>
+              ))}
+              <div
+                className="absolute border rounded-[50%] backdrop-blur bg-custom-dark top-[40%] left-0 transform [-translate-y-1/2] cursor-pointer"
+                onClick={goToPrevious}
+              >
+                <ChevronLeftRoundedIcon />
+              </div>
+              <div
+                className="absolute border rounded-[50%] backdrop-blur bg-custom-dark top-[40%] right-0 transform [-translate-y-1/2] cursor-pointer"
+                onClick={goToNext}
+              >
+                <ChevronRightRoundedIcon />
+              </div>
+            </div>
+            <div className="flex justify-center mt-3">
+              {dummyRecommendationsArray.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 mx-1 rounded-full ${
+                    index === currentIndex ? "bg-white" : "bg-gray-300"
+                  }`}
+                  onClick={() => setCurrentIndex(index)}
+                ></div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="jobs-saved flex flex-col w-full h-60 px-1 pb-5 gap-2">
+          <div className="saved-title text-sm font-sm">
+            <p className="text-left text-lg font-semibold">Saved Jobs</p>
+          </div>
+          <div
+            id="saved-container"
+            className="saved-container w-full h-full flex items-center gap-2 overflow-x-auto"
+          >
+            {(latestJobsArray) ? latestJobsArray.map((job, index) => (
+              <SavedJobCard key={index} job={job} />
+            )): <span className="">No jobs saved so far.</span>
+            }
+          </div>
+        </div>
+        <div className="jobs-latest flex flex-col w-full h-60 px-1 pb-5 gap-2">
+          <div className="latest-title flex items-center justify-between max-h-full text-sm overflow-hidden ">
+            <p className="text-left text-lg font-semibold h-full">
+              Recently Added
+            </p>
+            {newLatestLoaded && latestPage > 1 && (
+              <div className="flex items-center gap-2 text-slate-200 h-full overflow-hidden ">
+                <p className="text-sm font-light underline  overflow-hidden">
+                  Check Out Fresh!
+                  <ArrowRightAltIcon fontSize="large" className="" />
+                </p>
+              </div>
+            )}
+          </div>
+          <div
+            id="latest-container"
+            className="latest-container w-full h-full flex items-center gap-2 overflow-x-auto"
+          >
+            {isLatestLoading ? (
+              <JobCardSkeleton cards={2} />
+            ) : (
+              latestJobsArray.map((job, index) => (
+                <LatestJobCard key={index} job={job} />
+              ))
+            )}
+            {!isLatestLoading && latestPage > 0 && (
+              <div
+                className="latest-more absolute right-5 min-w-10 w-fit p-1 h-11 flex justify-center items-center rounded-full bg-slate-700"
+                onClick={loadMoreLatest}
+              >
+                {isLatestLoading && latestPage > 1 ? (
+                  <SyncIcon
+                    className="load-spinner dark:text-slate-200"
+                    fontSize="medium"
+                  />
+                ) : (
+                  <div className="flex justify-center items-center ml-2 hover:cursor-pointer">
+                    <p className="text-sm text-center font-light">More</p>
+                    <ArrowRightIcon fontSize="medium" />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {isScrollingUp && (
+        <div
+          className="w-10 h-10 fixed bottom-24 right-8 border border-slate-600 rounded-full dark:bg-custom-dark dark:text-white flex items-center justify-center"
+          onClick={showFromBottom}
+        >
+          <ArrowDownwardRoundedIcon />
+        </div>
+      )}
+
+      <div className="jobs-footer dark:bg-custom-dark dark:text-white fixed bottom-0 right-0 h-16 w-full flex justify-center items-center z-10">
+        <div className="job-postnew h-4/5 w-11/12 flex justify-center items-center gap-2 rounded-2xl bg-gradient-to-r dark:from-fuchsia-600 dark:to-purple-600 hover:cursor-pointer">
+          <AddRounded fontSize="large" />
+          <p className="font-medium text-2xl">Post Job</p>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Jobs;

@@ -17,8 +17,9 @@ const EventDetails = () => {
 
     useEffect(()=>{
         const initEventLoad = async() => {
-            await axios.get(`https://flinq-backend.onrender.com/events/${eventParam}`).then((response)=>{
+            await axios.get(`http://localhost:5000/events/${eventParam}`).then((response)=>{
                 setEventDetails(response.data.result)
+                console.log(response.data.result)
                 setBooked(response.data.result.booking)
             }).catch((err)=>{
                 console.log(err)
@@ -28,7 +29,7 @@ const EventDetails = () => {
     },[])
 
     const handleBookChange = () =>{
-        
+        setBooked(!booked)
         handleEventBook()
     }
     
@@ -71,31 +72,41 @@ const EventDetails = () => {
                         {eventDetails.eventName}
                     </div>
                     <div className=" py-1  justify-end text-slate-300">{eventDetails.companyName}</div>
-                    <div className=" py-1  justify-end">
-                        Bangalore,India
+                    {eventDetails.location ?(
+                        <div className=" py-1  justify-end">
+                        {eventDetails.location}
                     <span>
                         <LocationOn className="h-6 pr-1" />
                     </span>
                     </div>
+                    ):(
+                        <></>
+                    )}
                     <div className=" flex w-[130px]  rounded items-center bg-slate-300 text-slate-500  justify-center h-6">
                     {TimeGap(eventDetails.timeAllocated)}
                     </div>
                 </div>
-                <div className="border flex  w-10 h-10 "></div>
+                <div className="border flex  w-10 h-10 "><img src="https://g.foolcdn.com/editorial/images/541536/ibm_logo_blue60_cmyk.jpg" alt="image"/></div>
                 </div>
                 <div className="flex flex-col items-start px-10 w-screen py-1">
                     <div className="text-lg py-2  font-bold">About The Event</div>
-                    <div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    {eventDetails.desc ? (
+                        <div>
+                        <p>{eventDetails.desc}.</p>
                     </div>
+                    ):(
+                        <div>
+                        <p>No description for this event</p>
+                    </div>
+                    )}
                 </div>
                 <div className="flex flex-col items-start w-screen py-1  px-10  justify-start">
                     <div className="text-lg py-2 font-bold">Perks</div>
                     <div className="px-2">
                         <ul className="list-disc px-3 text-white">
                         <li className="p-1">Learn Industrial Skill</li>
-                        <li className="p-1">Learn Industrial Skill</li>
-                        <li className="p-1">Learn Industrial Skill</li>
+                        <li className="p-1">Meet with experts</li>
+                        <li className="p-1">Get Certified</li>
                         </ul>
                     </div>
                 </div>

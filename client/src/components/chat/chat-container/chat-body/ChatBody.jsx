@@ -12,8 +12,15 @@ const ChatBody = ({
   setIsScrollingUp,
 }) => {
   const chatContainerBodyRef = useRef(null);
-  const { user } = useContext(UserContext);
-
+  // const { user } = useContext(UserContext);
+  const [user,setUser] = useState({})
+  const storedUser = localStorage.getItem('userData');
+  useEffect(()=>{
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  },[])
+ 
   const showFromBottom = () => {
     chatContainerBodyRef.current.scrollTop =
       chatContainerBodyRef.current.scrollHeight;

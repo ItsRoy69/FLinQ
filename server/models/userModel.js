@@ -49,7 +49,8 @@ const userSchema = new mongoose.Schema(
 		type: Date,
 		},
 		image: {
-		type: Buffer,
+		type: String,
+		trim : true
 		},
 		savedJobs: [
 			{

@@ -51,12 +51,7 @@ const joinGroupAndAddMessage = async (req, res) => {
         await group.save();
 
         // Add the message to the existing group
-        group.messages.push({
-            sender: senderId, 
-            message, 
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        });
+        group.messages.push({ sender: senderId, message });
         await group.save();
         console.log(group)
         const user = await User.findById(senderId)
@@ -73,7 +68,7 @@ const joinGroupAndAddMessage = async (req, res) => {
         console.error('Error joining group or adding message:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-};
+}
 
 // Get all groups
 const getAllGroups = async (req, res) => {

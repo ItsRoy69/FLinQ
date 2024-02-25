@@ -1,6 +1,7 @@
 import "./sentMessage.css";
 
 const SentMessage = ({ message }) => {
+  console.log("message ",message)
   return (
     <div className="w-full flex flex-col gap-1">
       <div className="flex justify-end">
@@ -16,11 +17,11 @@ const SentMessage = ({ message }) => {
       {window.location.pathname === "/chat/anonymous" ||
       window.location.pathname === "/chat/aibot" ? (
         <div className="sent-message-footer text-sm font-thin text-end pl-2 text-gray-300">
-          {message.timestamp.substring(11, 16)}
+          {message.timestamp.substring(11,16)}
         </div>
       ) : (
         <div className="sent-message-footer text-sm font-thin text-end pl-2 text-gray-300">
-          {message.createdAt.substring(11, 16)}
+          {message.timestamp|| message.createdAt.substring(11,16)}
         </div>
       )}
     </div>

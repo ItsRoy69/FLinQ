@@ -11,7 +11,15 @@ const ChatFooter = ({
   groupId,
   messagetype
 }) => {
-  const { user } = useContext(UserContext);
+  const usercontext = useContext(UserContext);
+  const [user,setUser] = useState({})
+  const storedUser = localStorage.getItem('userData');
+  useEffect(()=>{
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  },[])
+ 
   const [queryInputVal, setQueryInputVal] = useState("");
 
   const handleQueryInputChange = (e) => {
