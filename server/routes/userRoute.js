@@ -21,4 +21,5 @@ router.delete('/delete/:id', controllers.deleteUser);
 router.put('/updatesavedjob', controllers.updateSavedJobs)
 // get all doctors
 router.get('/doctors', controllers.getDoctors);
+
 module.exports = router;

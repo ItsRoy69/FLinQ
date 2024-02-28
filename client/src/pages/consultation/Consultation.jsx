@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Consultation = () => {
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    // Fetch doctors' details from the backend
     axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/doctors`)
       .then(response => {
         setDoctors(response.data.result);
@@ -21,10 +21,11 @@ const Consultation = () => {
       <ul>
         {doctors.map(doctor => (
           <li key={doctor._id}>
-            <img src={doctor.image} alt={doctor.name} />
-            <p>User ID: {doctor._id}</p>
-            <p>Name: {doctor.name}</p>
-            <p>Specialisation: {doctor.specialisation || "Not yet specified"}</p>
+            <Link to={`/chat/${doctor._id}`}>
+              <img src={doctor.image} alt={doctor.name} />
+              <p>Name: {doctor.name}</p>
+              <p>Specialisation: {doctor.specialisation || "Not yet specified"}</p>
+            </Link>
           </li>
         ))}
       </ul>
