@@ -64,7 +64,7 @@ const Jobs = () => {
 	useEffect(() => {
 		const fetchLatestJobs = async() => {
 			try {
-				const response = await axios.get(`https://flinq-backend.onrender.com/jobs/`)
+				const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/jobs/`)
 				console.log(response.data.result)
 				setLatestJobsArray(response.data.result)
 			} catch (err) {

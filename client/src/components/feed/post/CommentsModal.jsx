@@ -41,7 +41,7 @@ const CommentsModal = ({ postId, comments, refreshComments, setCommentsModalOpen
     const handleSendComment = async() => {
         if (!replyingTo) {
             try {
-                const response = await axios.post(`https://flinq-backend.onrender.com/post/${postId}/comment`, { 
+                const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/post/${postId}/comment`, { 
                     userId: user._id,
                     username: user.username,
                     text: newComment 
@@ -53,7 +53,7 @@ const CommentsModal = ({ postId, comments, refreshComments, setCommentsModalOpen
             }
         } else {
             try {
-                const response = await axios.post(`https://flinq-backend.onrender.com/post/${postId}/comment/${replyingTo}/reply`, { 
+                const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/post/${postId}/comment/${replyingTo}/reply`, { 
                     userId: user._id,
                     username: user.username,
                     text: newComment 

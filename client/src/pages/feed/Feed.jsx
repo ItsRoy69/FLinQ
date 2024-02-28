@@ -29,7 +29,7 @@ const Feed = () => {
 	useEffect(() => {
 		const fetchPostData = async () => {
 		try {
-			const response = await fetch("https://flinq-backend.onrender.com/post/");
+			const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/post/`);
 			const data = await response.json();
 			setPostArray(data.result)
 		} catch (error) {

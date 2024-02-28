@@ -57,7 +57,7 @@ const EditProfile = () => {
     e.preventDefault();
    
     axios
-      .put(`https://flinq-backend.onrender.com/user/update/${userId}`, creds)
+      .put(`${import.meta.env.VITE_APP_BACKEND_URL}/user/update/${userId}`, creds)
       .then((response) => {
         if (response.status == 200) {
           const updatedUserData = response.data.result || response.data.user;

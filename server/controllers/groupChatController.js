@@ -1,4 +1,4 @@
-const Group = require('../models/groupModel');
+const GroupModel = require('../models/groupModel');
 const User = require('../models/userModel')
 
 // Create a new group and add a message
@@ -6,11 +6,11 @@ const createGroupAndAddMessage = async (req, res) => {
     try {
         const { groupName, sender, message } = req.body;
         console.log(req.body);
-        const existingGroup = await Group.findOne({ name: groupName });
+        const existingGroup = await GroupModel.findOne({ name: groupName });
         if (existingGroup) {
             return res.status(400).json({ message: 'Group already exists' });
         }
-        const newGroup = new Group({ name: groupName });
+        const newGroup = new GroupModel({ name: groupName });
 
         newGroup.members.push(sender);
 
@@ -41,7 +41,7 @@ const joinGroupAndAddMessage = async (req, res) => {
         const { groupId, senderId, message } = req.body;
         console.log(groupId, senderId, message)
 
-        const group = await Group.findById(groupId);
+        const group = await GroupModel.findById(groupId);
         if (!group) {
             return res.status(404).json({ message: 'Group not found' });
         }
@@ -73,7 +73,7 @@ const joinGroupAndAddMessage = async (req, res) => {
 // Get all groups
 const getAllGroups = async (req, res) => {
     try {
-        const groups = await Group.find();
+        const groups = await GroupModel.find();
         res.status(200).json({ groups });
     } catch (error) {
         console.error('Error fetching groups:', error);

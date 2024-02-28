@@ -78,7 +78,7 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 
 	const likePost = async() => {
 		try {
-			const response = await axios.post(`https://flinq-backend.onrender.com/post/${post._id}/like`, {userId: user._id})
+			const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/post/${post._id}/like`, {userId: user._id})
 			console.log(response.data.message)
 		} catch (err) {
 			console.log('An error occurred: ', err)
@@ -87,7 +87,7 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 
 	const unlikePost = async() => {
 		try {
-			const response = await axios.post(`https://flinq-backend.onrender.com/post/${post._id}/unlike`, {userId: user._id})
+			const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/post/${post._id}/unlike`, {userId: user._id})
 			console.log(response.data.message)
 		} catch (err) {
 			console.log('An error occurred: ', err)
@@ -135,7 +135,7 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 	const [commentsModalOpen, setCommentsModalOpen] = useState(false)
 	const getComments = async() => {
 		try {
-			const response = await axios.get(`https://flinq-backend.onrender.com/post/${post._id}`);
+			const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/post/${post._id}`);
 			setComments(response.data.result.comments);
 		} catch (err) {
 			console.log(err);
@@ -149,7 +149,7 @@ const FeedPostCard = ({ post, deletePostFromFeed }) => {
 
 	const refreshComments = async() => {
 		try {
-			const response = await axios.get(`https://flinq-backend.onrender.com/post/${post._id}`)
+			const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/post/${post._id}`)
 			setComments(response.data.result.comments)
 		} catch (err) {
 			console.log(err)

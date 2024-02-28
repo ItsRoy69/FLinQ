@@ -20,7 +20,7 @@ const ChatCommunityPrompt = ({
   const usercontext = useContext(UserContext);
   useEffect(() => {
     axios
-      .get("https://flinq-backend.onrender.com/group/")
+      .get(`${import.meta.env.VITE_APP_BACKEND_URL}/group/`)
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
@@ -56,16 +56,30 @@ const ChatCommunityPrompt = ({
         name: newCommunityName,
       };
       axios
-        .post("https://flinq-backend.onrender.com/group/creategroup", {
+        .post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/creategroup`, {
           groupName: newCommunity.name,
           sender: usercontext.user._id,
         })
         .then((response) => {
           console.log(response);
           if (response.status == 201) {
-            setCommunityChatArray([...communityChatArray, newCommunity]);
-            setNewCommunityName("");
+            axios
+              .get(`${import.meta.env.VITE_APP_BACKEND_URL}/group/`)
+              .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                  setCommunityChatArray(response.data.groups);
+                  setNewCommunityName("");
+                  setCommAddPromptOpen(false);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
+        })
+        .catch((err) => {
+          console.log(err);
         });
     } else {
       setAddCommunityError("Community name cannot be blank.");

@@ -5,52 +5,52 @@ const validator = require("validator");
 const userSchema = new mongoose.Schema(
 	{
 		username: {
-		type: String,
-		trim: true,
-		unique: [true, "Username must be unique"],
-		required: [true, "Username is required"],
+			type: String,
+			trim: true,
+			unique: [true, "Username must be unique"],
+			required: [true, "Username is required"],
 		},
 		name: {
-		type: String,
-		trim: true,
-		required: [true, "Name is required"],
+			type: String,
+			trim: true,
+			required: [true, "Name is required"],
 		},
 		email: {
-		type: String,
-		trim: true,
-		unique: [true, "Email must be unique"],
-		required: [true, "Email is required"],
-		validate: {
-			validator: validator.isEmail,
-			message: "Email not valid",
-		},
+			type: String,
+			trim: true,
+			unique: [true, "Email must be unique"],
+			required: [true, "Email is required"],
+			validate: {
+				validator: validator.isEmail,
+				message: "Email not valid",
+			},
 		},
 		password: {
-		type: String,
-		trim: true,
-		required: [true, "Password is required"],
+			type: String,
+			trim: true,
+			required: [true, "Password is required"],
 		},
 		occupation: {
-		type: String,
-		trim: true,
-		required: [true, "Occupation is required"],
+			type: String,
+			trim: true,
+			required: [true, "Occupation is required"],
 		},
 		phone: {
-		type: String,
-		trim: true,
-		unique: [true, "Phone number must be unique"],
-		required: [true, "Phone number is required"],
+			type: String,
+			trim: true,
+			unique: [true, "Phone number must be unique"],
+			required: [true, "Phone number is required"],
 		},
 		gender: {
-		type: String,
-		trim: true,
+			type: String,
+			trim: true,
 		},
 		birthdate: {
-		type: Date,
+			type: Date,
 		},
 		image: {
-		type: String,
-		trim : true
+			type: String,
+			trim: true
 		},
 		savedJobs: [
 			{
@@ -63,16 +63,16 @@ const userSchema = new mongoose.Schema(
 
 // user registration
 userSchema.statics.register = async function ({
-		username,
-		name,
-		email,
-		password,
-		occupation,
-		phone,
-		gender,
-		birthdate,
-		image,
-	}) {
+	username,
+	name,
+	email,
+	password,
+	occupation,
+	phone,
+	gender,
+	birthdate,
+	image,
+}) {
 	const emailExists = await this.findOne({ email });
 	const usernameExists = await this.findOne({ username });
 
@@ -93,27 +93,27 @@ userSchema.statics.register = async function ({
 	const salt = await bcrypt.genSalt(10);
 	const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({
-    username,
-    name,
-    email,
-    password: hash,
-    occupation,
-    phone,
-    birthdate,
-    gender,
-    image
-  });
+	const user = await this.create({
+		username,
+		name,
+		email,
+		password: hash,
+		occupation,
+		phone,
+		birthdate,
+		gender,
+		image
+	});
 
 	if (!user) {
 		throw new Error("User registration failed");
 	}
 
 	return user;
-	};
+};
 
-	// user login
-	userSchema.statics.login = async function (email, password) {
+// user login
+userSchema.statics.login = async function (email, password) {
 	// Check if the email is registered
 	const savedUser = await this.findOne({ email }).exec();
 	if (!savedUser) {

@@ -15,7 +15,7 @@ const JobDetails = () => {
   const  job = location.state;
   useEffect (()=>{
     const initJobLoad = async() =>{
-      await axios.get(`https://flinq-backend.onrender.com/jobs/${job._id}`).then((response )=>{
+      await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/jobs/${job._id}`).then((response )=>{
         setJobDetails(response.data.result)
         if(response.data.result.apply == "apply"){
           setApplied(false)
@@ -49,7 +49,7 @@ const JobDetails = () => {
     }
     setJobDetails(updatedJob)
     const id = job._id
-    await axios.put(`https://flinq-backend.onrender.com/jobs/update/${id}`,{updatedJob}).then((response)=>{
+    await axios.put(`${import.meta.env.VITE_APP_BACKEND_URL}/jobs/update/${id}`,{updatedJob}).then((response)=>{
       
       if(response.data.result.apply == "Applied"){
         setApplied(true)

@@ -36,7 +36,7 @@ const UserInfo = () => {
     e.preventDefault();
 
     axios
-      .post("https://flinq-backend.onrender.com/user/register", creds)
+      .post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/register`, creds)
       .then((response) => {
         if (response.status == 200) {
           usercontext.updateUser(response.data.user);

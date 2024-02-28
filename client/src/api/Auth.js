@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React from 'react';
 
 const API = process.env.NODE_ENV === 'production' ? "https://flinq.vercel.app" : "http://localhost:5173";
 

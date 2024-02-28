@@ -17,7 +17,7 @@ const EventDetails = () => {
 
     useEffect(()=>{
         const initEventLoad = async() => {
-            await axios.get(`https://flinq-backend.onrender.com/events/${eventParam}`).then((response)=>{
+            await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/events/${eventParam}`).then((response)=>{
                 setEventDetails(response.data.result)
                 console.log(response.data.result)
                 setBooked(response.data.result.booking)
@@ -43,7 +43,7 @@ const EventDetails = () => {
         }
         setEventDetails(updatedEvent)
         console.log(updatedEvent)
-        await axios.put(`https://flinq-backend.onrender.com/events/${eventParam}`,{updatedEvent}).then((response) =>{
+        await axios.put(`${import.meta.env.VITE_APP_BACKEND_URL}/events/${eventParam}`,{updatedEvent}).then((response) =>{
             
             setBooked(response.data.result.booking)
         }).catch((err) =>{

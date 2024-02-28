@@ -9,7 +9,7 @@ const ReceivedMessage = ({ message }) => {
     const userId = message.sender;
     const getUsername = async () => {
       await axios
-        .post(`https://flinq-backend.onrender.com/user/getuser/${userId}`, {
+        .post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/getuser/${userId}`, {
           userId,
         })
         .then((response) => {

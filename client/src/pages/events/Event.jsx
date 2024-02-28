@@ -22,7 +22,7 @@ const Event = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    axios.get('https://flinq-backend.onrender.com/events/').then((response) =>{
+    axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/events/`).then((response) =>{
       setEventArray(response.data.result);
     }).catch((err)=>{
       console.log(err)

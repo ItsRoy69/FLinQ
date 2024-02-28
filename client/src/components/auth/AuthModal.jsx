@@ -46,7 +46,7 @@ const AuthModal = () => {
     signInWithPopup(auth, provider)
       .then(async (data) => {
         await axios
-          .post("https://flinq-backend.onrender.com/user/googleLogin", {
+          .post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/googleLogin`, {
             email: data.user.email,
             verified: data.user.emailVerified,
           })
@@ -115,7 +115,7 @@ const AuthModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post("https://flinq-backend.onrender.com/user/register", creds)
+      .post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/register`, creds)
       .then((response) => {
         console.log("from Auth",response);
         if (response.status == 200) {
@@ -133,7 +133,7 @@ const AuthModal = () => {
   const handleLogin = async(e) => {
     e.preventDefault();
     await axios
-      .post("https://flinq-backend.onrender.com/user/login", {
+      .post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/login`, {
         email: creds.email,
         password: creds.password,
       })
