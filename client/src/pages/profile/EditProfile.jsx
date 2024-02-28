@@ -9,11 +9,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const EditProfile = () => {
   const navigate = useNavigate();
-
+  const [documentFile, setDocumentFile] = useState(null);
   const [user, setUser] = useState([]);
   const usercontext = useContext(UserContext);
   useEffect(() => {
-    const storedUser = localStorage.getItem('userData');
+    const storedUser = localStorage.getItem("userData");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -27,7 +27,7 @@ const EditProfile = () => {
     occupation: user.occupation,
     birthdate: user.birthdate,
     gender: user.gender,
-    image : user.image
+    image: user.image,
   });
 
   const handleBackClick = () => {
@@ -35,42 +35,52 @@ const EditProfile = () => {
   };
   const handleSaveClick = (e) => {
     try {
-			if (profilePhoto) {
-				const base64Image = profilePhoto.split(",")[1];
-				const blob = atob(base64Image);
-				const arrayBuffer = new ArrayBuffer(blob.length);
-				const uint8Array = new Uint8Array(arrayBuffer);
-				for (let i = 0; i < blob.length; i++) {
-					uint8Array[i] = blob.charCodeAt(i);
-				}
-
-				const imageSizeInBytes = uint8Array.length;
-				const imageSizeInKB = imageSizeInBytes / 1024;
-
-				if (imageSizeInKB > 50) {
-					alert("Image size should be within 50KB.");
-					return;
-				}
-			}
-    // setcreds({ ...creds, image: profilePhoto });
-    const userId = user._id;
-    e.preventDefault();
-   
-    axios
-      .put(`${import.meta.env.VITE_APP_BACKEND_URL}/user/update/${userId}`, creds)
-      .then((response) => {
-        if (response.status == 200) {
-          const updatedUserData = response.data.result || response.data.user;
-          usercontext.updateUser(response.data.result);
-          saveUserDataToLocalStorage(updatedUserData)
-          navigate("/profile");
+      if (profilePhoto) {
+        const base64Image = profilePhoto.split(",")[1];
+        const blob = atob(base64Image);
+        const arrayBuffer = new ArrayBuffer(blob.length);
+        const uint8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < blob.length; i++) {
+          uint8Array[i] = blob.charCodeAt(i);
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }catch(error){
-      setProfilePhoto(user.image)
+
+        const imageSizeInBytes = uint8Array.length;
+        const imageSizeInKB = imageSizeInBytes / 1024;
+
+        if (imageSizeInKB > 50) {
+          alert("Image size should be within 50KB.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", documentFile);
+        formData.append("name", creds.name);
+
+        // Send document file to the server
+        const response =  axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/uploadDocument`, formData);
+        console.log(response.data);
+      }
+      const userId = user._id;
+      e.preventDefault();
+
+      axios
+        .put(
+          `${import.meta.env.VITE_APP_BACKEND_URL}/user/update/${userId}`,
+          creds
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            const updatedUserData = response.data.result || response.data.user;
+            usercontext.updateUser(response.data.result);
+            saveUserDataToLocalStorage(updatedUserData);
+            navigate("/profile");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      setProfilePhoto(user.image);
       console.log("Failed to upload image");
     }
   };
@@ -100,6 +110,11 @@ const EditProfile = () => {
     localStorage.setItem("userData", JSON.stringify(userData));
   };
 
+  const handleDocumentChange = (e) => {
+    const file = e.target.files[0];
+    setDocumentFile(file);
+  };
+
   return (
     <div className="container bg-slate-900 min-h-screen font-sans text-white">
       <div className="divide-y divide-solid px-4 w-full h-full">
@@ -120,7 +135,7 @@ const EditProfile = () => {
               <img
                 className="w-[100px] h-[100px] mt-5 rounded-full border-2 border-white p-2 cursor-pointer"
                 src={profilePhoto}
-                value = {creds.image}
+                value={creds.image}
                 alt="profile"
                 onClick={handleImageClick}
               />
@@ -152,6 +167,21 @@ const EditProfile = () => {
           </div>
           <div className="flex justify-center items-center  text-lg text-stone-600 mb-2">
             {user.username}
+          </div>
+          <div className="w-full relative border-2 mt-2 border-slate-500 rounded-[10px]">
+            <label
+              htmlFor="fileInput"
+              className="cursor-pointer w-full bg-transparent mt-4 px-2  py-1.5 focus:outline-none peer"
+            >
+              Upload Identity Document
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              accept=".jpg, .jpeg, .png, .pdf, .doc, .docx"
+              style={{ display: "none" }}
+              onChange={handleDocumentChange}
+            />
           </div>
         </div>
         <div className="flex flex-col  p-1 mt-3">

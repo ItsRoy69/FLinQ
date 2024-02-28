@@ -13,7 +13,7 @@ const createToken = (payload, secret, expiry) => {
 const registerUser = async (req, res) => {
     try {
         const { username, name, email, password, occupation, phone, gender, birthdate } = req.body;
-        
+
         const image = req.file ? req.file.buffer : req.body.image;
         if (!username || !name || !email || !password || !occupation || !phone) {
             return res.status(422).json({ message: "Fill all details" });
@@ -77,7 +77,7 @@ const loginUser = async (req, res) => {
                 username: user.username,
                 name: user.name,
                 email: user.email,
-                image : user.image
+                image: user.image
             }, token
         });
 
@@ -88,19 +88,19 @@ const loginUser = async (req, res) => {
 }
 
 //POST
-const googleLogin = async(req,res)=>{
-    const {email, verified} = await  req.body;
-    if(!verified){
+const googleLogin = async (req, res) => {
+    const { email, verified } = await req.body;
+    if (!verified) {
         console.log('check')
-        return res.status(400).json({message : "Email is not verified."});
+        return res.status(400).json({ message: "Email is not verified." });
     }
-    const user = await UserModel.findOne({email : email})
-    if(user){
-        return res.status(200).json({message: "Login successful.",user});
+    const user = await UserModel.findOne({ email: email })
+    if (user) {
+        return res.status(200).json({ message: "Login successful.", user });
     }
     else {
         console.log('check 2')
-        return res.status(400).json({message : "Signup required for new account."});
+        return res.status(400).json({ message: "Signup required for new account." });
     }
 
 
@@ -127,7 +127,7 @@ const getUserById = async (req, res) => {
         const { id: _id } = await req.params;
         if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(422).json({ message: "Id is invalid" });
-        }        
+        }
         const userExist = await UserModel.find({ _id: userId });
         if (!userExist) {
             return res.status(404).json({ message: "User not found" });
@@ -145,12 +145,12 @@ const getUserById = async (req, res) => {
 
 // saved jobs update 
 // PATH '/
-const updateSavedJobs = async(req, res) => {
-    const {userId, jobId, saveJob} = req.body
+const updateSavedJobs = async (req, res) => {
+    const { userId, jobId, saveJob } = req.body
     if (!userId || !jobId || !saveJob) {
         return res.status(400).json({ message: "Essential fields missing" })
     }
-    const user = await UserModel.findById( userId )
+    const user = await UserModel.findById(userId)
     if (!user) {
         return res.status(404).json({ message: "User doesn't exist" })
     }
@@ -169,23 +169,35 @@ const updateSavedJobs = async(req, res) => {
 // edit user profile
 const updateUser = async (req, res) => {
     try {
-        const { id: _id } = await req.params;
+        const { id: _id } = req.params;
         const userExist = await UserModel.exists({ _id });
+
         if (!userExist) {
             return res.status(404).json({ message: "User doesn't exist" });
         }
 
         const image = req.file ? req.file.buffer : req.body.image;
-        const updatedUser = await UserModel.findByIdAndUpdate(_id, { ...req.body, completedDetails: true, image:image}, { new: true }, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 });
+        const identityDocument = req.file ? req.file.path : req.body.identityDocument;
+
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            _id,
+            { ...req.body, completedDetails: true, image, identityDocument },
+            { new: true },
+            { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 }
+        );
+
         if (!updatedUser) {
             throw new Error("Could not update user");
         }
+
         res.status(200).json({ message: "Updated successfully", result: updatedUser });
     } catch (error) {
         console.log(error);
         res.status(400).json({ message: error?.message });
     }
 }
+
+
 
 // delete user
 const deleteUser = async (req, res) => {
@@ -203,13 +215,28 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports = { 
-    registerUser, 
-    loginUser, 
-    getUsers, 
-    googleLogin, 
-    getUserById, 
-    updateUser, 
+// get doctors
+const getDoctors = async (req, res) => {
+    try {
+        const doctors = await UserModel.find({ occupation: "doctor" }, { _id: 1, name: 1, email: 1, image: 1 });
+        if (!doctors) {
+            return res.status(404).json({ message: "Could not fetch doctors", result: null });
+        }
+        res.status(200).json({ message: "Fetched doctors", result: doctors });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error?.message });
+    }
+}
+
+module.exports = {
+    registerUser,
+    loginUser,
+    getUsers,
+    googleLogin,
+    getUserById,
+    updateUser,
     deleteUser,
-    updateSavedJobs
+    updateSavedJobs,
+    getDoctors
 };

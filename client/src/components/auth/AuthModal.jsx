@@ -275,7 +275,7 @@ const AuthModal = () => {
                     <option value="" disabled defaultValue>
                       Select Profession
                     </option>
-                    <option value="gynaecologist">Gynaecologist</option>
+                    <option value="doctor">Doctor</option>
                     <option value="teacher">Teacher</option>
                     <option value="engineer">Engineer</option>
                     <option value="homemaker">Home Maker</option>

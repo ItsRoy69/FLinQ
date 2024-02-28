@@ -21,6 +21,7 @@ import ChatAnonymous from "./pages/chat/anonymous/ChatAnonymous";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { UserProvider } from "./contexts/userContext";
 import { useEffect, useState } from "react";
+import Consultation from "./pages/consultation/Consultation";
 
 function App() {
   const client_id = import.meta.env.VITE_CLIENT_ID;
@@ -77,6 +78,7 @@ function App() {
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/edit" element={<EditProfile />} />
                       <Route path="/userinfo" element={<UserInfo />} />
+                      <Route path="/consultation" element={<Consultation />} />
                       <Route path="/error" element={<Error404 />} />
                     </Routes>
                   </FeedTypeState>
