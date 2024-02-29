@@ -20,6 +20,7 @@ const chatRoute = require('./routes/chatRoute');
 const groupRoute = require('./routes/groupRoute');
 const jobsRoute = require('./routes/jobsRoute');
 const eventsRoute = require('./routes/eventsRoute');
+const doctorChatRoute = require('./routes/doctorChatRoute');
 
 // Socket Chat
 const chatNamespace = io.of('/chat');
@@ -53,6 +54,19 @@ chatGroupspace.on('connection', (socket) => {
   });
 });
 
+const docChatNamespace = io.of('/doctor');
+docChatNamespace.on('connection', (socket) => {
+  console.log('A user connected to the doctors chat namespace');
+
+  socket.on('chat message', (msg) => {
+    docChatNamespace.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected from the chat namespace');
+  });
+});
+
 // Middleware to set io globally
 app.use((req, res, next) => {
   req.io = io;
@@ -78,6 +92,7 @@ app.use('/chat', chatRoute);
 app.use('/group', groupRoute);
 app.use('/jobs', jobsRoute);
 app.use('/events', eventsRoute);
+app.use('/doctor', doctorChatRoute);
 
 const connectToDb = async () => {
   try {

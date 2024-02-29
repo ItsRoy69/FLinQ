@@ -6,7 +6,6 @@ const controllers = require('../controllers/userController.js');
 router.post('/register', controllers.registerUser);
 // login user
 router.post('/login', controllers.loginUser);
-
 // get all users
 router.get('/', controllers.getUsers);
 // get user by id

@@ -9,7 +9,7 @@ const createToken = (payload, secret, expiry) => {
     return jwt.sign({ payload }, secret, { expiresIn: `${expiry}` });
 }
 
-// POST 
+// Register user
 const registerUser = async (req, res) => {
     try {
         const { username, name, email, password, occupation, phone, gender, birthdate } = req.body;
@@ -19,7 +19,6 @@ const registerUser = async (req, res) => {
             return res.status(422).json({ message: "Fill all details" });
         }
 
-        // Register the user with UserModel.register method
         const user = await UserModel.register({
             username,
             name,
@@ -29,7 +28,7 @@ const registerUser = async (req, res) => {
             phone,
             gender,
             birthdate,
-            image, // Store the image buffer in the database
+            image,
         });
 
         if (!user) throw Error("Registration failed");
@@ -45,7 +44,7 @@ const registerUser = async (req, res) => {
                 username: user.username,
                 name: user.name,
                 email: user.email,
-                image: user.image // Assuming you want to send back the image buffer in the response
+                image: user.image
             },
             token
         });
@@ -55,7 +54,7 @@ const registerUser = async (req, res) => {
     }
 }
 
-// POST
+// Login user
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -109,7 +108,7 @@ const googleLogin = async (req, res) => {
 // get all users
 const getUsers = async (req, res) => {
     try {
-        const users = await UserModel.find({}, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 });
+        const users = await UserModel.find({}, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1, occupation: 1 });
         if (!users) {
             return res.status(404).json({ message: "Could not fetch users", result: null });
         }
@@ -132,7 +131,7 @@ const getUserById = async (req, res) => {
         if (!userExist) {
             return res.status(404).json({ message: "User not found" });
         }
-        const user = await UserModel.findById(userId, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1 });
+        const user = await UserModel.findById(userId, { username: 1, name: 1, email: 1, totalPostCount: 1, createdAt: 1, createdPosts: 1, occupation: 1 });
         if (!user) throw new Error("Failed to fetch user");
         // success
         return res.status(200).json({ message: "Fetched user", result: user });
@@ -144,7 +143,6 @@ const getUserById = async (req, res) => {
 }
 
 // saved jobs update 
-// PATH '/
 const updateSavedJobs = async (req, res) => {
     const { userId, jobId, saveJob } = req.body
     if (!userId || !jobId || !saveJob) {
@@ -196,8 +194,6 @@ const updateUser = async (req, res) => {
         res.status(400).json({ message: error?.message });
     }
 }
-
-
 
 // delete user
 const deleteUser = async (req, res) => {
