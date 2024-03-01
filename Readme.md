@@ -106,7 +106,7 @@ By dismantling barriers and fostering connections, FlinQ aims to create a safer 
 Clone this repository to your local machine.
 
 ```bash
-git clone https://github.com/ItsRoy69/Google-Solution
+git clone https://github.com/ItsRoy69/FLinQ
 ```
 
 - ### Chatbot Installation
